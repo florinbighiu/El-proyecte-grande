@@ -1,4 +1,4 @@
-package com.codecool.epgsprint1.El.proyecte.grande;
+package com.codecool.el.proyecte.grande;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
