@@ -1,21 +1,8 @@
-import './App.css';
-import Navbar from './layout/Navbar';
-
-
-function App() {
-
+import Navbar from "./layout/Navbar";
+export default function App() {
   return (
-    <>
-    <div className="app">
-    <Navbar />
-      <header>
-        <h1>My Online Shop</h1>
-      </header>
-      <main>
-      </main>
+    <div>
+      <Navbar />
     </div>
-    </>
   );
 }
-
-export default App;

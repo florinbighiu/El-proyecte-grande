@@ -1,44 +1,26 @@
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import "./Navbar.css";
-
-const Home = () => <h1>Welcome to the Home Page</h1>;
-const About = () => <h1>About Us</h1>;
-const Contact = () => <h1>Contact Us</h1>;
-
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <Router>
-      <div>
-      <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          My Online Shop
-        </Link>
-
-        <ul className="navbar-menu">
-          <li className="navbar-item">
-            <Link to="/">Home</Link>
+    <nav className="bg-gray-800 py-2">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center">
+          <span className="text-white text-xl font-semibold ml-2">My Online Shop</span>
+        </div>
+        <ul className="flex space-x-4">
+          <li className="text-white hover:text-yellow-500">
+            <a href="/">Home</a>
           </li>
-          <li className="navbar-item">
-            <Link to="/products">Products</Link>
+          <li className="text-white hover:text-yellow-500">
+            <a href="/products">Products</a>
           </li>
-          <li className="navbar-item">
-            <Link to="/cart">Cart</Link>
+          <li className="text-white hover:text-yellow-500">
+            <a href="/cart">Cart</a>
           </li>
-          <li className="navbar-item">
-            <Link to="/login">Login</Link>
+          <li className="text-white hover:text-yellow-500">
+            <a href="/login">Login</a>
           </li>
         </ul>
       </div>
     </nav>
-        <Routes>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-        </Routes>
-      </div>
-    </Router>
   );
-};
+}
 
-export default Navbar;
