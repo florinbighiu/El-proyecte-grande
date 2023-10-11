@@ -3,9 +3,25 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    './components/**/*.{js,jsx,ts,tsx}',
+    './Layout/**/*.{html,jsx}',
+
+
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        '6rem': '6rem',
+      },
+      zIndex: {
+        '0': 0,
+        '10': 10,
+        '20': 20,
+        '30': 30,
+        '40': 40,
+        '50': 50,
+      },
+    },
   },
   plugins: [],
 }
