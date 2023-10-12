@@ -1,6 +1,7 @@
-package com.codecool.el.proyecte.grande.service;
+package com.elproyectegrande.service;
 
-import com.codecool.el.proyecte.grande.model.Product;
+import com.elproyectegrande.model.Product;
+import com.elproyectegrande.model.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +18,18 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // Create a new product
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
-    // Read all products
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // Read a product by ID
     public Optional<Product> getProductById(Long productId) {
         return productRepository.findById(productId);
     }
 
-    // Update an existing product
     public Product updateProduct(Long productId, Product updatedProduct) {
         Optional<Product> existingProductOptional = productRepository.findById(productId);
         if (existingProductOptional.isPresent()) {
@@ -42,10 +39,9 @@ public class ProductService {
             existingProduct.setPrice(updatedProduct.getPrice());
             return productRepository.save(existingProduct);
         }
-        return null; // Handle not found case
+        return null;
     }
 
-    // Delete a product by ID
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }

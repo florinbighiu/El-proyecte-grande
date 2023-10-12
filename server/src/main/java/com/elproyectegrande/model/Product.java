@@ -1,17 +1,22 @@
-package com.codecool.el.proyecte.grande.model;
+package com.elproyectegrande.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
     private double price;
+
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -39,9 +44,5 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Long getId() {
-        return id;
     }
 }
