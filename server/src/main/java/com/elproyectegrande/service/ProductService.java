@@ -18,6 +18,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public List<Product> getCartProducts() {
+        return productRepository.findByIsInCartTrue();
+    }
+
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
@@ -44,5 +48,30 @@ public class ProductService {
 
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
+    }
+
+    public Product addProductToCart(Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setIsInCart(true);
+            return productRepository.save(product);
+        }
+
+        return null; 
+    }
+
+    public boolean removeProductFromCart(Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setIsInCart(false);
+            productRepository.save(product);
+            return true;
+        }
+
+        return false; // Product not found
     }
 }

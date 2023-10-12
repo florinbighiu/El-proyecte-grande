@@ -13,6 +13,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private boolean isInCart = false;
 
     public Long getId() {
         return id;
@@ -44,5 +45,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setIsInCart(boolean isInCart) {
+        this.isInCart = isInCart;
+    }
+
+    public boolean getIsInCart() {
+        return isInCart;
     }
 }

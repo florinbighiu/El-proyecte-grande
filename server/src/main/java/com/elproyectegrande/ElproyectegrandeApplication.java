@@ -30,7 +30,13 @@ public class ElproyectegrandeApplication {
 			product2.setPrice(29.99);
 			productRepository.save(product2);
 
-			// Add more products as needed
+			Product product3 = new Product();
+			product3.setName("Product 3");
+			product3.setDescription("Description for Product 3");
+			product3.setPrice(29.99);
+			productRepository.save(product3);
+
+			
 		};
 	}
 }
