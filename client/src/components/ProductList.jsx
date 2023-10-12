@@ -1,89 +1,28 @@
 import { ShoppingCartIcon } from "@heroicons/react/solid";
-
-const products = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 19.99,
-    imageUrl: "/product1.jpg",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 29.99,
-    imageUrl: "/product2.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 24.99,
-    imageUrl: "/product3.jpg",
-  },
-
-];
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/products"); 
+      if (response.status === 200) {
+        console.log(response.data)
+        setProducts(response.data);
+      } else {
+        console.error("Failed to fetch products");
+      }
+    } catch (error) {
+      console.error("Error fetching products", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div className="container m-0.5 p-4  text-slate-500 dark:text-slate-400 bg-slate-300 rounded-xl">
       <h2 className="text-2xl font-semibold mb-4">Products</h2>
