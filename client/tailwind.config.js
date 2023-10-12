@@ -21,6 +21,13 @@ export default {
         '40': 40,
         '50': 50,
       },
+      fontFamily: {
+        'sans': ['ui-sans-serif', 'system-ui'],
+        'serif': ['ui-serif', 'Helvetica'],
+        'mono': ['ui-monospace', 'SFMono-Regular'],
+        'display': ['Oswald'],
+        'body': ['"Open Sans"'],
+      }
     },
   },
   plugins: [],

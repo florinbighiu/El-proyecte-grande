@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto pl-2 pr-3 py-1">
         <ProductList />
       </div>
     </div>
