@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden ">
           <div className="flex-10 py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
-            <ul className="flex space-x-8 font-serif text-lg">
+            <ul className="flex space-x-8 font-serif text-md">
               <li className="text-black hover:text-yellow-500">
                 <a href="/">Home</a>
               </li>
@@ -56,7 +56,7 @@ const Navbar = () => {
               <a href="/">Products</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-              <a href="/">Cart</a>
+              <a href="http://localhost:5173/cart">Cart</a>
               </li>
               <li className="text-black hover:text-yellow-500">
               <a href="/">Contact</a>
