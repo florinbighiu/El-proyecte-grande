@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductList from "./components/ProductList";
 import Navbar from "./layout/Navbar";
 import Cart from "./components/Cart";
+import ContactPage from './components/ContactPage';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar />
       <div className="container mx-5 pl-2 pr-3 py-1">
       <Routes>
+        <Route path='/contact' element={<ContactPage />}></Route>
           <Route path="/cart" element={<Cart />} />
           <Route path="/" element={<ProductList />} />
         </Routes>

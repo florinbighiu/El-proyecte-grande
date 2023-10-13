@@ -59,10 +59,10 @@ const Navbar = () => {
               <a href="http://localhost:5173/cart">Cart</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-              <a href="/">Contact</a>
+              <a href="/contact">Contact</a>
               </li>
               <li className="text-black hover:text-yellow-500 pl-8">
-              <a href="/"className="text-black bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-serif font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Login</a>
+              <a href="/"className="text-black bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-blue-300 font-serif font-bold rounded-lg text-sm px-5 py-2 mr-2 mb-2">Login</a>
               </li>
             </ul>
           </div>

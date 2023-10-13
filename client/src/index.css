@@ -17,4 +17,10 @@ body {
   margin-bottom: 1rem; 
 }
 
+#cartItems {
+  scroll-behavior: smooth;
+  scrollbar-color: #807f7f;
+  scrollbar-track-color: slategray;
+}
+
 
