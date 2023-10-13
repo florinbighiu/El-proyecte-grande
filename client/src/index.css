@@ -8,4 +8,13 @@
   }
 }
 
+body {
+  font-family: 'GT Walsheim Regular','Segoe UI',sans-serif;
+  color: #161616;
+}
+
+.flex.flex-col > * {
+  margin-bottom: 1rem; 
+}
+
 

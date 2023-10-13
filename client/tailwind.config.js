@@ -23,7 +23,7 @@ export default {
       },
       fontFamily: {
         'sans': ['ui-sans-serif', 'system-ui'],
-        'serif': ['ui-serif', 'Helvetica'],
+        'serif': ['ui-segoe', 'GT Walsheim Regular'],
         'mono': ['ui-monospace', 'SFMono-Regular'],
         'display': ['Oswald'],
         'body': ['"Open Sans"'],

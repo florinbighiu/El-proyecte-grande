@@ -8,7 +8,7 @@ function App() {
     <Router>
     <div>
       <Navbar />
-      <div className="container mx-auto pl-2 pr-3 py-1">
+      <div className="container mx-5 pl-2 pr-3 py-1">
       <Routes>
           <Route path="/cart" element={<Cart />} />
           <Route path="/" element={<ProductList />} />
