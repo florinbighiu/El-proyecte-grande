@@ -77,17 +77,14 @@ function ProductList() {
 
   const handleUpdateProduct = async () => {
     try {
-      // Send a PUT request to update the product at localhost/8080/products/{updateProductId}
       const response = await axios.put(`http://localhost:8080/products/${ProductId}`, newProduct);
 
-      // Update the products array with the updated product data
       setProducts((prevProducts) =>
         prevProducts.map((prevProduct) =>
           prevProduct.id === ProductId ? { ...response.data } : prevProduct
         )
       );
 
-      // Clear the update form and close it
       setNewProduct({
         name: "",
         price: 0,
@@ -103,7 +100,6 @@ function ProductList() {
   const handleOpenUpdateForm = (productId) => {
     const productToUpdate = products.find((product) => product.id === productId);
 
-    // Set the updateProductId and pre-fill the newProduct state with existing product data
     setProductId(productId);
     setNewProduct({ ...productToUpdate });
     setShowUpdateForm(true);

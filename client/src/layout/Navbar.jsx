@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-scroll";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
-import LogoImage from "../assets/shoppingcart.png"
+import LogoImage from "../assets/ecommerce.png"
 
 const Navbar = () => {
   const [click, setClick] = useState(false);

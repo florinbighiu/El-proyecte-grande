@@ -41,16 +41,16 @@ function Cart() {
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-evenly">
         {cartProducts.length ? (
           <>
             <div
               id="cartItems"
-              className="flex flex-col w-2/3 h-[75vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
+              className="flex flex-col w-3/4 h-[75vh] mr-20 overflow-auto rounded-md bg-white border-2 border-slate-300	">
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out backdrop-blur-md hover:cursor-pointer">
+                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -71,7 +71,7 @@ function Cart() {
                 </div>
               ))}
             </div>
-            <div className="w-full h-fit flex items-center justify-end ">
+            <div className="w-1/4 h-fit flex items-center justify-end ">
               <div className="bg-white p-4 rounded-md shadow-md w-fit h-2/3">
                 <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
                 <hr className="my-4 border-t border-gray-300" />
@@ -94,7 +94,7 @@ function Cart() {
                 </div>
                 <button
                   onClick={() => setShowCheckout(true)}
-                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4">
+                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 ml-16 rounded-full mt-4">
                   Proceed to Checkout
                 </button>
                 {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}

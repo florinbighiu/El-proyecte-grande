@@ -1,4 +1,5 @@
-import LogoImage from "../assets/shoppingcart.png"
+import LogoImage from "../assets/ecommerce.png"
+
 const ContactPage = () => {
   return (
     <div className="container mx-auto p-6 ">
