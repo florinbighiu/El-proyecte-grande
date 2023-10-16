@@ -41,28 +41,32 @@ const Navbar = () => {
     </>
   );
   return (
-    <nav className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-rose-100 to-teal-100 flex transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10">
+      <div className="container mx-auto flex flex-wrap justify-between items-center">
         <div className="flex items-center flex-1 justify-center">
           <span className="text-3xl font-serif font-bold mr-96">Logo</span>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden ">
           <div className="flex-10 py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
-            <ul className="flex space-x-8 font-serif font-bold text-md">
+            <ul className="flex space-x-8 font-serif font-bold text-base">
               <li className="text-black hover:text-yellow-500">
                 <a href="/">Home</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-              <a href="/">Products</a>
+                <a href="/">Products</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-              <a href="http://localhost:5173/cart">Cart</a>
+                <a href="http://localhost:5173/cart">Cart</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-              <a href="/contact">Contact</a>
+                <a href="/contact">Contact</a>
               </li>
               <li className="text-black hover:text-yellow-500 pl-8">
-              <a href="/"className="text-black bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-blue-300 font-serif font-bold rounded-lg text-sm px-5 py-2 mr-2 mb-2">Login</a>
+                <a
+                  href="/"
+                  className="text-black bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-blue-300 font-serif font-bold text-base rounded-lg px-5 py-2 mr-2 mb-2">
+                  Login
+                </a>
               </li>
             </ul>
           </div>

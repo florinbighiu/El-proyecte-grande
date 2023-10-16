@@ -5,6 +5,7 @@ import com.elproyectegrande.model.Product;
 import com.elproyectegrande.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
-    }
 
     @GetMapping
     public List<Product> getAllProducts() {
@@ -40,6 +36,12 @@ public class ProductController {
     @PutMapping("/{productId}")
     public Product updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
         return productService.updateProduct(productId, updatedProduct);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        Product createdProduct = productService.createProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @DeleteMapping("/{productId}")

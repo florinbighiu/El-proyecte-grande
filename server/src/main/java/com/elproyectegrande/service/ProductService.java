@@ -1,6 +1,6 @@
 package com.elproyectegrande.service;
 
-import com.elproyectegrande.model.Product;
+import com.elproyectegrande.model.*;
 import com.elproyectegrande.model.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,10 +41,13 @@ public class ProductService {
             existingProduct.setName(updatedProduct.getName());
             existingProduct.setDescription(updatedProduct.getDescription());
             existingProduct.setPrice(updatedProduct.getPrice());
+            existingProduct.setImage(updatedProduct.getImage());
             return productRepository.save(existingProduct);
         }
         return null;
     }
+
+
 
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
@@ -72,6 +75,6 @@ public class ProductService {
             return true;
         }
 
-        return false; // Product not found
+        return false;
     }
 }

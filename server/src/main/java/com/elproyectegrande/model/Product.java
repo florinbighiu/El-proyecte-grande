@@ -13,6 +13,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private String image;  // New field for image URL
     private boolean isInCart = false;
 
     public Long getId() {
@@ -47,11 +48,19 @@ public class Product {
         this.price = price;
     }
 
-    public void setIsInCart(boolean isInCart) {
-        this.isInCart = isInCart;
+    public String getImage() {
+        return image;
     }
 
-    public boolean getIsInCart() {
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public boolean isIsInCart() {
         return isInCart;
+    }
+
+    public void setIsInCart(boolean isInCart) {
+        this.isInCart = isInCart;
     }
 }
