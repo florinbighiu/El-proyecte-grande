@@ -56,8 +56,10 @@ function Cart() {
                     alt={product.name}
                     className=" w-10 h-16 object-contain "
                   />
-                  <h3 className="text-lg text-slate-800 font-semibold mt-2">{product.name}</h3>
-                  <h2 className="text-lg text-slate-800 font-semibold mt-2">
+                  <h3 className="text-lg text-slate-800 font-semibold mt-2">
+                    <strong>{product.name}</strong>
+                  </h3>
+                  <h2 className="text-lg text-slate-700 font-semibold mt-2">
                     {product.description}
                   </h2>
                   <p className="text-indigo-700">
@@ -72,12 +74,12 @@ function Cart() {
               ))}
             </div>
             <div className="w-1/4 h-fit flex items-center justify-end ">
-              <div className="bg-white p-4 rounded-md shadow-md w-fit h-2/3">
+              <div className="bg-white p-4 rounded-md shadow-md w-5/6 h-2/3">
                 <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
                 <hr className="my-4 border-t border-gray-300" />
                 {cartProducts.map((prod) => (
                   <div key={prod.id}>
-                    <div className="flex flex-row justify-between">
+                <div className="flex justify-between items-center">
                       <p className="w-3/4">{prod.name}:</p>
                       <p className="w-1/4 text-end text-lg text-indigo-700">
                         <strong>{prod.price.toFixed(2)}$</strong>
@@ -89,14 +91,16 @@ function Cart() {
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-semibold">Total:</p>
                   <p className="text-lg text-indigo-700">
-                    <strong>{totalCost}$</strong>
+                    <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
+                <div className="flex items-center justify-center">
                 <button
                   onClick={() => setShowCheckout(true)}
-                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 ml-16 rounded-full mt-4">
+                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4">
                   Proceed to Checkout
                 </button>
+                </div>
                 {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
               </div>
             </div>

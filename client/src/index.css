@@ -9,8 +9,6 @@
 }
 * {
   box-sizing: border-box;
-  scrollbar-width: auto;
-  scrollbar-color: #717171 #cefaf1;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -18,11 +16,9 @@
   }
 
 body {
-  font-family: 'GT Walsheim Regular','Segoe UI',sans-serif;
+  font-family: 'Roboto',sans-serif;
   color: #161616;
 }
-
-
 
 .flex.flex-col > * {
   margin-bottom: 1rem; 

@@ -56,10 +56,10 @@ const Navbar = () => {
                 <a href="/">Home</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-                <a href="/">Products</a>
+                <a href="/products">Products</a>
               </li>
               <li className="text-black hover:text-yellow-500">
-                <a href="http://localhost:5173/cart">Cart</a>
+                <a href="/cart">Cart</a>
               </li>
               <li className="text-black hover:text-yellow-500">
                 <a href="/contact">Contact</a>
