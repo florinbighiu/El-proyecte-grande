@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-scroll";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
+import LogoImage from "../assets/shoppingcart.png"
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
@@ -43,8 +44,10 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-rose-100 to-teal-100 flex transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10">
       <div className="container mx-auto flex flex-wrap justify-between items-center">
-        <div className="flex items-center flex-1 justify-center">
-          <span className="text-3xl font-serif font-bold mr-96">Logo</span>
+      <div className="flex items-start flex-1 justify-start ml-24">
+        <a href="/">
+          <img src={LogoImage} alt="Logo" className=" w-12 my-1" />
+          </a>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden ">
           <div className="flex-10 py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">

@@ -8,11 +8,11 @@ function ProductCard({
   handleOpenUpdateForm,
 }) {
   return (
-    <div className="flex flex-col justify-evenly bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative">
+    <div className="flex flex-col justify-evenly bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative font-serif">
       <img src={product.image} alt={product.name} className="w-full h-60 object-contain mb-2" />
-      <h3 className="text-lg text-slate-800 font-semibold mt-2">{product.name}</h3>
+      <h3 className="text-lg text-center text-slate-800 font-semibold mt-2">{product.name}</h3>
       <h2 className="text-slate-950">{product.description}</h2>
-      <p className="text-slate-950">${product.price.toFixed(2)}</p>
+      <p className="text-slate-950 text-lg font-bold">${product.price.toFixed(2)}</p>
       <div className="flex flex-row items-center justify-around">
         <button
           onClick={() => handleAddToCart(product)}
@@ -22,7 +22,7 @@ function ProductCard({
           }`}
         >
           <span>
-            <ShoppingCartIcon className="h-inherit w-5" />
+            <ShoppingCartIcon className="h-[24px] w-5" />
           </span>
         </button>
         <button

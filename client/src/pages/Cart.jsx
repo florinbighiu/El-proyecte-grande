@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Checkout from "../components/Checkout"; // Import your Checkout component
+import Checkout from "../components/Checkout";
 import axios from "axios";
 
 function Cart() {
@@ -34,6 +34,10 @@ function Cart() {
     }
   };
 
+  const totalCost = cartProducts.reduce((accumulator, product) => {
+    return accumulator + product.price;
+  }, 0);
+
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
@@ -42,11 +46,11 @@ function Cart() {
           <>
             <div
               id="cartItems"
-              className="flex flex-col w-full h-[75vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
+              className="flex flex-col w-2/3 h-[75vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-slate-500 p-4 m-10 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out backdrop-blur-md hover:cursor-pointer">
+                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out backdrop-blur-md hover:cursor-pointer">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -56,8 +60,9 @@ function Cart() {
                   <h2 className="text-lg text-slate-800 font-semibold mt-2">
                     {product.description}
                   </h2>
-
-                  <p className="text-slate-950">${product.price.toFixed(2)}</p>
+                  <p className="text-indigo-700">
+                    <strong>${product.price.toFixed(2)}</strong>
+                  </p>
                   <button
                     onClick={() => handleRemoveFromCart(product)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full absolute bottom-4 right-4">
@@ -66,13 +71,26 @@ function Cart() {
                 </div>
               ))}
             </div>
-            <div className="w-full flex items-center justify-end ">
+            <div className="w-full h-fit flex items-center justify-end ">
               <div className="bg-white p-4 rounded-md shadow-md w-fit h-2/3">
                 <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
                 <hr className="my-4 border-t border-gray-300" />
+                {cartProducts.map((prod) => (
+                  <div key={prod.id}>
+                    <div className="flex flex-row justify-between">
+                      <p className="w-3/4">{prod.name}:</p>
+                      <p className="w-1/4 text-end text-lg text-indigo-700">
+                        <strong>{prod.price.toFixed(2)}$</strong>
+                      </p>
+                    </div>
+                    <hr className="my-4 border-t border-gray-300" />
+                  </div>
+                ))}
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-semibold">Total:</p>
-                  <p className="text-lg text-indigo-700">$</p>
+                  <p className="text-lg text-indigo-700">
+                    <strong>{totalCost}$</strong>
+                  </p>
                 </div>
                 <button
                   onClick={() => setShowCheckout(true)}
