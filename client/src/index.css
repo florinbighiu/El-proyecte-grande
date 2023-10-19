@@ -7,22 +7,12 @@
     display: block; 
   }
 }
-* {
-  box-sizing: border-box;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  }
 
 body {
   font-family: 'Roboto',sans-serif;
-  color: #161616;
+  scroll-behavior: smooth;
 }
 
-.flex.flex-col > * {
-  margin-bottom: 1rem; 
-}
 
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-scroll";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
+
 import LogoImage from "../assets/ecommerce.png"
 
 const Navbar = () => {
@@ -10,37 +10,28 @@ const Navbar = () => {
 
   const content = (
     <>
-      <div className="lg:hidden backdrop-blur-xl block absolute top-12 w-full left-0 right-0  text-white transition z-50">
+      <div className="lg:hidden bg-gradient-to-r from-rose-100 to-teal-100 block absolute top-14 w-full left-0 right-0  text-black text-bold transition z-50">
         <ul className="text-center text-xl p-20 ">
-          <Link spy={true} smooth={true} to="Home">
-            <li className="my-4 py-4 border-b border-slate-800 hover:bg-green-800 hover:rounded hover: cursor-pointer">
-              Home
+            <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-200 hover:rounded hover: cursor-pointer">
+              <a href="/">Home</a>
             </li>
-          </Link>
-          <Link spy={true} smooth={true} to="/products">
-            <li className="my-4 py-4 border-b border-slate-800 hover:bg-green-800 hover:rounded hover: cursor-pointer">
-              Products
+            <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-200 hover:rounded hover: cursor-pointer">
+            <a href="/products">Products</a>
             </li>
-          </Link>
-          <Link spy={true} smooth={true} to="Cart">
-            <li className="my-4 py-4 border-b border-slate-800 hover:bg-green-800 hover:rounded hover: cursor-pointer">
-              Cart
+            <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-200 hover:rounded hover: cursor-pointer">
+            <a href="/cart">Cart</a>
             </li>
-          </Link>
-          <Link spy={true} smooth={true} to="Contact">
-            <li className="my-4 py-4 border-b border-slate-800 hover:bg-green-800 hover:rounded hover: cursor-pointer">
-              Contact
+            <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-200 hover:rounded hover: cursor-pointer">
+            <a href="/contact">Contact</a>
             </li>
-          </Link>
-          <Link spy={true} smooth={true} to="Login">
-            <li className="my-4 py-4 border-b border-slate-800 hover:bg-green-800 hover:rounded hover: cursor-pointer">
-              Login
+            <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-200 hover:rounded hover: cursor-pointer">
+            <a href="/">Login</a>
             </li>
-          </Link>
         </ul>
       </div>
     </>
   );
+
   return (
     <nav className="sticky top-0 z-40 w-full bg-gradient-to-r from-rose-100 to-teal-100 flex transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10">
       <div className="container mx-auto flex flex-wrap justify-between items-center">
@@ -76,7 +67,7 @@ const Navbar = () => {
         </div>
         <div>{click && content}</div>
 
-        <button className="hidden visible-below-767 transition" onClick={handleClick}>
+        <button className="hidden visible-below-767 transition mr-5" onClick={handleClick}>
           {click ? <FaTimes /> : <CiMenuFries />}
         </button>
       </div>

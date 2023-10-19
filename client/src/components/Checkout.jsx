@@ -22,7 +22,7 @@ const Checkout = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
-      <div className="bg-white p-4 rounded-md shadow-md w-1/4">
+      <div className="bg-white p-4 rounded-md shadow-md md:w-2/5">
         <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

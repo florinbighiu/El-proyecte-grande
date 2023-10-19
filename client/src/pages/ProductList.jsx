@@ -9,8 +9,7 @@ function ProductList() {
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-
-  const [ProductId, setProductId] = useState(null);
+  const [productIdToUpdate, setProductIdToUpdate] = useState(null);
 
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -24,7 +23,6 @@ function ProductList() {
       const response = await axios.get("http://localhost:8080/products");
       if (response.status === 200) {
         setProducts(response.data);
-        console.log(response.data);
       } else {
         console.error("Failed to fetch products");
       }
@@ -40,12 +38,10 @@ function ProductList() {
   const handleAddToCart = async (product) => {
     try {
       await axios.put(`http://localhost:8080/cart/products/add/${product.id}`);
-
-      setProducts((prevProducts) =>
-        prevProducts.map((prevProduct) =>
-          prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
-        )
+      const updatedProducts = products.map((prevProduct) =>
+        prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
       );
+      setProducts(updatedProducts);
     } catch (error) {
       console.log(error);
     }
@@ -53,17 +49,14 @@ function ProductList() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewProduct({ ...newProduct, [name]: value });
-    console.log(newProduct);
+    setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
 
   const handleAddProduct = async () => {
     try {
       const response = await axios.post("http://localhost:8080/products/create", newProduct);
-
       setProducts((prevProducts) => [...prevProducts, response.data]);
       setShowForm(false);
-
       setNewProduct({
         name: "",
         price: 0,
@@ -77,14 +70,11 @@ function ProductList() {
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/products/${ProductId}`, newProduct);
-
-      setProducts((prevProducts) =>
-        prevProducts.map((prevProduct) =>
-          prevProduct.id === ProductId ? { ...response.data } : prevProduct
-        )
+      const response = await axios.put(`http://localhost:8080/products/${productIdToUpdate}`, newProduct);
+      const updatedProducts = products.map((prevProduct) =>
+        prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
       );
-
+      setProducts(updatedProducts);
       setNewProduct({
         name: "",
         price: 0,
@@ -99,8 +89,7 @@ function ProductList() {
 
   const handleOpenUpdateForm = (productId) => {
     const productToUpdate = products.find((product) => product.id === productId);
-
-    setProductId(productId);
+    setProductIdToUpdate(productId);
     setNewProduct({ ...productToUpdate });
     setShowUpdateForm(true);
   };
@@ -108,7 +97,8 @@ function ProductList() {
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`http://localhost:8080/products/${productId}`);
-      setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
+      const updatedProducts = products.filter((product) => product.id !== productId);
+      setProducts(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -117,8 +107,8 @@ function ProductList() {
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-semibold mb-4">Products</h2>
-      <div className=" container m-0.5 p-4 text-slate-500 dark:text-slate-400 rounded-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="m-0.5 p-4 text-slate-500 dark:text-slate-400 rounded-xl">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -128,19 +118,16 @@ function ProductList() {
               handleOpenUpdateForm={handleOpenUpdateForm}
             />
           ))}
-          <div className="group bg-white p-4 rounded-lg shadow-lg  backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
+          <div className="group bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
             <button
               onClick={() => setShowForm(true)}
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md ">
+              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
               Add
             </button>
           </div>
           {showUpdateForm && (
             <UpdateForm
-              name={newProduct.name}
-              price={newProduct.price}
-              description={newProduct.description}
-              image={newProduct.image}
+              {...newProduct}
               handleInputChange={handleInputChange}
               handleUpdate={handleUpdateProduct}
               onClose={() => setShowUpdateForm(false)}
@@ -148,10 +135,7 @@ function ProductList() {
           )}
           {showForm && (
             <AddForm
-              name={newProduct.name}
-              price={newProduct.price}
-              description={newProduct.description}
-              image={newProduct.image}
+              {...newProduct}
               handleInputChange={handleInputChange}
               handleAddProduct={handleAddProduct}
               onClose={() => setShowForm(false)}

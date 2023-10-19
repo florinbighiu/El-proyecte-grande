@@ -1,13 +1,12 @@
-import LogoImage from "../assets/ecommerce.png"
+import LogoImage from "../assets/ecommerce.png";
 
 const ContactPage = () => {
   return (
-    <div className="container mx-auto p-6 ">
-      <h1 className="text-3xl font-semibold mb-4 text-center">Contact Us</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-6">
-        <div className=" pt-24 pl-44">
-          <img src={LogoImage} alt="Logo" className=" h-32 mb-10"/>
+    <div className="mx-auto p-6">
+      <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="flex flex-col justify-center items-center text-center md:text-left">
+          <img src={LogoImage} alt="Logo" className="h-32 mb-4" />
           <p className="text-gray-700 mb-6">
             Feel free to reach out to us for any inquiries or feedback.
           </p>
@@ -23,7 +22,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="pr-44 pt-20">
+        <div className="flex flex-col justify-end md:w-1/2">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form>
             <div className="mb-4">
@@ -34,7 +33,7 @@ const ContactPage = () => {
                 type="text"
                 id="name"
                 name="name"
-                className="w-full p-2 border-black border-1 rounded-md"
+                className="w-full p-2 rounded-md"
                 required
               />
             </div>
@@ -59,11 +58,12 @@ const ContactPage = () => {
                 name="message"
                 rows="4"
                 className="w-full p-2 border rounded-md"
-                required></textarea>
+                required
+              ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4">
+              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4 w-full">
               Send Message
             </button>
           </form>

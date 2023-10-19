@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Checkout from "../components/Checkout";
 import axios from "axios";
 
+import EmptyCart from "../assets/empty.png";
+
 function Cart() {
   const [cartProducts, setCartProducts] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -39,14 +41,14 @@ function Cart() {
   }, 0);
 
   return (
-    <>
+    <div className="h-full">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="flex flex-row justify-evenly">
+      <div className="flex flex-col md:flex-row gap-x-5 justify-evenly">
         {cartProducts.length ? (
           <>
             <div
               id="cartItems"
-              className="flex flex-col w-3/4 h-[75vh] mr-20 overflow-auto rounded-md bg-white border-2 border-slate-300	">
+              className="flex flex-col md:w-3/4 h-[65vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
@@ -73,15 +75,15 @@ function Cart() {
                 </div>
               ))}
             </div>
-            <div className="w-1/4 h-fit flex items-center justify-end ">
-              <div className="bg-white p-4 rounded-md shadow-md w-5/6 h-2/3">
+            <div className="h-fit flex items-center justify-start  ">
+              <div className="bg-white p-4 rounded-md shadow-md w-full">
                 <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
                 <hr className="my-4 border-t border-gray-300" />
                 {cartProducts.map((prod) => (
                   <div key={prod.id}>
-                <div className="flex justify-between items-center">
-                      <p className="w-3/4">{prod.name}:</p>
-                      <p className="w-1/4 text-end text-lg text-indigo-700">
+                    <div className="flex justify-between items-center space-x-5">
+                      <p className="font-bold">{prod.name}:</p>
+                      <p className="text-lg text-indigo-700">
                         <strong>{prod.price.toFixed(2)}$</strong>
                       </p>
                     </div>
@@ -94,27 +96,30 @@ function Cart() {
                     <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
-                <div className="flex items-center justify-center">
-                <button
-                  onClick={() => setShowCheckout(true)}
-                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full mt-4">
-                  Proceed to Checkout
-                </button>
+                <div className="flex items-center justify-center w-full">
+                  <button
+                    onClick={() => setShowCheckout(true)}
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 rounded-full">
+                    Proceed to Checkout
+                  </button>
                 </div>
                 {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
               </div>
             </div>
           </>
         ) : (
-          <h1 className="w-full text-center mt-14">
-            Your cart is empty. To add products to you cart go{" "}
-            <a href="/" className="text-blue-500">
-              back to shop.
-            </a>
-          </h1>
+          <div className="flex flex-col items-center justify-start">
+            <img src={EmptyCart} alt="EmptyCart" className="h-2/4 " />
+            <h1 className="w-full text-center mt-14 text-lg">
+              Your cart is empty. To add products to your cart go{" "}
+              <a href="/products" className="text-blue-500">
+                back to shop.
+              </a>
+            </h1>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
