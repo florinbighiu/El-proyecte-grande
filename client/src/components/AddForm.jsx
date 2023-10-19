@@ -11,12 +11,14 @@ function AddForm({ name, price, image, description, handleInputChange, handleAdd
           type="text"
           name="name"
           value={name}
+          required
           onChange={handleInputChange}
           placeholder="Product Name"
           className="mb-2 p-2 border rounded"
         />
         <input
           type="number"
+          required
           name="price"
           value={price}
           onChange={handleInputChange}
@@ -25,6 +27,7 @@ function AddForm({ name, price, image, description, handleInputChange, handleAdd
         />
         <input
           type="text"
+          required
           name="image"
           value={image}
           onChange={handleInputChange}
@@ -33,6 +36,7 @@ function AddForm({ name, price, image, description, handleInputChange, handleAdd
         />
         <textarea
           name="description"
+          required
           value={description}
           onChange={handleInputChange}
           placeholder="Description"

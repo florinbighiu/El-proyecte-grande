@@ -6,7 +6,7 @@ const ContactPage = () => {
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div className="flex flex-col justify-center items-center text-center md:text-left">
-          <img src={LogoImage} alt="Logo" className="h-32 mb-4" />
+          <img src={LogoImage} alt="Logo" className="h-32 mb-8" />
           <p className="text-gray-700 mb-6">
             Feel free to reach out to us for any inquiries or feedback.
           </p>

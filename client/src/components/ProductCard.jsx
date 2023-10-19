@@ -3,7 +3,7 @@ import { ShoppingCartIcon } from "@heroicons/react/solid";
 
 function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpenUpdateForm }) {
   return (
-    <div className="flex flex-col justify-evenly bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative font-serif">
+    <div className="flex flex-col justify-evenly bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative font-serif gap-y-2">
       <img src={product.image} alt={product.name} className="w-full h-60 object-contain mb-2" />
       <h3 className="text-lg text-center text-slate-800 font-semibold mt-2">{product.name}</h3>
       <h2 className="text-slate-950">{product.description}</h2>
@@ -14,7 +14,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
         <button
           onClick={() => handleAddToCart(product)}
           disabled={product.isInCart}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ${
+          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-fit rounded-md ${
             product.isInCart ? "opacity-50 cursor-not-allowed" : ""
           }`}>
           <span>
@@ -23,12 +23,12 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
         </button>
         <button
           onClick={() => handleDeleteProduct(product.id)}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 w-fit rounded-md">
           Delete
         </button>
         <button
           onClick={() => handleOpenUpdateForm(product.id)}
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md">
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 w-fit rounded-md">
           Update
         </button>
       </div>

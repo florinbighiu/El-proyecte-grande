@@ -77,7 +77,7 @@ function Homepage() {
               <button
                 onClick={() => handleAddToCart(product)}
                 disabled={product.isInCart}
-                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-2/12 ${
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-fit  ${
                   product.isInCart ? "opacity-50 cursor-not-allowed" : ""
                 }`}>
                 <span>

@@ -54,19 +54,29 @@ function ProductList() {
 
   const handleAddProduct = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/products/create", newProduct);
-      setProducts((prevProducts) => [...prevProducts, response.data]);
-      setShowForm(false);
-      setNewProduct({
-        name: "",
-        price: 0,
-        image: "",
-        description: "",
-      });
+      if (
+        newProduct.name === "" ||
+        newProduct.price === 0 ||
+        newProduct.image === "" ||
+        newProduct.description === ""
+      ) {
+        console.error("Please fill in all fields.");
+      } else {
+        const response = await axios.post("http://localhost:8080/products/create", newProduct);
+        setProducts((prevProducts) => [...prevProducts, response.data]);
+        setShowForm(false);
+        setNewProduct({
+          name: "",
+          price: 0,
+          image: "",
+          description: "",
+        });
+      }
     } catch (error) {
       console.error("Error creating product:", error.message);
     }
   };
+  
 
   const handleUpdateProduct = async () => {
     try {

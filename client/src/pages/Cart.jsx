@@ -43,7 +43,7 @@ function Cart() {
   return (
     <div className="h-full">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="flex flex-col md:flex-row gap-x-5 justify-evenly">
+      <div className="flex flex-col md:flex-row gap-5 justify-evenly">
         {cartProducts.length ? (
           <>
             <div
