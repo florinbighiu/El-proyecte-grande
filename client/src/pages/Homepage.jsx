@@ -8,10 +8,18 @@ import { ShoppingCartIcon } from "@heroicons/react/solid";
 function Homepage() {
   const [products, setProducts] = useState([]);
 
+  const token = localStorage.getItem("authToken");
+
+
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/products");
-      if (response.status === 200) {
+      const response = await axios.get("http://localhost:8080/products", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response) {
         setProducts(response.data);
       } else {
         console.error("Failed to fetch products");
