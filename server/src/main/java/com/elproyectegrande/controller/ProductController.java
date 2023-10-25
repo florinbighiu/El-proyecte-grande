@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*", methods = {RequestMethod.PUT, RequestMethod.GET, RequestMethod.DELETE, RequestMethod.POST})
 public class ProductController {
 
     private final ProductService productService;
