@@ -31,7 +31,8 @@ function ProductList() {
         headers: {
           Authorization: `Bearer ${token}`,
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Methods":
+            "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         },
       });
 
@@ -57,11 +58,14 @@ function ProductList() {
         headers: {
           Authorization: `Bearer ${token}`,
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Methods":
+            "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         },
       });
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
+        prevProduct.id === product.id
+          ? { ...prevProduct, isInCart: true }
+          : prevProduct
       );
       setProducts(updatedProducts);
     } catch (error) {
@@ -84,7 +88,10 @@ function ProductList() {
       ) {
         console.error("Please fill in all fields.");
       } else {
-        const response = await axios.post("http://localhost:8080/products/create", newProduct);
+        const response = await axios.post(
+          "http://localhost:8080/products/create",
+          newProduct
+        );
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
         setNewProduct({
@@ -106,7 +113,9 @@ function ProductList() {
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
+        prevProduct.id === productIdToUpdate
+          ? { ...response.data }
+          : prevProduct
       );
       setProducts(updatedProducts);
       setNewProduct({
@@ -122,7 +131,9 @@ function ProductList() {
   };
 
   const handleOpenUpdateForm = (productId) => {
-    const productToUpdate = products.find((product) => product.id === productId);
+    const productToUpdate = products.find(
+      (product) => product.id === productId
+    );
     setProductIdToUpdate(productId);
     setNewProduct({ ...productToUpdate });
     setShowUpdateForm(true);
@@ -131,7 +142,9 @@ function ProductList() {
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`http://localhost:8080/products/${productId}`);
-      const updatedProducts = products.filter((product) => product.id !== productId);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId
+      );
       setProducts(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -139,10 +152,10 @@ function ProductList() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-screen">
       <h2 className="text-2xl font-semibold mb-4">Products</h2>
       <div className="m-0.5 p-4 text-slate-500 dark:text-slate-400 rounded-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 gap-6 w-fit">
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -155,7 +168,8 @@ function ProductList() {
           <div className="group bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
             <button
               onClick={() => setShowForm(true)}
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
+              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32"
+            >
               Add
             </button>
           </div>

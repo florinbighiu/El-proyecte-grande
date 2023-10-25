@@ -1,7 +1,7 @@
 package com.elproyectegrande.service;
 
 import com.elproyectegrande.model.*;
-import com.elproyectegrande.model.ProductRepository;
+import com.elproyectegrande.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

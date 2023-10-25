@@ -11,9 +11,9 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PasswordReset from "./pages/PasswordReset";
 import Logout from "./pages/Logout";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
- 
   return (
     <Router>
       <div>
@@ -25,11 +25,12 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/" element={<Homepage />} />
-              <Route path="/logout" element={<Logout />}/>
+              <Route path="/logout" element={<Logout />} />
             </Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/reset" element={<PasswordReset />}></Route>
+            <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           </Routes>
         </div>
         <Footer />
