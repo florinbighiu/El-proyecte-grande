@@ -13,7 +13,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private String image;  // New field for image URL
+    private String image;
     private boolean isInCart = false;
 
     public Long getId() {

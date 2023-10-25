@@ -11,6 +11,8 @@ function ProductList() {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
 
+  const token = localStorage.getItem("authToken");
+
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: 0,
@@ -20,9 +22,22 @@ function ProductList() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/products");
-      if (response.status === 200) {
-        setProducts(response.data);
+      if (!token) {
+        return;
+      }
+
+      const response = await fetch("http://localhost:8080/products", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        },
+      });
+
+      if (response) {
+        const data = await response.json();
+        setProducts(data);
       } else {
         console.error("Failed to fetch products");
       }
@@ -37,7 +52,14 @@ function ProductList() {
 
   const handleAddToCart = async (product) => {
     try {
-      await axios.put(`http://localhost:8080/cart/products/add/${product.id}`);
+      await fetch(`http://localhost:8080/cart/products/add/${product.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        },
+      });
       const updatedProducts = products.map((prevProduct) =>
         prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
       );
@@ -76,11 +98,13 @@ function ProductList() {
       console.error("Error creating product:", error.message);
     }
   };
-  
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/products/${productIdToUpdate}`, newProduct);
+      const response = await axios.put(
+        `http://localhost:8080/products/${productIdToUpdate}`,
+        newProduct
+      );
       const updatedProducts = products.map((prevProduct) =>
         prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
       );

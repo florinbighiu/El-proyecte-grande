@@ -10,6 +10,7 @@ import com.elproyectegrande.model.Product;
 import com.elproyectegrande.service.ProductService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/cart/products")
 public class CartController {
     @Autowired
