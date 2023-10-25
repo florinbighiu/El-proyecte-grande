@@ -42,30 +42,30 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-extrabold text-center text-gray-800 mb-6">Get Started</h2>
+      <div className="bg-slate-800 p-8 rounded-lg shadow-md w-96">
+        <h2 className="text-2xl font-extrabold uppercase text-center text-gray-100 mb-6">Get Started</h2>
         <form onSubmit={handleRegistration}>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-600 text-sm font-semibold">Username</label>
+          <div className="mb-2">
+            <label htmlFor="username" className="block text-gray-200 text-sm font-semibold">Username</label>
             <input
               type="text"
               id="username"
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white rounded-md focus:outline-none"
               placeholder="Your username"
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600 text-sm font-semibold">Password</label>
+            <label htmlFor="password" className="block text-gray-200 text-sm font-semibold">Password</label>
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>

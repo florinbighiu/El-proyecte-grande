@@ -1,7 +1,7 @@
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-8 mt-20">
+    <footer className="border-t border-gray-800/75 bg-gray-900 text-gray-100 pt-8 mt-20">
       <div className="flex items-center justify-evenly">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mx-5 pl-10">
           <div>
@@ -35,7 +35,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-gray-600 mt-8 pt-4 text-center">
+      <div className="border-t border-gray-800/75 bg-gray-900 text-gray-100 py-4 mt-2 text-center">
         <p>&copy; {new Date().getFullYear()} eCommerce. All rights reserved.</p>
       </div>
     </footer>

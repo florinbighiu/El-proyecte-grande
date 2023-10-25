@@ -12,6 +12,7 @@ function ProductList() {
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
 
   const token = localStorage.getItem("authToken");
+  const userRole = localStorage.getItem("role");
 
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -61,7 +62,7 @@ function ProductList() {
         },
       });
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
+          prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
       );
       setProducts(updatedProducts);
     } catch (error) {
@@ -77,10 +78,10 @@ function ProductList() {
   const handleAddProduct = async () => {
     try {
       if (
-        newProduct.name === "" ||
-        newProduct.price === 0 ||
-        newProduct.image === "" ||
-        newProduct.description === ""
+          newProduct.name === "" ||
+          newProduct.price === 0 ||
+          newProduct.image === "" ||
+          newProduct.description === ""
       ) {
         console.error("Please fill in all fields.");
       } else {
@@ -102,11 +103,11 @@ function ProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/products/${productIdToUpdate}`,
-        newProduct
+          `http://localhost:8080/products/${productIdToUpdate}`,
+          newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
+          prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
       );
       setProducts(updatedProducts);
       setNewProduct({
@@ -139,45 +140,47 @@ function ProductList() {
   };
 
   return (
-    <div className="flex flex-col">
-      <h2 className="text-2xl font-semibold mb-4">Products</h2>
-      <div className="m-0.5 p-4 text-slate-500 dark:text-slate-400 rounded-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              handleAddToCart={handleAddToCart}
-              handleDeleteProduct={handleDeleteProduct}
-              handleOpenUpdateForm={handleOpenUpdateForm}
-            />
-          ))}
-          <div className="group bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
-            <button
-              onClick={() => setShowForm(true)}
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
-              Add
-            </button>
+      <div className="flex flex-col text-white">
+        <h2 className="text-2xl font-semibold mb-4">Products</h2>
+        <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
+            {products.map((product) => (
+                <ProductCard
+                    key={product.id}
+                    product={product}
+                    handleAddToCart={handleAddToCart}
+                    handleDeleteProduct={handleDeleteProduct}
+                    handleOpenUpdateForm={handleOpenUpdateForm}
+                />
+            ))}
+            {userRole === "1" && (
+                <div className="group bg-slate-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
+                  <button
+                      onClick={() => setShowForm(true)}
+                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
+                    Add
+                  </button>
+                </div>
+            )}
+            {showUpdateForm && (
+                <UpdateForm
+                    {...newProduct}
+                    handleInputChange={handleInputChange}
+                    handleUpdate={handleUpdateProduct}
+                    onClose={() => setShowUpdateForm(false)}
+                />
+            )}
+            {showForm && (
+                <AddForm
+                    {...newProduct}
+                    handleInputChange={handleInputChange}
+                    handleAddProduct={handleAddProduct}
+                    onClose={() => setShowForm(false)}
+                />
+            )}
           </div>
-          {showUpdateForm && (
-            <UpdateForm
-              {...newProduct}
-              handleInputChange={handleInputChange}
-              handleUpdate={handleUpdateProduct}
-              onClose={() => setShowUpdateForm(false)}
-            />
-          )}
-          {showForm && (
-            <AddForm
-              {...newProduct}
-              handleInputChange={handleInputChange}
-              handleAddProduct={handleAddProduct}
-              onClose={() => setShowForm(false)}
-            />
-          )}
         </div>
       </div>
-    </div>
   );
 }
 

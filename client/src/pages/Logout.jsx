@@ -1,5 +1,6 @@
 
 const Logout = () => {
+  
   const logout = () => {
     localStorage.removeItem('authToken');
 

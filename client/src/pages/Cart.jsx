@@ -41,30 +41,30 @@ function Cart() {
   }, 0);
 
   return (
-    <div className="h-full">
+    <div className="h-screen text-white">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       <div className="flex flex-col md:flex-row gap-5 justify-evenly">
         {cartProducts.length ? (
           <>
             <div
               id="cartItems"
-              className="flex flex-col md:w-3/4 h-[65vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
+              className="flex flex-col md:w-3/4 h-[65vh] overflow-auto rounded-md bg-slate-800 ">
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
+                  className="group bg-slate-700 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
                   <img
                     src={product.image}
                     alt={product.name}
                     className=" w-10 h-16 object-contain "
                   />
-                  <h3 className="text-lg text-slate-800 font-semibold mt-2">
+                  <h3 className="text-lg text-white font-semibold mt-2">
                     <strong>{product.name}</strong>
                   </h3>
-                  <h2 className="text-lg text-slate-700 font-semibold mt-2">
+                  <h2 className="text-lg text-white font-semibold mt-2">
                     {product.description}
                   </h2>
-                  <p className="text-indigo-700">
+                  <p className="text-indigo-400">
                     <strong>${product.price.toFixed(2)}</strong>
                   </p>
                   <button
@@ -76,14 +76,14 @@ function Cart() {
               ))}
             </div>
             <div className="h-fit flex items-center justify-start  ">
-              <div className="bg-white p-4 rounded-md shadow-md w-full">
+              <div className="bg-slate-800 text-white p-4 rounded-md shadow-md w-full">
                 <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
                 <hr className="my-4 border-t border-gray-300" />
                 {cartProducts.map((prod) => (
                   <div key={prod.id}>
                     <div className="flex justify-between items-center space-x-5">
                       <p className="font-bold">{prod.name}:</p>
-                      <p className="text-lg text-indigo-700">
+                      <p className="text-lg text-indigo-500">
                         <strong>{prod.price.toFixed(2)}$</strong>
                       </p>
                     </div>
@@ -92,7 +92,7 @@ function Cart() {
                 ))}
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-semibold">Total:</p>
-                  <p className="text-lg text-indigo-700">
+                  <p className="text-lg text-indigo-600">
                     <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
