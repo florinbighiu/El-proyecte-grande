@@ -29,7 +29,9 @@ function Cart() {
 
   const handleRemoveFromCart = async (product) => {
     try {
-      await axios.delete(`http://localhost:8080/cart/products/remove/${product.id}`);
+      await axios.delete(
+        `http://localhost:8080/cart/products/remove/${product.id}`
+      );
       setCartProducts(cartProducts.filter((prod) => prod.id !== product.id));
     } catch (error) {
       console.log(error);
@@ -48,11 +50,13 @@ function Cart() {
           <>
             <div
               id="cartItems"
-              className="flex flex-col md:w-3/4 h-[65vh] overflow-auto rounded-md bg-white border-2 border-slate-300	">
+              className="flex flex-col md:w-3/4 h-[65vh] overflow-auto rounded-md bg-white border-2 border-slate-300	"
+            >
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
+                  className="group bg-slate-100 border-2 border-slate-300 p-4 mx-5 mt-5 mb-1 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer"
+                >
                   <img
                     src={product.image}
                     alt={product.name}
@@ -69,7 +73,8 @@ function Cart() {
                   </p>
                   <button
                     onClick={() => handleRemoveFromCart(product)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full absolute bottom-4 right-4">
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full absolute bottom-4 right-4"
+                  >
                     Remove
                   </button>
                 </div>
@@ -99,11 +104,14 @@ function Cart() {
                 <div className="flex items-center justify-center w-full">
                   <button
                     onClick={() => setShowCheckout(true)}
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 rounded-full">
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 rounded-full"
+                  >
                     Proceed to Checkout
                   </button>
                 </div>
-                {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
+                {showCheckout && (
+                  <Checkout onClose={() => setShowCheckout(false)} />
+                )}
               </div>
             </div>
           </>

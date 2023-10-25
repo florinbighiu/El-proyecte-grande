@@ -19,16 +19,25 @@ function ProductList() {
   });
 
   const fetchProducts = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/products");
-      if (response.status === 200) {
-        setProducts(response.data);
-      } else {
-        console.error("Failed to fetch products");
-      }
-    } catch (error) {
-      console.error("Error fetching products", error);
-    }
+    const jwt =
+      "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2OTgxNzE4NjMsInJvbGVzIjoiQURNSU4ifQ.GoPhsp8nVhPvghxd08UPR4cG0Jm9MJpyGp45h3jL8FB-MvFzm9lOuw0wG4jx_7ur9k4pONR17__PypxyMDvR63bLAYhBi4daWcnQT2nIvXwMwRLDXpfdWxAvuqB8aGxULeX1J44w2bySd5VRHFb4wPbAB7RdVqJIQcENKQFV8vSTN_16f2BQG-ZTGQrnlsuuPCEyY5et2-die97xSfrkSJir2LKfnIaqNznJozVyo_jIdb6-GB7Mb4U28-ufH4LpDDkBxhV_8dnNnMKXNzl9k1QyGVom_fUVcOJD16iLERwzu9EDhWzvi3DcIBcPGkj-5T1d-HwdpB1q4jtcmJaG-A";
+
+    const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
+    const apiUrl = "http://localhost:8080/products";
+
+    fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: "Bearer " + jwt,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        console.log(data);
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
   useEffect(() => {
@@ -39,7 +48,9 @@ function ProductList() {
     try {
       await axios.put(`http://localhost:8080/cart/products/add/${product.id}`);
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
+        prevProduct.id === product.id
+          ? { ...prevProduct, isInCart: true }
+          : prevProduct
       );
       setProducts(updatedProducts);
     } catch (error) {
@@ -62,7 +73,10 @@ function ProductList() {
       ) {
         console.error("Please fill in all fields.");
       } else {
-        const response = await axios.post("http://localhost:8080/products/create", newProduct);
+        const response = await axios.post(
+          "http://localhost:8080/products/create",
+          newProduct
+        );
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
         setNewProduct({
@@ -76,13 +90,17 @@ function ProductList() {
       console.error("Error creating product:", error.message);
     }
   };
-  
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/products/${productIdToUpdate}`, newProduct);
+      const response = await axios.put(
+        `http://localhost:8080/products/${productIdToUpdate}`,
+        newProduct
+      );
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
+        prevProduct.id === productIdToUpdate
+          ? { ...response.data }
+          : prevProduct
       );
       setProducts(updatedProducts);
       setNewProduct({
@@ -98,7 +116,9 @@ function ProductList() {
   };
 
   const handleOpenUpdateForm = (productId) => {
-    const productToUpdate = products.find((product) => product.id === productId);
+    const productToUpdate = products.find(
+      (product) => product.id === productId
+    );
     setProductIdToUpdate(productId);
     setNewProduct({ ...productToUpdate });
     setShowUpdateForm(true);
@@ -107,7 +127,9 @@ function ProductList() {
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`http://localhost:8080/products/${productId}`);
-      const updatedProducts = products.filter((product) => product.id !== productId);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId
+      );
       setProducts(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -131,7 +153,8 @@ function ProductList() {
           <div className="group bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
             <button
               onClick={() => setShowForm(true)}
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
+              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32"
+            >
               Add
             </button>
           </div>
