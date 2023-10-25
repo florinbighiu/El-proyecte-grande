@@ -4,12 +4,14 @@ import axios from "axios";
 import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
+import Loading from "../layout/Loading.jsx"
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
@@ -39,6 +41,7 @@ function ProductList() {
       if (response) {
         const data = await response.json();
         setProducts(data);
+        setIsLoading(false)
       } else {
         console.error("Failed to fetch products");
       }
@@ -48,7 +51,9 @@ function ProductList() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    setTimeout(() => {
+      fetchProducts()
+    },3000)
   }, []);
 
   const handleAddToCart = async (product) => {
@@ -142,44 +147,49 @@ function ProductList() {
   return (
       <div className="flex flex-col text-white">
         <h2 className="text-2xl font-semibold mb-4">Products</h2>
-        <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
-            {products.map((product) => (
-                <ProductCard
-                    key={product.id}
-                    product={product}
-                    handleAddToCart={handleAddToCart}
-                    handleDeleteProduct={handleDeleteProduct}
-                    handleOpenUpdateForm={handleOpenUpdateForm}
-                />
-            ))}
-            {userRole === "1" && (
-                <div className="group bg-slate-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
-                  <button
-                      onClick={() => setShowForm(true)}
-                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
-                    Add
-                  </button>
-                </div>
-            )}
-            {showUpdateForm && (
-                <UpdateForm
-                    {...newProduct}
-                    handleInputChange={handleInputChange}
-                    handleUpdate={handleUpdateProduct}
-                    onClose={() => setShowUpdateForm(false)}
-                />
-            )}
-            {showForm && (
-                <AddForm
-                    {...newProduct}
-                    handleInputChange={handleInputChange}
-                    handleAddProduct={handleAddProduct}
-                    onClose={() => setShowForm(false)}
-                />
-            )}
-          </div>
-        </div>
+        {isLoading ? (
+            <Loading />
+        ) : (
+            <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
+                {products.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        handleAddToCart={handleAddToCart}
+                        handleDeleteProduct={handleDeleteProduct}
+                        handleOpenUpdateForm={handleOpenUpdateForm}
+                    />
+                ))}
+                {userRole === "1" && (
+                    <div className="group bg-slate-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
+                      <button
+                          onClick={() => setShowForm(true)}
+                          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32"
+                      >
+                        Add
+                      </button>
+                    </div>
+                )}
+                {showUpdateForm && (
+                    <UpdateForm
+                        {...newProduct}
+                        handleInputChange={handleInputChange}
+                        handleUpdate={handleUpdateProduct}
+                        onClose={() => setShowUpdateForm(false)}
+                    />
+                )}
+                {showForm && (
+                    <AddForm
+                        {...newProduct}
+                        handleInputChange={handleInputChange}
+                        handleAddProduct={handleAddProduct}
+                        onClose={() => setShowForm(false)}
+                    />
+                )}
+              </div>
+            </div>
+        )}
       </div>
   );
 }

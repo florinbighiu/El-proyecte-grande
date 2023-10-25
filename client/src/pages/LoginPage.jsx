@@ -47,8 +47,7 @@ const LoginPage = () => {
       <div className="bg-slate-800 p-8 rounded-lg shadow-md w-96">
         <h2 className="text-2xl font-extrabold uppercase text-center text-gray-100 mb-6">Log In</h2>
         <form onSubmit={handleLogin}>
-          <div className="mb-2">
-            <label htmlFor="username" className="block text-gray-100 text-sm font-semibold">Username</label>
+          <div className="mb-5">
             <input
               type="text"
               id="username"
@@ -59,8 +58,7 @@ const LoginPage = () => {
               placeholder="Your username"
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-200 text-sm font-semibold">Password</label>
+          <div className="mb-5">
             <input
               type="password"
               id="password"

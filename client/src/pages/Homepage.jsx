@@ -77,28 +77,23 @@ function Homepage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {featuredProducts.map((product) => (
                     <div key={product.id} className="flex flex-col justify-evenly bg-gray-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative font-serif">
-                      <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-80 rounded-md mx-0 mb-2"
-                      />
-                      <h3 className="font-black uppercase tracking-wide text-white mb-1">
-                        {product.name}
-                      </h3>
+                      <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-2">
+                        New
+                      </div>
+                      <img src={product.image} alt={product.name} className="w-full h-80 rounded-md mb-4" />
+                      <h3 className="font-extrabold text-xl text-white  uppercase mb-1">{product.name}</h3>
                       <h2 className="text-white">{product.description}</h2>
-                      <p className="text-blue-500 text-lg font-bold">
+                      <p className="text-yellow-400 text-xl font-semibold mt-2">
                         <strong>${product.price.toFixed(2)}</strong>
                       </p>
                       <button
                           onClick={() => handleAddToCart(product)}
                           disabled={product.isInCart}
-                          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-fit  ${
+                          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full  ${
                               product.isInCart ? "opacity-50 cursor-not-allowed" : ""
                           }`}
                       >
-              <span>
-                <ShoppingCartIcon className="h-[24px] w-5" />
-              </span>
+                        {product.isInCart ? "In Cart" : "Add to Cart"}
                       </button>
                     </div>
                 ))}

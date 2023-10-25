@@ -13,6 +13,26 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Works on Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #243368 #111827;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #2b3a68;
+  border-radius: 20px;
+}
+
 
 
 
