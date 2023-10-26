@@ -13,7 +13,7 @@ public class EmailSenderService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    public void sendMail(String body, String subject, String contactedEmail) throws MessagingException {
+    public void sendMail(String name, String email, String message) throws MessagingException {
 
         MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
 
@@ -22,9 +22,9 @@ public class EmailSenderService {
         mimeMessageHelper.setFrom("elproyectegrande@gmail.com");
         mimeMessageHelper.setTo("elproyectegrande@gmail.com");
 
-        String emailContent = "Message: " + body + "\nEmail " + contactedEmail;
+        String emailContent = "Message: " + message + "\nEmail: " + email;
 
-        mimeMessageHelper.setSubject("Sent from " + subject);
+        mimeMessageHelper.setSubject("Sent from " + name);
         mimeMessageHelper.setText(emailContent);
 
         javaMailSender.send(mimeMailMessage);

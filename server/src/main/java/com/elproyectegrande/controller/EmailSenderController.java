@@ -26,6 +26,6 @@ public class EmailSenderController {
 
     @PostMapping("/")
     public void triggerEmail(@RequestBody EmailData emailData) throws MessagingException {
-        emailSenderService.sendMail(emailData.getBody(), emailData.getSubject(), emailData.getContactedEmail());
+        emailSenderService.sendMail(emailData.getName(), emailData.getEmail(), emailData.getMessage());
     }
 }

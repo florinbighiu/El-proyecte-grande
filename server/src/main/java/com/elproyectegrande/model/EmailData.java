@@ -2,32 +2,32 @@ package com.elproyectegrande.model;
 
 public class EmailData {
 
-    private String body;
-    private String subject;
+    private String name;
+    private String email;
+    private String message;
 
-    private String contactedEmail;
 
-    public String getBody() {
-        return body;
+    public String getName() {
+        return name;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getContactedEmail() {
-        return contactedEmail;
+    public String getMessage() {
+        return message;
     }
 
-    public void setContactedEmail(String contactedEmail) {
-        this.contactedEmail = contactedEmail;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
