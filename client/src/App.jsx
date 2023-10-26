@@ -14,6 +14,7 @@ import Logout from "./pages/Logout";
 import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
+ 
   return (
     <Router>
       <div>
@@ -21,10 +22,10 @@ function App() {
         <div className="mx-5 pl-2 pr-3 py-1">
           <Routes>
             <Route element={<ProtectedRoutes />}>
+              <Route path="/" element={<Homepage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
-              <Route path="/" element={<Homepage />} />
               <Route path="/logout" element={<Logout />} />
             </Route>
             <Route path="/login" element={<LoginPage />}></Route>

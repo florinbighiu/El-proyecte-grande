@@ -4,14 +4,17 @@ import axios from "axios";
 import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
+import Loading from "../layout/Loading.jsx"
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem("authToken");
+  const userRole = localStorage.getItem("role");
 
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -31,14 +34,14 @@ function ProductList() {
         headers: {
           Authorization: `Bearer ${token}`,
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods":
-            "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         },
       });
 
       if (response) {
         const data = await response.json();
         setProducts(data);
+        setIsLoading(false)
       } else {
         console.error("Failed to fetch products");
       }
@@ -48,7 +51,9 @@ function ProductList() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    setTimeout(() => {
+      fetchProducts()
+    },3000)
   }, []);
 
   const handleAddToCart = async (product) => {
@@ -58,12 +63,11 @@ function ProductList() {
         headers: {
           Authorization: `Bearer ${token}`,
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods":
-            "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         },
       });
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === product.id
+          prevProduct.id === product.id
           ? { ...prevProduct, isInCart: true }
           : prevProduct
       );
@@ -88,10 +92,7 @@ function ProductList() {
       ) {
         console.error("Please fill in all fields.");
       } else {
-        const response = await axios.post(
-          "http://localhost:8080/products/create",
-          newProduct
-        );
+        const response = await axios.post("http://localhost:8080/products/create", newProduct);
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
         setNewProduct({
@@ -113,7 +114,7 @@ function ProductList() {
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === productIdToUpdate
+          prevProduct.id === productIdToUpdate
           ? { ...response.data }
           : prevProduct
       );
@@ -131,9 +132,7 @@ function ProductList() {
   };
 
   const handleOpenUpdateForm = (productId) => {
-    const productToUpdate = products.find(
-      (product) => product.id === productId
-    );
+    const productToUpdate = products.find((product) => product.id === productId);
     setProductIdToUpdate(productId);
     setNewProduct({ ...productToUpdate });
     setShowUpdateForm(true);
@@ -142,9 +141,7 @@ function ProductList() {
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`http://localhost:8080/products/${productId}`);
-      const updatedProducts = products.filter(
-        (product) => product.id !== productId
-      );
+      const updatedProducts = products.filter((product) => product.id !== productId);
       setProducts(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -152,46 +149,52 @@ function ProductList() {
   };
 
   return (
-    <div className="flex flex-col w-screen">
-      <h2 className="text-2xl font-semibold mb-4">Products</h2>
-      <div className="m-0.5 p-4 text-slate-500 dark:text-slate-400 rounded-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 gap-6 w-fit">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              handleAddToCart={handleAddToCart}
-              handleDeleteProduct={handleDeleteProduct}
-              handleOpenUpdateForm={handleOpenUpdateForm}
-            />
-          ))}
-          <div className="group bg-white p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
-            <button
-              onClick={() => setShowForm(true)}
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32"
-            >
-              Add
-            </button>
-          </div>
-          {showUpdateForm && (
-            <UpdateForm
-              {...newProduct}
-              handleInputChange={handleInputChange}
-              handleUpdate={handleUpdateProduct}
-              onClose={() => setShowUpdateForm(false)}
-            />
-          )}
-          {showForm && (
-            <AddForm
-              {...newProduct}
-              handleInputChange={handleInputChange}
-              handleAddProduct={handleAddProduct}
-              onClose={() => setShowForm(false)}
-            />
-          )}
-        </div>
+      <div className="flex flex-col text-white">
+        <h2 className="text-2xl font-semibold mb-4">Products</h2>
+        {isLoading ? (
+            <Loading />
+        ) : (
+            <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit">
+                {products.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        handleAddToCart={handleAddToCart}
+                        handleDeleteProduct={handleDeleteProduct}
+                        handleOpenUpdateForm={handleOpenUpdateForm}
+                    />
+                ))}
+                {userRole === "1" && (
+                    <div className="group bg-slate-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
+                      <button
+                          onClick={() => setShowForm(true)}
+                          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32"
+                      >
+                        Add
+                      </button>
+                    </div>
+                )}
+                {showUpdateForm && (
+                    <UpdateForm
+                        {...newProduct}
+                        handleInputChange={handleInputChange}
+                        handleUpdate={handleUpdateProduct}
+                        onClose={() => setShowUpdateForm(false)}
+                    />
+                )}
+                {showForm && (
+                    <AddForm
+                        {...newProduct}
+                        handleInputChange={handleInputChange}
+                        handleAddProduct={handleAddProduct}
+                        onClose={() => setShowForm(false)}
+                    />
+                )}
+              </div>
+            </div>
+        )}
       </div>
-    </div>
   );
 }
 

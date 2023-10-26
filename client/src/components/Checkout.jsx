@@ -17,12 +17,11 @@ const Checkout = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add your checkout logic here, like making an API call to complete the order
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
-      <div className="bg-white p-4 rounded-md shadow-md md:w-2/5">
+      <div className="bg-slate-800 p-4 rounded-md shadow-md sm:w-2/4 md:w-1/4">
         <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -35,7 +34,7 @@ const Checkout = ({ onClose }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full bg-slate-700 focus:outline-none rounded-md"
               required
             />
           </div>
@@ -49,7 +48,7 @@ const Checkout = ({ onClose }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full bg-slate-700 focus:outline-none rounded-md"
               required
             />
           </div>
@@ -62,7 +61,7 @@ const Checkout = ({ onClose }) => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full bg-slate-700 focus:outline-none rounded-md"
               required
             />
           </div>

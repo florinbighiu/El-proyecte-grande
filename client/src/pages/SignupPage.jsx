@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
+import Logo from "../assets/ecommerce.png";
+
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -47,25 +49,19 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-extrabold text-center text-gray-800 mb-6">
-          Get Started
-        </h2>
-        <form onSubmit={handleRegistration}>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-600 text-sm font-semibold"
-            >
-              Username
-            </label>
+      <div className="bg-slate-800 rounded-lg shadow-md w-96">
+        <div className="flex items-center justify-center pt-4">
+          <img src={Logo} alt="Logo" className="w-24" />
+        </div>{" "}
+        <form onSubmit={handleRegistration} className="p-8">
+          <div className="mb-5">
             <input
               type="text"
               id="username"
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white rounded-md focus:outline-none"
               placeholder="Your username"
             />
           </div>
@@ -99,7 +95,7 @@ const SignupPage = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>
@@ -111,7 +107,7 @@ const SignupPage = () => {
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mt-4 text-gray-600 text-center">
+        <p className="mb-4 text-gray-600 text-center">
           Already have an account?{" "}
           <a href="/login" className="text-blue-500 hover:underline">
             Log in

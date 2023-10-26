@@ -3,7 +3,7 @@
 function UpdateForm({ name, price, image, description, handleInputChange, handleUpdate, onClose }) {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
-        <div className="bg-white p-4 rounded-md shadow-md md:w-1/4">
+        <div className="bg-slate-800 text-white p-4 rounded-md shadow-md md:w-1/4">
       <h2 className="text-xl font-semibold mb-2">Update Product</h2>
         <form>
           <div className="mb-4 flex flex-col">
@@ -13,15 +13,15 @@ function UpdateForm({ name, price, image, description, handleInputChange, handle
             value={name}
             onChange={handleInputChange}
             placeholder="Product Name"
-            className="mb-2 p-2 border rounded"
+            className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
           />
           <input
-            type="number"
+            type="text"
             name="price"
             value={price}
             onChange={handleInputChange}
             placeholder="Price"
-            className="mb-2 p-2 border rounded"
+            className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
           />
           <input
             type="text"
@@ -29,7 +29,7 @@ function UpdateForm({ name, price, image, description, handleInputChange, handle
             value={image}
             onChange={handleInputChange}
             placeholder="Image URL"
-            className="mb-2 p-2 border rounded"
+            className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
           />
           <textarea
             name="description"
@@ -37,7 +37,7 @@ function UpdateForm({ name, price, image, description, handleInputChange, handle
             onChange={handleInputChange}
             placeholder="Description"
             rows="4"
-            className="mb-2 p-2 border rounded"
+            className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
           />
           <button type="button" onClick={handleUpdate} className=" bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
             Update Product

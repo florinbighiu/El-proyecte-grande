@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Logo from "../assets/ecommerce.png";
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -23,17 +25,16 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        formData
-      );
-
-      console.log(response);
+      const response = await axios.post("http://localhost:8080/auth/login", formData);
 
       if (response) {
         localStorage.setItem("authToken", response.data.jwt);
+        localStorage.setItem("role", response.data.user.authorities[0].roleId);
+        console.log(response.data.user.authorities[0].roleId);
+
         console.log("Login successful");
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -43,42 +44,30 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-extrabold text-center text-gray-800 mb-6">
-          Log In
-        </h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-600 text-sm font-semibold"
-            >
-              Username
-            </label>
+      <div className="bg-slate-800 rounded-lg shadow-md w-96">
+        <div className="flex items-center justify-center pt-4">
+          <img src={Logo} alt="Logo" className="w-24" />
+          </div>
+        <form onSubmit={handleLogin} className="p-8">
+          <div className="mb-5">
             <input
               type="text"
               id="username"
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
               placeholder="Your username"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-600 text-sm font-semibold"
-            >
-              Password
-            </label>
+          <div className="mb-5">
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>
@@ -90,7 +79,7 @@ const LoginPage = () => {
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mt-4 text-gray-600 text-center">
+        <p className="mb-4 text-gray-500 text-center">
           Dont have an account?{" "}
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign up
