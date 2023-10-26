@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,5 +39,30 @@ public class UserService implements UserDetailsService {
 
     public List<ApplicationUser> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public void updateResetPassword(String token, String email) {
+        ApplicationUser applicationUser = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email is not valid"));
+
+        if(applicationUser != null) {
+            applicationUser.setResetPasswordToken(token);
+            userRepository.save(applicationUser);
+        } else {
+            throw new RuntimeException("Could not find any user with email: " + email);
+        }
+    }
+
+    public ApplicationUser getToken(String resetPasswordToken) {
+        return userRepository.findByResetPasswordToken(resetPasswordToken).orElseThrow(() -> new RuntimeException("Reset Token not valid"));
+    }
+
+    public void updatePassword (ApplicationUser applicationUser, String newPassword) {
+        String encodePassword = passwordEncoder.encode(newPassword);
+
+        applicationUser.setPassword(encodePassword);
+        applicationUser.setResetPasswordToken(null);
+
+        userRepository.save(applicationUser);
+
     }
 }
