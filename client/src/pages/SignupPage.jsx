@@ -65,9 +65,10 @@ const SignupPage = () => {
               placeholder="Your username"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-5">
+          
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-gray-600 text-sm font-semibold"
             >
               Email

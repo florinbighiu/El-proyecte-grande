@@ -29,9 +29,7 @@ function Cart() {
 
   const handleRemoveFromCart = async (product) => {
     try {
-      await axios.delete(
-        `http://localhost:8080/cart/products/remove/${product.id}`
-      );
+      await axios.delete(`http://localhost:8080/cart/products/remove/${product.id}`);
       setCartProducts(cartProducts.filter((prod) => prod.id !== product.id));
     } catch (error) {
       console.log(error);
@@ -73,8 +71,7 @@ function Cart() {
                   </p>
                   <button
                     onClick={() => handleRemoveFromCart(product)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full absolute bottom-4 right-4"
-                  >
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full absolute bottom-4 right-4">
                     Remove
                   </button>
                 </div>
@@ -104,14 +101,11 @@ function Cart() {
                 <div className="flex items-center justify-center w-full">
                   <button
                     onClick={() => setShowCheckout(true)}
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 rounded-full"
-                  >
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 rounded-full">
                     Proceed to Checkout
                   </button>
                 </div>
-                {showCheckout && (
-                  <Checkout onClose={() => setShowCheckout(false)} />
-                )}
+                {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
               </div>
             </div>
           </>

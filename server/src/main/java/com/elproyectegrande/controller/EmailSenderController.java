@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequestMapping("/send_email")
 public class EmailSenderController {
 
@@ -24,7 +24,7 @@ public class EmailSenderController {
         this.emailSenderService = emailSenderService;
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public void triggerEmail(@RequestBody EmailData emailData) throws MessagingException {
         emailSenderService.sendMail(emailData.getName(), emailData.getEmail(), emailData.getMessage());
     }
