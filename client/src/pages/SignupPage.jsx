@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
+
+import Logo from "../assets/ecommerce.png";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
-    username: '', 
-    password: '',
+    username: "",
+    password: "",
   });
 
   const navigate = useNavigate();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,27 +26,29 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/register', formData, {
+      const response = await axios.post("http://localhost:8080/auth/register", formData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       if (response.ok) {
-        console.log('Registration successful');
-        navigate("/login")
+        console.log("Registration successful");
+        navigate("/login");
       }
     } catch (error) {
-      console.error('Error during registration:', error);
-      setError('Registration failed. Please try again.');
+      console.error("Error during registration:", error);
+      setError("Registration failed. Please try again.");
     }
   };
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-slate-800 p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-extrabold uppercase text-center text-gray-100 mb-6">Get Started</h2>
-        <form onSubmit={handleRegistration}>
+      <div className="bg-slate-800 rounded-lg shadow-md w-96">
+        <div className="flex items-center justify-center pt-4">
+          <img src={Logo} alt="Logo" className="w-24" />
+        </div>{" "}
+        <form onSubmit={handleRegistration} className="p-8">
           <div className="mb-5">
             <input
               type="text"
@@ -67,14 +71,18 @@ const SignupPage = () => {
               placeholder="Your password"
             />
           </div>
-          <button className="w-full bg-purple-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-purple-600" type="submit">
+          <button
+            className="w-full bg-purple-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-purple-600"
+            type="submit">
             Sign Up
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mt-4 text-gray-600 text-center">
-          Already have an account?{' '}
-          <a href="/login" className="text-blue-500 hover:underline">Log in</a>
+        <p className="mb-4 text-gray-600 text-center">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:underline">
+            Log in
+          </a>
         </p>
       </div>
     </div>

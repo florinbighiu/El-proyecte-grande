@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { ShoppingCartIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 
 function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpenUpdateForm }) {
@@ -50,7 +49,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
                     {product.isInCart ? "In Cart" : "Add to Cart"}
                 </button>
                 {userRole === "1" && (
-                    <div className="flex flex-row space-x-4">
+                    <div className="flex flex-row space-x-2 w-full">
                         <button
                             onClick={() => handleDeleteProduct(product.id)}
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md w-full focus:outline-none"
