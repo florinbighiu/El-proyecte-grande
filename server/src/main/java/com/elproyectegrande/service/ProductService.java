@@ -77,4 +77,8 @@ public class ProductService {
 
         return false;
     }
+
+    public List<Product> searchProductsByName(String query) {
+        return productRepository.findProductByNameIgnoreCase(query);
+    }
 }
