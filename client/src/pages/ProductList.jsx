@@ -203,7 +203,7 @@ function ProductList() {
           value={searchQuery}
           onChange={handleSearchQueryInput}
           placeholder="Search products..."
-          className="border border-gray-300 rounded-md py-2 px-3 mr-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="border border-gray-300 rounded-md py-2 px-3 mr-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-black"
         />
         <button
           onClick={handleSearchProducts}
