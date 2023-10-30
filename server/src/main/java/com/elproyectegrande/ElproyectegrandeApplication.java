@@ -1,6 +1,6 @@
 package com.elproyectegrande;
 
-import com.elproyectegrande.model.ApplicationUser;
+import com.elproyectegrande.model.ApplicationUser; 
 import com.elproyectegrande.model.Role;
 import com.elproyectegrande.repository.RoleRepository;
 import com.elproyectegrande.repository.UserRepository;

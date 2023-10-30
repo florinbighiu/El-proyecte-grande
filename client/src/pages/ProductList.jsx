@@ -145,7 +145,7 @@ function ProductList() {
   };
 
   return (
-      <div className="flex flex-col text-white">
+      <div className="h-screen flex flex-col text-white">
         <h2 className="text-2xl font-semibold mb-4">Products</h2>
         {isLoading ? (
             <Loading />

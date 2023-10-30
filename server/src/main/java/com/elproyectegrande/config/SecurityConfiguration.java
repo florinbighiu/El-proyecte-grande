@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,11 +51,10 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/home/**").permitAll();
-                    auth.requestMatchers("/send_mail").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/products/**").permitAll();
                     auth.requestMatchers("/cart/products/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
@@ -63,13 +63,11 @@ public class SecurityConfiguration {
                 });
 
         http
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(jwtAuthenticationConverter());
+                .oauth2ResourceServer(server -> server
+                        .jwt()
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter()));
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http
-                .cors().disable();
         return http.build();
     }
 
