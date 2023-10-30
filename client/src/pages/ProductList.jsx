@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
@@ -13,6 +15,7 @@ function ProductList() {
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [priceRange, setPriceRange] = React.useState([20, 37]);
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
@@ -193,6 +196,38 @@ function ProductList() {
     }
   };
 
+  const handleChange = (event, priceRange) => {
+    setPriceRange(priceRange);
+  };
+
+  console.log(priceRange);
+
+  const handlePriceRange = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/products/price?minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods":
+              "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+          },
+        }
+      );
+
+      if (response) {
+        const data = await response.json();
+        setProducts(data);
+      } else {
+        console.error("Failed to search products");
+      }
+    } catch (error) {
+      console.error("Error searching products", error);
+    }
+  };
+
   return (
     <div className="flex flex-col text-white">
       <h2 className="text-2xl font-semibold mb-4">Products</h2>
@@ -212,6 +247,19 @@ function ProductList() {
           Search
         </button>
       </div>
+      <Box sx={{ width: 300 }}>
+        <Slider
+          valueLabelDisplay="auto"
+          onChange={handleChange}
+          value={priceRange}
+        />
+        <button
+          onClick={handlePriceRange}
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md"
+        >
+          Search
+        </button>
+      </Box>
       {isLoading ? (
         <Loading />
       ) : (

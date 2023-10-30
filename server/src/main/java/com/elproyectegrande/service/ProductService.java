@@ -81,4 +81,8 @@ public class ProductService {
     public List<Product> searchProductsByName(String query) {
         return productRepository.findProductByNameIgnoreCase(query);
     }
+
+    public List<Product> getProductsInPriceRange(Double minPrice, Double maxPrice) {
+        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
 }

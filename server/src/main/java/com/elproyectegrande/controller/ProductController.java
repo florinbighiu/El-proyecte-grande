@@ -56,4 +56,9 @@ public class ProductController {
     public List<Product> searchByProductName(@RequestParam String query) {
         return productService.searchProductsByName(query);
     }
+
+    @GetMapping("/price")
+    public List<Product> getProductsInPriceRange(@RequestParam Double minPrice, @RequestParam Double maxPrice) {
+        return productService.getProductsInPriceRange(minPrice, maxPrice);
+    }
 }
