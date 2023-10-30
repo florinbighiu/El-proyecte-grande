@@ -3,6 +3,7 @@ package com.elproyectegrande.service;
 import com.elproyectegrande.model.*;
 import com.elproyectegrande.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +49,6 @@ public class ProductService {
     }
 
 
-
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
@@ -62,7 +62,7 @@ public class ProductService {
             return productRepository.save(product);
         }
 
-        return null; 
+        return null;
     }
 
     public boolean removeProductFromCart(Long productId) {
@@ -78,11 +78,18 @@ public class ProductService {
         return false;
     }
 
-    public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
-        return productRepository.findProductByNameIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
-    }
+    public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice, Boolean sortByPriceAsc, Boolean sortAlphabeticallyAsc) {
+        Sort sort = Sort.unsorted();
+        if (sortByPriceAsc != null) {
+            sort = sortByPriceAsc ? Sort.by("price").ascending() : Sort.by("price").descending();
+        }
+        if (sortAlphabeticallyAsc != null) {
+            sort = sortAlphabeticallyAsc ? sort.and(Sort.by("name").ascending()) : sort.and(Sort.by("name").descending());
 
-//    public List<Product> getProductsInPriceRange(Double minPrice, Double maxPrice) {
-//        return productRepository.findByPriceBetween(minPrice, maxPrice);
-//    }
+
+        }
+        return productRepository.findProductByNameContainingIgnoreCaseAndPriceBetween(query, minPrice, maxPrice, sort);
+
+
+    }
 }

@@ -16,6 +16,10 @@ function ProductList() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = React.useState([20, 37]);
+  const [sortByPriceAsc, setSortByPriceAsc] = useState(true);
+  const [sortAlphabeticallyAsc, setSortAlphabeticallyAsc] = useState(true);
+  console.log("sortPrice");
+  console.log(sortByPriceAsc);
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
@@ -173,7 +177,7 @@ function ProductList() {
       }
 
       const response = await fetch(
-        `http://localhost:8080/products/search?query=${searchQuery}&minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
+        `http://localhost:8080/products/search?query=${searchQuery}&minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}&sortByPriceAsc=${sortByPriceAsc}&sortAlphabeticallyAsc=${sortAlphabeticallyAsc}`,
         {
           method: "GET",
           headers: {
@@ -202,31 +206,13 @@ function ProductList() {
 
   console.log(priceRange);
 
-  // const handlePriceRange = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8080/products/price?minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Access-Control-Allow-Origin": "*",
-  //           "Access-Control-Allow-Methods":
-  //             "GET, PUT, POST, DELETE, PATCH, OPTIONS",
-  //         },
-  //       }
-  //     );
+  const handlePriceSort = () => {
+    setSortByPriceAsc(!sortByPriceAsc);
+  };
 
-  //     if (response) {
-  //       const data = await response.json();
-  //       setProducts(data);
-  //     } else {
-  //       console.error("Failed to search products");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error searching products", error);
-  //   }
-  // };
+  const handleAlphabeticalSort = () => {
+    setSortAlphabeticallyAsc(!sortAlphabeticallyAsc);
+  };
 
   return (
     <div className="flex flex-col text-white">
@@ -258,6 +244,20 @@ function ProductList() {
         />
         {/* <input value={priceRange[1]}></input> */}
       </Box>
+      <div className="flex items-center my-4">
+        <button
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md mx-2"
+          onClick={handlePriceSort}
+        >
+          Sort by Price
+        </button>
+        <button
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md mx-2"
+          onClick={handleAlphabeticalSort}
+        >
+          Sort Alphabetically{" "}
+        </button>
+      </div>
       {isLoading ? (
         <Loading />
       ) : (

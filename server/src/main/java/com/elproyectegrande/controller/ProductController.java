@@ -53,12 +53,12 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> searchByProductName(@RequestParam String query, @RequestParam Double minPrice, @RequestParam Double maxPrice) {
-        return productService.searchProductsByName(query, minPrice, maxPrice);
+    public List<Product> searchByProductName(@RequestParam(required = false) String query,
+                                             @RequestParam(required = false) Double minPrice,
+                                             @RequestParam(required = false) Double maxPrice,
+                                             @RequestParam(required = false) Boolean sortByPriceAsc,
+                                             @RequestParam(required = false) Boolean sortAlphabeticallyAsc) {
+        return productService.searchProductsByName(query, minPrice, maxPrice, sortByPriceAsc, sortAlphabeticallyAsc);
     }
 
-//    @GetMapping("/price")
-//    public List<Product> getProductsInPriceRange(@RequestParam Double minPrice, @RequestParam Double maxPrice) {
-//        return productService.getProductsInPriceRange(minPrice, maxPrice);
-//    }
 }
