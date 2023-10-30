@@ -173,7 +173,7 @@ function ProductList() {
       }
 
       const response = await fetch(
-        `http://localhost:8080/products/search?query=${searchQuery}`,
+        `http://localhost:8080/products/search?query=${searchQuery}&minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
         {
           method: "GET",
           headers: {
@@ -202,31 +202,31 @@ function ProductList() {
 
   console.log(priceRange);
 
-  const handlePriceRange = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/products/price?minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods":
-              "GET, PUT, POST, DELETE, PATCH, OPTIONS",
-          },
-        }
-      );
+  // const handlePriceRange = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8080/products/price?minPrice=${priceRange[0]}&maxPrice=${priceRange[1]}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Access-Control-Allow-Methods":
+  //             "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+  //         },
+  //       }
+  //     );
 
-      if (response) {
-        const data = await response.json();
-        setProducts(data);
-      } else {
-        console.error("Failed to search products");
-      }
-    } catch (error) {
-      console.error("Error searching products", error);
-    }
-  };
+  //     if (response) {
+  //       const data = await response.json();
+  //       setProducts(data);
+  //     } else {
+  //       console.error("Failed to search products");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error searching products", error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col text-white">
@@ -248,17 +248,15 @@ function ProductList() {
         </button>
       </div>
       <Box sx={{ width: 300 }}>
+        {/* <input type="text" value={priceRange[0]}>
+          $${priceRange[0]}
+        </input> */}
         <Slider
           valueLabelDisplay="auto"
           onChange={handleChange}
           value={priceRange}
         />
-        <button
-          onClick={handlePriceRange}
-          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md"
-        >
-          Search
-        </button>
+        {/* <input value={priceRange[1]}></input> */}
       </Box>
       {isLoading ? (
         <Loading />
