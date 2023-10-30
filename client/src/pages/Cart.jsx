@@ -48,11 +48,13 @@ function Cart() {
           <>
             <div
               id="cartItems"
-              className="flex flex-col md:w-3/4 h-[65vh]  overflow-auto rounded-md bg-slate-800 ">
+              className="flex flex-col md:w-3/4 h-[65vh]  overflow-auto rounded-md bg-slate-800 "
+            >
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-slate-700 p-4 mx-5 my-3 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
+                  className="group bg-slate-700 p-4 mx-5 my-3 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer"
+                >
                   <img
                     src={product.image}
                     alt={product.name}

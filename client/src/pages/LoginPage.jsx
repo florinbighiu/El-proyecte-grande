@@ -73,7 +73,8 @@ const LoginPage = () => {
           </div>
           <button
             className="w-full bg-purple-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-purple-600"
-            type="submit">
+            type="submit"
+          >
             Log In
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
@@ -83,6 +84,9 @@ const LoginPage = () => {
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign up
           </a>
+        </p>
+        <p className="mt-4 text-center text-blue-500">
+          <a href="/forgotPassword">Forgot your password?</a>
         </p>
       </div>
     </div>
