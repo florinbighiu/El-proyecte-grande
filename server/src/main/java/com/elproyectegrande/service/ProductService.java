@@ -18,10 +18,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getCartProducts() {
-        return productRepository.findByIsInCartTrue();
-    }
-
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
@@ -42,47 +38,48 @@ public class ProductService {
             existingProduct.setDescription(updatedProduct.getDescription());
             existingProduct.setPrice(updatedProduct.getPrice());
             existingProduct.setImage(updatedProduct.getImage());
+            existingProduct.setCategory(updatedProduct.getCategory());
+
             return productRepository.save(existingProduct);
         }
         return null;
     }
 
-
-
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
     }
 
-    public Product addProductToCart(Long productId) {
-        Optional<Product> optionalProduct = productRepository.findById(productId);
+    // public Product addProductToCart(Long productId) {
+    //     Optional<Product> optionalProduct = productRepository.findById(productId);
 
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-            product.setIsInCart(true);
-            return productRepository.save(product);
-        }
+    //     if (optionalProduct.isPresent()) {
+    //         Product product = optionalProduct.get();
+    //         product.setIsInCart(true);
+    //         return productRepository.save(product);
+    //     }
 
-        return null; 
-    }
+    //     return null;
+    // }
 
-    public boolean removeProductFromCart(Long productId) {
-        Optional<Product> optionalProduct = productRepository.findById(productId);
+    // public boolean removeProductFromCart(Long productId) {
+    //     Optional<Product> optionalProduct = productRepository.findById(productId);
 
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-            product.setIsInCart(false);
-            productRepository.save(product);
-            return true;
-        }
+    //     if (optionalProduct.isPresent()) {
+    //         Product product = optionalProduct.get();
+    //         product.setIsInCart(false);
+    //         productRepository.save(product);
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
         return productRepository.findProductByNameIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
     }
 
-//    public List<Product> getProductsInPriceRange(Double minPrice, Double maxPrice) {
-//        return productRepository.findByPriceBetween(minPrice, maxPrice);
-//    }
+    // public List<Product> getProductsInPriceRange(Double minPrice, Double
+    // maxPrice) {
+    // return productRepository.findByPriceBetween(minPrice, maxPrice);
+    // }
 }

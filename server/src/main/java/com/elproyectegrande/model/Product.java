@@ -17,7 +17,11 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private String image;
+    private double discountpercentage;
+    private double rating;
+    private int stock;
+    private String brand;
     private String category;
-    private boolean isInCart = false;
+    private String image;
+    
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-function UpdateForm({ name, price, image, description, handleInputChange, handleUpdate, onClose }) {
+function UpdateForm({ name, price, image, description,category, handleInputChange, handleUpdate, onClose }) {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
         <div className="bg-slate-800 text-white p-4 rounded-md shadow-md md:w-1/4">
@@ -29,6 +29,14 @@ function UpdateForm({ name, price, image, description, handleInputChange, handle
             value={image}
             onChange={handleInputChange}
             placeholder="Image URL"
+            className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
+          />
+          <input
+            type="text"
+            name="image"
+            value={category}
+            onChange={handleInputChange}
+            placeholder="Category"
             className="mb-2 p-2  bg-slate-700 focus:outline-none rounded"
           />
           <textarea

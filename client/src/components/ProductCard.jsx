@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpenUpdateForm }) {
+    
     const userRole = localStorage.getItem("role");
     const maxDescriptionLines = 3;
     const [showMore, setShowMore] = useState(false);
@@ -16,12 +17,12 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
         .join("\n");
 
     return (
-        <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 p-4 rounded-lg shadow-lg cursor-pointer duration-300">
+        <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-lg cursor-pointer duration-300 w-fit">
             <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-2">
                 New
             </div>
-            <img src={product.image} alt={product.name} className="w-full h-80 rounded-md mb-4" />
-            <div className="text-white text-center">
+            <img src={product.image} alt={product.name} className="w-full h-64 rounded-md mb-4" />
+            <div className="text-white text-center p-2">
                 <h3 className="font-extrabold text-xl uppercase mb-1">{product.name}</h3>
                 <p className={`text-gray-200 text-lg ${showMore ? "..." : "overflow-hidden h-14"}`}>
                     {showMore ? product.description : truncatedDescription}
@@ -38,7 +39,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
                     <strong>${product.price.toFixed(2)}</strong>
                 </p>
             </div>
-            <div className="mt-4 flex flex-col items-center w-full">
+            <div className="mt-4 p-2 flex flex-col items-center w-full">
                 <button
                     onClick={() => handleAddToCart(product)}
                     disabled={product.isInCart}

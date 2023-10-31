@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import ProductCard from "../components/ProductCard.jsx";
 import Loading from "../layout/Loading.jsx"
-
-import { ShoppingCartIcon } from "@heroicons/react/solid";
-
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -76,26 +74,11 @@ function Homepage() {
               <h2 className="text-2xl font-bold text-white mb-4">Featured Products</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {featuredProducts.map((product) => (
-                    <div key={product.id} className="flex flex-col justify-evenly bg-gray-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative font-serif">
-                      <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-2">
-                        New
-                      </div>
-                      <img src={product.image} alt={product.name} className="w-full h-80 rounded-md mb-4" />
-                      <h3 className="font-extrabold text-xl text-white  uppercase mb-1">{product.name}</h3>
-                      <h2 className="text-white">{product.description}</h2>
-                      <p className="text-yellow-400 text-xl font-semibold mt-2">
-                        <strong>${product.price.toFixed(2)}</strong>
-                      </p>
-                      <button
-                          onClick={() => handleAddToCart(product)}
-                          disabled={product.isInCart}
-                          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full  ${
-                              product.isInCart ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
-                      >
-                        {product.isInCart ? "In Cart" : "Add to Cart"}
-                      </button>
-                    </div>
+                    <ProductCard
+                    key={product.id}
+                    product={product}
+                    handleAddToCart={handleAddToCart}
+                  />
                 ))}
               </div>
             </div>
