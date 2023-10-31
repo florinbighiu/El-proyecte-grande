@@ -18,9 +18,14 @@ function ProductList() {
 
   const [newProduct, setNewProduct] = useState({
     name: "",
-    price: 0,
-    image: "",
     description: "",
+    price: 0,
+    discountpercentage: 0,
+    rating: 0,
+    stock: 0,
+    brand: "",
+    category: "",
+    image: "",
   });
 
   const fetchProducts = async () => {
@@ -88,23 +93,28 @@ function ProductList() {
         newProduct.image === "" ||
         newProduct.description === ""
       ) {
-        console.error("Please fill in all fields.");
+        console.error("Please fill in all required fields.");
       } else {
         const response = await axios.post("http://localhost:8080/products/create", newProduct);
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
         setNewProduct({
           name: "",
-          price: 0,
-          image: "",
           description: "",
+          price: 0,
+          discountpercentage: 0,
+          rating: 0,
+          stock: 0,
+          brand: "",
+          category: "",
+          image: "",
         });
       }
     } catch (error) {
       console.error("Error creating product:", error.message);
     }
   };
-
+  
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
@@ -117,15 +127,21 @@ function ProductList() {
       setProducts(updatedProducts);
       setNewProduct({
         name: "",
-        price: 0,
-        image: "",
         description: "",
+        price: 0,
+        discountpercentage: 0,
+        rating: 0,
+        stock: 0,
+        brand: "",
+        category: "",
+        image: "",
       });
       setShowUpdateForm(false);
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error updating product:", error.message);
     }
   };
+  
 
   const handleOpenUpdateForm = (productId) => {
     const productToUpdate = products.find((product) => product.id === productId);
@@ -152,7 +168,7 @@ function ProductList() {
         <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
           {Array.from(new Set(products.map((product) => product.category))).map((category) => (
             <div key={category} className="mb-28">
-              <h2 className="mt-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">{category}</h2>
+              <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">{category}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {" "}
                 {products

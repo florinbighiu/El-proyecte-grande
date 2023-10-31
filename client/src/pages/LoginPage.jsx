@@ -85,7 +85,7 @@ const LoginPage = () => {
             Sign up
           </a>
         </p>
-        <p className="mt-4 text-center text-blue-500">
+        <p className="my-2 text-center text-blue-500">
           <a href="/forgotPassword">Forgot your password?</a>
         </p>
       </div>

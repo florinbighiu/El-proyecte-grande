@@ -43,9 +43,9 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 text-sm font-medium text-white bg-gray-900 border-b border-gray-800/75">
       <div className="container mx-auto flex flex-wrap justify-between items-center">
-        <div className="flex items-start flex-1 justify-start ml-24">
+        <div>
           <a href="/">
-            <img src={LogoImage} alt="Logo" className="w-12 my-1" />
+            <img src={LogoImage} alt="Logo" className="w-12 my-1 mx-20" />
           </a>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">
