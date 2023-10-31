@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/products")
+//@CrossOrigin(origins = "*", methods = {RequestMethod.PUT, RequestMethod.GET, RequestMethod.DELETE, RequestMethod.POST})
 public class ProductController {
 
     private final ProductService productService;
@@ -50,4 +51,14 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
     }
+
+    @GetMapping("/search")
+    public List<Product> searchByProductName(@RequestParam(required = false) String query,
+                                             @RequestParam(required = false) Double minPrice,
+                                             @RequestParam(required = false) Double maxPrice,
+                                             @RequestParam(required = false) Boolean sortByPriceAsc,
+                                             @RequestParam(required = false) Boolean sortAlphabeticallyAsc) {
+        return productService.searchProductsByName(query, minPrice, maxPrice, sortByPriceAsc, sortAlphabeticallyAsc);
+    }
+
 }

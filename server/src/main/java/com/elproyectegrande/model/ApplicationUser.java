@@ -17,6 +17,12 @@ public class ApplicationUser implements UserDetails {
     private Integer userId;
     @Column(unique = true)
     private String username;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -32,12 +38,14 @@ public class ApplicationUser implements UserDetails {
         this.authorities = new HashSet<Role>();
     }
 
-    public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
+    public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities, String resetPasswordToken, String email) {
         super();
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.resetPasswordToken = resetPasswordToken;
+        this.email = email;
     }
 
     public Integer getUserId() {
@@ -93,5 +101,21 @@ public class ApplicationUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

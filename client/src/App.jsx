@@ -25,9 +25,8 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
-              <Route path="/logout" element={<Logout />}/>
+              <Route path="/logout" element={<Logout />} />
             </Route>
-
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/reset" element={<PasswordReset />}></Route>

@@ -8,6 +8,7 @@ import Logo from "../assets/ecommerce.png";
 const SignupPage = () => {
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
@@ -26,11 +27,15 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/register", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/auth/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         console.log("Registration successful");
@@ -61,6 +66,30 @@ const SignupPage = () => {
             />
           </div>
           <div className="mb-5">
+          
+            <label
+              htmlFor="email"
+              className="block text-gray-600 text-sm font-semibold"
+            >
+              Email
+            </label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-purple-400"
+              placeholder="Your email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block text-gray-600 text-sm font-semibold"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -73,7 +102,8 @@ const SignupPage = () => {
           </div>
           <button
             className="w-full bg-purple-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-purple-600"
-            type="submit">
+            type="submit"
+          >
             Sign Up
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}

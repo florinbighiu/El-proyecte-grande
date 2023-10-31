@@ -4,14 +4,17 @@ public class RegistrationDTO {
     private String username;
     private String password;
 
+    private String email;
+
     public RegistrationDTO() {
         super();
     }
 
-    public RegistrationDTO(String username, String password) {
+    public RegistrationDTO(String username, String password, String email) {
         super();
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -30,7 +33,15 @@ public class RegistrationDTO {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String toString() {
-        return "Registration info: username: " + this.username + " password: " + this.password;
+        return "Registration info: username: " + this.username + " password: " + this.password + " email: " + this.email;
     }
 }
