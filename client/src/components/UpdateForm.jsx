@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 
 function UpdateForm({ 
-  name, 
+  title,
   description, 
   price, 
-  discountpercentage, 
+  discountPercentage,
   rating, 
   stock, 
   brand, 
   category, 
-  image, 
-  handleInputChange, 
+  thumbnail,
+  handleInputChange,
   handleUpdate, 
   onClose 
 }) {
@@ -23,8 +23,8 @@ function UpdateForm({
             <label htmlFor="name" className="text-white mb-1">Product Name</label>
             <input
               type="text"
-              name="name"
-              value={name}
+              name="title"
+              value={title}
               onChange={handleInputChange}
               placeholder="Product Name"
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
@@ -53,8 +53,8 @@ function UpdateForm({
             <label htmlFor="discountpercentage" className="text-white mb-1">Discount Percentage</label>
             <input
               type="text"
-              name="discountpercentage"
-              value={discountpercentage}
+              name="discountPercentage"
+              value={discountPercentage}
               onChange={handleInputChange}
               placeholder="Discount Percentage"
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
@@ -103,8 +103,8 @@ function UpdateForm({
             <label htmlFor="image" className="text-white mb-1">Image URL</label>
             <input
               type="text"
-              name="image"
-              value={image}
+              name="thumbnail"
+              value={thumbnail}
               onChange={handleInputChange}
               placeholder="Image URL"
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"

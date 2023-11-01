@@ -18,19 +18,19 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
 
   return (
     <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-lg cursor-pointer duration-300 w-fit">
-      {product.discountpercentage > 0 && (
+      {product.discountPercentage > 0 && (
         <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-white p-2 rounded-full">
           <div className="text-md font-semibold">
             <span className="text-lg">-</span>
-            {product.discountpercentage}%
+            {product.discountPercentage}%
           </div>
         </div>
       )}
-      <img src={product.image} alt={product.name} className="w-full h-64 rounded-md mb-4" />
-      <div className="text-white text-center p-2">
-        <h3 className="font-extrabold text-xl uppercase mb-1">{product.name}</h3>
+      <img src={product.thumbnail} alt={product.title} className="w-full h-64 rounded-md mb-4" />
+      <div className="text-white text-center p-2 ">
+        <h3 className="font-extrabold text-xl uppercase mb-1">{product.title}</h3>
         <p
-          className={`text-gray-200 text-lg text-start px-1 ${
+          className={`text-gray-200 text-lg text-start font-display px-1  ${
             showMore ? "..." : "overflow-hidden h-14"
           }`}>
           {showMore ? product.description : truncatedDescription}
@@ -48,11 +48,11 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
         <p className="text-red-500 text-xl font-semibold mt-2 text-center">
           <strong>
             $
-            {product.discountpercentage > 0
-              ? (product.price - (product.price * product.discountpercentage) / 100).toFixed(2)
+            {product.discountPercentage > 0
+              ? (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
               : product.price.toFixed(2)}
           </strong>
-          {product.discountpercentage > 0 && (
+          {product.discountPercentage > 0 && (
             <span className="text-sm text-gray-400 line-through ml-2">
               ${product.price.toFixed(2)}
             </span>

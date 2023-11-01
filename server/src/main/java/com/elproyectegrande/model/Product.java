@@ -14,14 +14,13 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String title;
     private String description;
     private double price;
-    private double discountpercentage;
+    private double discountPercentage;
     private double rating;
     private int stock;
     private String brand;
     private String category;
-    private String image;
-    
+    private String thumbnail;
 }

@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: 'Roboto',sans-serif;
+  font-family: 'Roboto';
   scroll-behavior: smooth;
 }
 
@@ -32,7 +32,7 @@ body {
 }
 
 input {
-  color: #151f34;
+  color: #ffff;
 }
 
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
@@ -85,6 +86,8 @@ function ProductList() {
     setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
 
+  const Toaster = () => toast.success("Product added succesfully");
+
   const handleAddProduct = async () => {
     try {
       if (
@@ -95,9 +98,14 @@ function ProductList() {
       ) {
         console.error("Please fill in all required fields.");
       } else {
-        const response = await axios.post("http://localhost:8080/products/create", newProduct);
+        const response = await axios.post("http://localhost:8080/products/create", newProduct, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the bearer token in the request headers
+          },
+        });
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
+        Toaster();
         setNewProduct({
           name: "",
           description: "",
@@ -114,7 +122,7 @@ function ProductList() {
       console.error("Error creating product:", error.message);
     }
   };
-  
+
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
@@ -141,7 +149,6 @@ function ProductList() {
       console.error("Error updating product:", error.message);
     }
   };
-  
 
   const handleOpenUpdateForm = (productId) => {
     const productToUpdate = products.find((product) => product.id === productId);
@@ -168,7 +175,9 @@ function ProductList() {
         <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
           {Array.from(new Set(products.map((product) => product.category))).map((category) => (
             <div key={category} className="mb-28">
-              <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">{category}</h2>
+              <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
+                {category}
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {" "}
                 {products
@@ -182,18 +191,19 @@ function ProductList() {
                       handleOpenUpdateForm={handleOpenUpdateForm}
                     />
                   ))}
+                {userRole === "1" && (
+                  <div className="group bg-slate-800 bg-opacity-50 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-inherit h-inherit">
+                    <button
+                      onClick={() => setShowForm(true)}
+                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
+                      Add
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
-          {userRole === "1" && (
-            <div className="group bg-slate-800 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-60 h-inherit">
-              <button
-                onClick={() => setShowForm(true)}
-                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
-                Add
-              </button>
-            </div>
-          )}
+
           {showUpdateForm && (
             <UpdateForm
               {...newProduct}

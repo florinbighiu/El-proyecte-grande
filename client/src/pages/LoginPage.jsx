@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import Logo from "../assets/ecommerce.png";
+import Logo from "../assets/carton.png";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -45,9 +45,10 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
       <div className="bg-slate-800 rounded-lg shadow-md w-96">
-        <div className="flex items-center justify-center pt-4">
-          <img src={Logo} alt="Logo" className="w-24" />
-          </div>
+        <div className="flex items-center mt-8 pl-24">
+            <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
+            <div className="text-xl text-rose-500 ml-4 font-semibold font-body">eCommerce</div>
+        </div>
         <form onSubmit={handleLogin} className="p-8">
           <div className="mb-5">
             <input
@@ -79,7 +80,7 @@ const LoginPage = () => {
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mb-4 text-gray-500 text-center">
+        <p className="mb-2 text-gray-500 text-center">
           Dont have an account?{" "}
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign up

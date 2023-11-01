@@ -11,6 +11,7 @@ function Homepage() {
 
 
   const token = localStorage.getItem("authToken");
+  console.log(token);
 
 
   const fetchProducts = async () => {
@@ -71,7 +72,7 @@ function Homepage() {
             <Loading />
         ) : (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Featured Products</h2>
+              <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-3xl w-fit font-extrabold uppercase tracking-tighter text-transparent">Featured Products</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {featuredProducts.map((product) => (
                     <ProductCard

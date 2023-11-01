@@ -51,7 +51,7 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/home/**").permitAll();
@@ -68,8 +68,6 @@ public class SecurityConfiguration {
                         .jwtAuthenticationConverter(jwtAuthenticationConverter()));
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.cors(cors -> cors.disable());
 
         return http.build();
     }

@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PasswordReset from "./pages/PasswordReset";
 import Logout from "./pages/Logout";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
  
@@ -26,6 +27,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/product/:productId" component={ProductDetail} />
             </Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>

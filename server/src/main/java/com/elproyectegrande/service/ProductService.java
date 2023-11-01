@@ -34,14 +34,14 @@ public class ProductService {
         Optional<Product> existingProductOptional = productRepository.findById(productId);
         if (existingProductOptional.isPresent()) {
             Product existingProduct = existingProductOptional.get();
-            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setTitle(updatedProduct.getTitle());
             existingProduct.setDescription(updatedProduct.getDescription());
-            existingProduct.setDiscountpercentage(updatedProduct.getDiscountpercentage());
+            existingProduct.setDiscountPercentage(updatedProduct.getDiscountPercentage());
             existingProduct.setBrand(updatedProduct.getBrand());
             existingProduct.setPrice(updatedProduct.getPrice());
             existingProduct.setRating(updatedProduct.getRating());
             existingProduct.setStock(updatedProduct.getStock());
-            existingProduct.setImage(updatedProduct.getImage());
+            existingProduct.setThumbnail(updatedProduct.getThumbnail());
             existingProduct.setCategory(updatedProduct.getCategory());
 
             return productRepository.save(existingProduct);
@@ -79,7 +79,7 @@ public class ProductService {
     // }
 
     public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
-        return productRepository.findProductByNameIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
+        return productRepository.findProductByTitleIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
     }
 
     // public List<Product> getProductsInPriceRange(Double minPrice, Double
