@@ -1,45 +1,34 @@
 package com.elproyectegrande.controller;
 
-import java.util.List;
-
+import com.elproyectegrande.model.Cart;
+import com.elproyectegrande.model.Product;
+import com.elproyectegrande.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.elproyectegrande.model.Product;
-import com.elproyectegrande.service.ProductService;
-
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/cart/products")
+@RequestMapping("/cart")
 public class CartController {
+
     @Autowired
-    private ProductService productService;
+    private CartService cartService;
 
-    // @GetMapping
-    // public List<Product> getCartProducts() {
-    //     return productService.getCartProducts();
-    // }
+    @PostMapping("/add/{productId}")
+    public Cart addToCart(@PathVariable(name = "productId") Long productId) {
+        return cartService.addToCart(productId);
+    }
 
-    //  @PutMapping("/add/{productId}")
-    // public ResponseEntity<String> addToCart(@PathVariable Long productId) {
-    //     Product product = productService.addProductToCart(productId);
-    //     if (product != null) {
-    //         return ResponseEntity.ok("Product added to cart");
-    //     } else {
-    //         return ResponseEntity.badRequest().body("Failed to add product to cart");
-    //     }
-    // }
+    @DeleteMapping("/remove/{cartItemId}")
+    public ResponseEntity<Void> removeFromCart(@PathVariable Long cartItemId) {
+        cartService.removeFromCart(cartItemId);
+        return ResponseEntity.noContent().build();
+    }
 
-    // @DeleteMapping("/remove/{productId}")
-    // public ResponseEntity<String> removeFromCart(@PathVariable Long productId) {
-    //     boolean removed = productService.removeProductFromCart(productId);
-    //     if (removed) {
-    //         return ResponseEntity.ok("Product removed from the cart");
-    //     } else {
-    //         return ResponseEntity.badRequest().body("Failed to remove product from the cart");
-    //     }
-    // }
-
+    @GetMapping("/items")
+    public Iterable<Cart> getCartItems() {
+        return cartService.getCartItems();
+    }
 }
-

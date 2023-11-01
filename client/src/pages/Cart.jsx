@@ -8,20 +8,28 @@ function Cart() {
   const [cartProducts, setCartProducts] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
 
-  const fetchCartItems = () => {
-    axios
-      .get("http://localhost:8080/cart/products")
-      .then((response) => {
-        if (response.status === 200) {
-          setCartProducts(response.data);
-        } else {
-          console.error("Failed to fetch cart products");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching cart products", error);
-      });
+  const fetchCartItems = async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      console.error("Token not found in localStorage");
+      return;
+    }
+
+    const response = await axios
+        .get("http://localhost:8080/cart/items", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+    const fetchedProducts = response.data
+
+    setCartProducts(fetchedProducts);
+    console.log(cartProducts)
+
   };
+
 
   useEffect(() => {
     fetchCartItems();
@@ -37,7 +45,7 @@ function Cart() {
   };
 
   const totalCost = cartProducts.reduce((accumulator, product) => {
-    return accumulator + product.price;
+    return accumulator + product.product.price;
   }, 0);
 
   return (
@@ -56,18 +64,18 @@ function Cart() {
                   className="group bg-slate-700 p-4 mx-5 my-3 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer"
                 >
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={product.product.thumbnail}
+                    alt={product.product.title}
                     className=" w-10 h-16 object-contain "
                   />
                   <h3 className="text-lg text-white font-semibold mt-2">
-                    <strong>{product.name}</strong>
+                    <strong>{product.product.title}</strong>
                   </h3>
                   <h2 className="text-lg text-white font-semibold mt-2">
-                    {product.description}
+                    {product.product.description}
                   </h2>
                   <p className="text-indigo-400">
-                    <strong>${product.price.toFixed(2)}</strong>
+                    <strong>${product.product.price.toFixed(2)}</strong>
                   </p>
                   <button
                     onClick={() => handleRemoveFromCart(product)}
@@ -84,9 +92,9 @@ function Cart() {
                 {cartProducts.map((prod) => (
                   <div key={prod.id}>
                     <div className="flex justify-between items-center space-x-5">
-                      <p className="font-bold">{prod.name}:</p>
+                      <p className="font-bold">{prod.product.title}:</p>
                       <p className="text-lg text-indigo-500">
-                        <strong>{prod.price.toFixed(2)}$</strong>
+                        <strong>{prod.product.price.toFixed(2)}$</strong>
                       </p>
                     </div>
                     <hr className="my-4 border-t border-gray-300" />

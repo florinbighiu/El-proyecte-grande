@@ -53,30 +53,34 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    // public Product addProductToCart(Long productId) {
-    // Optional<Product> optionalProduct = productRepository.findById(productId);
+//     public Product addProductToCart(Long productId) {
+//     Optional<Product> optionalProduct = productRepository.findById(productId);
+//
+//     if (optionalProduct.isPresent()) {
+//     Product product = optionalProduct.get();
+//     product.setIsInCart(true);
+//     return productRepository.save(product);
+//     }
+//
+//     return null;
+//     }
+//
+//    public List<Product> getCartProducts() {
+//        return productRepository.findByIsInCartTrue();
+//    }
 
-    // if (optionalProduct.isPresent()) {
-    // Product product = optionalProduct.get();
-    // product.setIsInCart(true);
-    // return productRepository.save(product);
-    // }
-
-    // return null;
-    // }
-
-    // public boolean removeProductFromCart(Long productId) {
-    // Optional<Product> optionalProduct = productRepository.findById(productId);
-
-    // if (optionalProduct.isPresent()) {
-    // Product product = optionalProduct.get();
-    // product.setIsInCart(false);
-    // productRepository.save(product);
-    // return true;
-    // }
-
-    // return false;
-    // }
+//     public boolean removeProductFromCart(Long productId) {
+//     Optional<Product> optionalProduct = productRepository.findById(productId);
+//
+//     if (optionalProduct.isPresent()) {
+//     Product product = optionalProduct.get();
+//     product.setIsInCart(false);
+//     productRepository.save(product);
+//     return true;
+//     }
+//
+//     return false;
+//     }
 
     public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
         return productRepository.findProductByTitleIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);

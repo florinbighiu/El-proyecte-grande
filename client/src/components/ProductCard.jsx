@@ -26,7 +26,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
           </div>
         </div>
       )}
-      <img src={product.thumbnail} alt={product.title} className="w-full h-64 rounded-md mb-4" />
+      <img src={product.thumbnail} alt={product.title} className="w-full h-60 rounded-md mb-4" />
       <div className="text-white text-center p-2 ">
         <h3 className="font-extrabold text-xl uppercase mb-1">{product.title}</h3>
         <p
@@ -61,7 +61,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
       </div>
       <div className=" p-2 flex flex-col items-center w-full">
         <button
-          onClick={() => handleAddToCart(product)}
+          onClick={() => handleAddToCart(product.id, 1)}
           disabled={product.isInCart}
           className={`mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-md w-full focus:outline-none ${
             product.isInCart ? "opacity-50 cursor-not-allowed" : ""

@@ -1,9 +1,12 @@
 package com.elproyectegrande;
 
-import com.elproyectegrande.model.ApplicationUser; 
+import com.elproyectegrande.model.ApplicationUser;
 import com.elproyectegrande.model.Role;
+import com.elproyectegrande.repository.CartRepository;
+import com.elproyectegrande.repository.ProductRepository;
 import com.elproyectegrande.repository.RoleRepository;
 import com.elproyectegrande.repository.UserRepository;
+import com.elproyectegrande.service.CartService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +24,7 @@ public class ElproyectegrandeApplication {
 
 	@Bean
 	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository,
-			PasswordEncoder passwordEncoder) {
+						  PasswordEncoder passwordEncoder) {
 		return args -> {
 			if (roleRepository.findByAuthority("ADMIN").isPresent())
 				return;
@@ -35,6 +38,9 @@ public class ElproyectegrandeApplication {
 			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncoder.encode("password"), roles, "token", null);
 
 			userRepository.save(admin);
+
+
+
 		};
 	}
 

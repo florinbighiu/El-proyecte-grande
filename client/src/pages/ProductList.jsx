@@ -21,7 +21,7 @@ function ProductList() {
     name: "",
     description: "",
     price: 0,
-    discountpercentage: 0,
+    discountPercentage: 0,
     rating: 0,
     stock: 0,
     brand: "",
@@ -62,24 +62,31 @@ function ProductList() {
     }, 2000);
   }, []);
 
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async (productId) => {
     try {
-      await fetch(`http://localhost:8080/cart/products/add/${product.id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
-        },
-      });
-      const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
+
+
+      const response = await axios.post(
+          `http://localhost:8080/cart/add/${productId}`
+          , {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
       );
-      setProducts(updatedProducts);
+
+      if (response.status === 200) {
+        alert("Product added to the cart!");
+      } else {
+        alert("Failed to add the product to the cart");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error adding product to the cart", error);
+      alert("An error occurred while adding the product to the cart");
     }
   };
+
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -110,7 +117,7 @@ function ProductList() {
           name: "",
           description: "",
           price: 0,
-          discountpercentage: 0,
+          discountPercentage: 0,
           rating: 0,
           stock: 0,
           brand: "",
@@ -137,7 +144,7 @@ function ProductList() {
         name: "",
         description: "",
         price: 0,
-        discountpercentage: 0,
+        discountPercentage: 0,
         rating: 0,
         stock: 0,
         brand: "",

@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/send_email")
 public class EmailSenderController {
 
-    private final EmailSenderService emailSenderService;
-
     @Autowired
-    public EmailSenderController(EmailSenderService emailSenderService) {
-        this.emailSenderService = emailSenderService;
-    }
+    private EmailSenderService emailSenderService;
+
+
 
     @PostMapping()
     public void triggerEmail(@RequestBody EmailData emailData) throws MessagingException {

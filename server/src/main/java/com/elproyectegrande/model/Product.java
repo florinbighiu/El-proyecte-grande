@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +25,5 @@ public class Product {
     private String brand;
     private String category;
     private String thumbnail;
+
 }
