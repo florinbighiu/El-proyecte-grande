@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/send_email")
+@RequestMapping("/email")
 public class EmailSenderController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class EmailSenderController {
 
 
 
-    @PostMapping()
+    @PostMapping("/send")
     public void triggerEmail(@RequestBody EmailData emailData) throws MessagingException {
         emailSenderService.sendMail(emailData.getName(), emailData.getEmail(), emailData.getMessage());
     }

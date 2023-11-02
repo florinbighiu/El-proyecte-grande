@@ -30,8 +30,5 @@ public class EmailSenderService {
 
         System.out.println("Mail sent successfully");
 
-
-
-
     }
 }

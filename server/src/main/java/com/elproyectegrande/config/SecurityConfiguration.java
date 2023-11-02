@@ -58,7 +58,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/products/**").permitAll();
                     auth.requestMatchers("/cart/add/**").permitAll();
                     auth.requestMatchers("/cart/items/**").permitAll();
-                    auth.requestMatchers("/send_email/**").permitAll();
+                    auth.requestMatchers("/email/send/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("user/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();

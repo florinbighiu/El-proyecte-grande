@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import  { Toaster } from 'react-hot-toast';
+
 
 import ProductList from "./pages/ProductList";
 import Navbar from "./layout/Navbar";
@@ -33,6 +35,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/reset" element={<PasswordReset />}></Route>
           </Routes>
+          <Toaster />
         </div>
         <Footer />
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "../assets/ecommerce.png";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -24,22 +25,19 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/send_email", formData, {
+      await axios.post("http://localhost:8080/email/send", formData, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
         }
       });
-
-      console.log("Message sent successfully!");
-
+      toast.success("Message sent successfully!");
       setFormData({
         name: "",
         email: "",
         message: ""
       });
     } catch (error) {
-      console.error("Error sending the message:", error);
+      toast.error("Error sending the message:", error);
     } finally {
       setLoading(false);
     }

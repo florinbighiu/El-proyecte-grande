@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 
-function UpdateForm({ 
+import toast from 'react-hot-toast';
+
+function UpdateForm({
   title,
   description, 
   price, 
@@ -14,6 +16,13 @@ function UpdateForm({
   handleUpdate, 
   onClose 
 }) {
+  const toaster = () => toast.success("Product updated!");
+
+  const update = () => {
+    handleUpdate();
+    toaster();
+  }
+
   return (
     <div className="fixed inset-0 overflow-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
       <div className="bg-slate-800 text-white p-4 rounded-md shadow-md md:w-1/4">
@@ -111,7 +120,7 @@ function UpdateForm({
             />
           </div>
           <div className="flex flex-col justify-center">
-          <button type="button" onClick={handleUpdate} className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
+          <button type="button" onClick={update} className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
               Update Product
             </button>
             <button

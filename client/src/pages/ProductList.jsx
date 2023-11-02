@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "sonner";
 
 import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
 import Loading from "../layout/Loading.jsx";
+import toast from "react-hot-toast";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -35,17 +35,14 @@ function ProductList() {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/products", {
-        method: "GET",
+      const response = await axios.get("http://localhost:8080/products", {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         },
       });
 
       if (response) {
-        const data = await response.json();
+        const data = await response.data;
         setProducts(data);
         setIsLoading(false);
       } else {
@@ -76,9 +73,9 @@ function ProductList() {
       );
 
       if (response.status === 200) {
-        alert("Product added to the cart!");
+        toast.success("Product added to the cart!");
       } else {
-        alert("Failed to add the product to the cart");
+        toast.error("Failed to add the product to the cart");
       }
     } catch (error) {
       console.error("Error adding product to the cart", error);
@@ -93,7 +90,6 @@ function ProductList() {
     setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
 
-  const Toaster = () => toast.success("Product added succesfully");
 
   const handleAddProduct = async () => {
     try {
@@ -112,7 +108,6 @@ function ProductList() {
         });
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
-        Toaster();
         setNewProduct({
           name: "",
           description: "",
@@ -199,7 +194,7 @@ function ProductList() {
                     />
                   ))}
                 {userRole === "1" && (
-                  <div className="group bg-slate-800 bg-opacity-50 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-inherit h-inherit">
+                  <div className="group bg-gradient-to-r from-slate-700 to-slate-800 bg-opacity-50 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-inherit h-inherit">
                     <button
                       onClick={() => setShowForm(true)}
                       className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md sm:w-full md:w-32">
