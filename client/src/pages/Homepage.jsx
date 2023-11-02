@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import ProductCard from "../components/ProductCard.jsx";
 import Loading from "../layout/Loading.jsx"
@@ -37,17 +38,27 @@ function Homepage() {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async (productId) => {
     try {
-      await axios.put(`http://localhost:8080/cart/products/add/${product.id}`);
 
-      setProducts((prevProducts) =>
-        prevProducts.map((prevProduct) =>
-          prevProduct.id === product.id ? { ...prevProduct, isInCart: true } : prevProduct
-        )
+
+      const response = await axios.post(
+          `http://localhost:8080/cart/add/${productId}`
+          , {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
       );
+
+      if (response.status === 200) {
+        toast.success("Product added to the cart!");
+      } else {
+        toast.error("Failed to add the product!");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error adding product to the cart", error);
+      alert("An error occurred while adding the product to the cart");
     }
   };
 
@@ -55,7 +66,7 @@ function Homepage() {
 
   return (
     <div>
-      <section className="bg-transparent py-16 my-4 text-center rounded-lg">
+      <section className="bg-transparent py-16 mt-4 text-center rounded-lg">
         <h1 className="mt-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">Discover the Best Deals</h1>
         <p className="order-first bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text font-medium tracking-wide text-transparent m-3">
           Explore our wide range of products at amazing prices.
@@ -107,7 +118,7 @@ function Homepage() {
         </div>
       </section>
 
-      <section className="bg-transparent text-center text-white py-16 mb-4 w-full">
+      <section className="bg-transparent text-center text-white py-16 w-full">
         <h2 className="mt-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">Ready to Shop?</h2>
         <p className="order-first bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text font-medium tracking-wide text-transparent m-3">
           Start exploring our products and find your next favorite item.

@@ -1,28 +1,60 @@
 /* eslint-disable react/prop-types */
-const ProductDetail = ({ product }) => {
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import axios from 'axios';
+
+function ProductDetail() {
+  const { productId } = useParams();
+
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/products/${productId}`)
+      .then((response) => {
+        setProduct(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [productId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!product) {
+    return <div>Product not found.</div>;
+  }
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
+    <div className="container mx-auto p-4">
       <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
-      <img src={product.image} alt={product.name} className="w-full h-auto mb-4" />
-      <p className="text-gray-600">{product.description}</p>
-      <div className="mt-4">
-        <p className="text-xl text-red-500 font-semibold">
-          Price: ${product.price.toFixed(2)}
-        </p>
-        {product.discountpercentage > 0 && (
-          <p className="text-xl text-green-500 font-semibold">
-            Discounted Price: ${(product.price - (product.price * product.discountpercentage) / 100).toFixed(2)}
-          </p>
-        )}
+      <div className="flex flex-col md:flex-row">
+        <div className="md:w-1/2 p-4">
+          <img
+            src={product.thumbnail} // Replace with the actual image URL
+            alt={product.title}
+            className="w-full h-auto"
+          />
+        </div>
+        <div className="md:w-1/2 text-white p-4">
+          <p className="text-lg">Product ID: {product.id}</p>
+          <p className="text-lg">Price: ${product.price}</p>
+          {/* Add more product details here */}
+        </div>
       </div>
-      <p className="mt-4">
-        Rating: {product.rating.toFixed(1)} <i className="text-yellow-400 fas fa-star"></i>
-      </p>
-      <p className="mt-4">
-        Stock: {product.stock} {product.stock > 1 ? 'items' : 'item'} available
-      </p>
     </div>
   );
-};
+}
 
 export default ProductDetail;

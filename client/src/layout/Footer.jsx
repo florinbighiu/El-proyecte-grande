@@ -3,7 +3,7 @@ function Footer() {
   return (
     <footer className="border-t border-gray-800/75 bg-gray-900 text-gray-100 pt-8 mt-20">
       <div className="flex items-center justify-evenly">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mx-5 pl-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ml-12 pl-10">
           <div>
             <h3 className="text-2xl font-bold mb-4">eCommerce</h3>
             <p className="text-gray-400 pr-6">

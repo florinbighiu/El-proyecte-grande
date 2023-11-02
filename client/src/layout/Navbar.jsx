@@ -14,6 +14,9 @@ const Navbar = () => {
     window.location.href = "/login";
   };
 
+  const isAuthenticated = localStorage.getItem("authToken");
+
+
   const content = (
     <>
       <div className="lg:hidden bg-[#111827] block absolute top-14 w-full left-0 right-0  text-white text-bold transition z-50">
@@ -30,15 +33,28 @@ const Navbar = () => {
           <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
             <a href="/contact">Contact</a>
           </li>
-          <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-            <a href="/login">Login</a>
-          </li>
+          {isAuthenticated ? (
+              <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+                <a
+                    href="/login"
+                    onClick={logout}
+                    >
+                  Logout
+                </a>
+              </li>
+          ) : (
+              <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+                <a
+                    href="/login">
+                  Log In
+                </a>
+              </li>
+          )}
         </ul>
       </div>
     </>
   );
 
-  const isAuthenticated = localStorage.getItem("authToken");
 
   return (
     <nav className="sticky top-0 z-50 text-sm font-medium text-white bg-gray-900 border-b border-gray-800/75">

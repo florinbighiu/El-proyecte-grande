@@ -56,7 +56,7 @@ function ProductList() {
   useEffect(() => {
     setTimeout(() => {
       fetchProducts();
-    }, 2000);
+    }, 1000);
   }, []);
 
   const handleAddToCart = async (productId) => {
@@ -75,7 +75,7 @@ function ProductList() {
       if (response.status === 200) {
         toast.success("Product added to the cart!");
       } else {
-        toast.error("Failed to add the product to the cart");
+        toast.error("Failed to add the product!");
       }
     } catch (error) {
       console.error("Error adding product to the cart", error);

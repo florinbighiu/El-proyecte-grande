@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import StarRating from "./StarRating";
 
 function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpenUpdateForm }) {
@@ -17,7 +19,7 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
     .join("\n");
 
   return (
-    <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-lg cursor-pointer duration-300 w-fit">
+    <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-lg duration-300 w-fit">
       {product.discountPercentage > 0 && (
         <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-white p-2 rounded-full">
           <div className="text-md font-semibold">
@@ -26,15 +28,21 @@ function ProductCard({ product, handleAddToCart, handleDeleteProduct, handleOpen
           </div>
         </div>
       )}
-      <img src={product.thumbnail} alt={product.title} className="w-full h-60 rounded-md mb-4" />
+      <Link to={`/product/${product.id}`}>
+        <img src={product.thumbnail} alt={product.title} className="w-full h-56 rounded-md mb-4" />
+      </Link>
+
       <div className="text-white text-center p-2 ">
-        <h3 className="font-extrabold text-xl uppercase mb-1">{product.title}</h3>
-        <p
-          className={`text-gray-200 text-lg text-start font-display px-1  ${
-            showMore ? "..." : "overflow-hidden h-14"
-          }`}>
-          {showMore ? product.description : truncatedDescription}
-        </p>
+        <Link to={`/product/${product.id}`}>
+          <h3 className="font-extrabold text-xl uppercase mb-1">{product.title}</h3>
+          <p
+            className={`text-gray-200 text-lg text-start font-display px-1  ${
+              showMore ? "..." : "overflow-hidden h-14"
+            }`}>
+            {showMore ? product.description : truncatedDescription}
+          </p>
+        </Link>
+
         {product.description.split("\n").length > maxDescriptionLines && (
           <button
             onClick={toggleDescription}

@@ -29,7 +29,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/product/:productId" component={ProductDetail} />
+              <Route path="/product/:productId" element={<ProductDetail />} />
             </Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>

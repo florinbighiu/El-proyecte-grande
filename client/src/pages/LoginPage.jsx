@@ -47,10 +47,13 @@ const LoginPage = () => {
       <div className="bg-slate-800 rounded-lg shadow-md w-96">
         <div className="flex items-center mt-8 pl-24">
             <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
-            <div className="text-xl text-rose-500 ml-4 font-semibold font-body">eCommerce</div>
+            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
-        <form onSubmit={handleLogin} className="p-8">
-          <div className="mb-5">
+        <form onSubmit={handleLogin} className="py-3 px-8  font-display">
+          <div className="mb-3">
+            <label htmlFor="username" className="text-gray-300">
+              Username
+            </label>
             <input
               type="text"
               id="username"
@@ -61,7 +64,10 @@ const LoginPage = () => {
               placeholder="Your username"
             />
           </div>
-          <div className="mb-5">
+          <div className="">
+            <label htmlFor="password" className="text-gray-300">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -72,22 +78,21 @@ const LoginPage = () => {
               placeholder="Your password"
             />
           </div>
+          <p className="my-3 text-start text-blue-500">
+            <a href="/forgotPassword">Forgot your password?</a>
+          </p>
           <button
-            className="w-full bg-purple-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-purple-600"
+            className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-md transition duration-300 hover:bg-purple-600"
             type="submit"
           >
             Log In
           </button>
-          {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mb-2 text-gray-500 text-center">
+        <p className="mb-4 text-gray-300 text-center font-display">
           Dont have an account?{" "}
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign up
           </a>
-        </p>
-        <p className="my-2 text-center text-blue-500">
-          <a href="/forgotPassword">Forgot your password?</a>
         </p>
       </div>
     </div>
