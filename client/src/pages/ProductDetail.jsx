@@ -10,6 +10,8 @@ import StarRating from "../components/StarRating";
 function ProductDetail() {
   const { productId } = useParams();
 
+  const quantity = 1;
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,22 +31,31 @@ function ProductDetail() {
       });
   }, []);
 
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (product, productId, quantity) => {
     try {
-      const response = await axios.post(`http://localhost:8080/cart/add/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        toast.success("Product added to the cart!");
+      if (product.stock > 0) {
+        const response = await axios.post(
+          `http://localhost:8080/cart/add/${productId}/${quantity}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          toast.success("Product added to the cart!");
+          setProduct((prevProduct) => ({ ...prevProduct, stock: prevProduct.stock - quantity }));
+        } else {
+          toast.error("Failed to add the product!");
+        }
       } else {
-        toast.error("Failed to add the product!");
+        toast.error("Product is out of stock!");
       }
     } catch (error) {
       console.error("Error adding product to the cart", error);
-      alert("An error occurred while adding the product to the cart");
+      toast.error("An error occurred while adding the product to the cart");
     }
   };
 
@@ -65,15 +76,15 @@ function ProductDetail() {
   }
 
   return (
-    <div className="w-full p-12 flex flex-wrap rounded overflow-hidden">
-      <div className="w-full sm:w-1/2 rounded-xl my-5">
+    <div className="w-full p-8 flex flex-wrap rounded overflow-hidden">
+      <div className="w-full sm:w-1/2 bg-gray-100 rounded-xl p-1 my-5">
         <img
           src={product.thumbnail}
           alt="Thumbnail"
-          className="w-full h-96 object-fit rounded-xl"
+          className="w-full h-96 object-fit border border-amber-50/50 shadow-lg rounded-xl"
         />
       </div>
-      <div className="w-full sm:w-1/2 px-12 py-4 text-gray-200 flex flex-col items-start justify-between">
+      <div className="w-full sm:w-1/2 px-20 py-4 text-black flex flex-col items-start justify-between">
         <h3 className="font-extrabold w-full text-3xl text-center uppercase mb-4">
           {product.title}
         </h3>
@@ -87,7 +98,7 @@ function ProductDetail() {
                 : product.price.toFixed(2)}
             </strong>
             {product.discountPercentage > 0 && (
-              <span className="text-sm text-gray-400 line-through ml-2">
+              <span className="text-sm text-black line-through ml-2">
                 ${product.price.toFixed(2)}
               </span>
             )}
@@ -104,14 +115,16 @@ function ProductDetail() {
               Quantity available / {product.stock} in stock
             </p>
           )}
-          <p className="text-xl font-display my-2">Brand {product.brand}</p>
-          <p className="text-xl font-display my-2 mb-5">Category {product.category}</p>
+          <p className="text-xl font-display my-2">Brand: {product.brand}</p>
+          <p className="text-xl font-display my-2 mb-5">Category: {product.category}</p>
         </div>
         <div className="flex flex-col items-end justify-end w-full">
-          <button
-            onClick={() => handleAddToCart(product.id)}
-            className="mb-2 py-3 bg-[#0053a0] hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ">
-            Add to cart
+        <button
+              onClick={() => handleAddToCart(product,product.id, quantity)}
+              className={`mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${
+                  product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
+              }`}>
+            {product.stock === 0 ? "Out of stock" : `Add to Cart`}
           </button>
         </div>
       </div>

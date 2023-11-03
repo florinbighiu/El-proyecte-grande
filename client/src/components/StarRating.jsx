@@ -9,7 +9,7 @@ const StarRating = ({ product }) => {
             key={index}
             xmlns="http://www.w3.org/2000/svg"
             className={`text-center w-6 fill-current ${
-              index <= product.rating ? "text-yellow-400" : "text-gray-300"
+              index <= product.rating ? "text-yellow-400" : "text-gray-400"
             }`}
             viewBox="0 0 24 24">
             <path
@@ -19,7 +19,7 @@ const StarRating = ({ product }) => {
           </svg>
         ))}
       </div>
-      <span className="ml-2 text-start text-gray-300">{product.rating.toFixed(1)}</span>
+      <span className="ml-2 text-start font-display text-gray-800">{product.rating.toFixed(1)}</span>
     </div>
   );
 };

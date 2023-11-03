@@ -48,7 +48,7 @@ function Cart() {
   const finalCost = totalCost + 20;
 
   return (
-    <div className="text-white">
+    <div className="text-black mt-8">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-1 gap-x-5 gap-y-0">
         {cartProducts.length ? (
@@ -57,20 +57,21 @@ function Cart() {
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-slate-800 mx-3 my-3 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer">
-                  <div className="flex flex-col lg:flex-row">
-                    <div className="lg:w-1/3">
+                  className="bg-gray-50 h-64 mx-3 my-3 rounded-lg border border-gray-100/75 shadow-md backdrop-blur-md hover:cursor-pointer">
+                  <div className="relative h-full flex flex-col lg:flex-row">
+                    <div className="relative h-full lg:w-1/3">
                       <img
-                        src={product.product.thumbnail}
-                        alt={product.product.title}
-                        className="w-full h-40 lg:h-64 object-fill rounded-lg"
+                          src={product.product.thumbnail}
+                          alt={product.product.title}
+                          className="w-full h-full object-fill border border-gray-100/75 shadow-lg rounded-lg"
                       />
                     </div>
-                    <div className="p-2 lg:p-4 flex-grow flex justify-between flex-col lg:w-1/2">
-                      <h3 className="text-lg text-white text-center font-semibold mb-2">
+
+                    <div className="p-4 flex-grow flex justify-evenly flex-col lg:w-1/2">
+                      <h3 className="text-lg text-black text-center font-semibold mb-2">
                         <strong>{product.product.title}</strong>
                       </h3>
-                      <p className="text-lg text-white text-center mb-2">
+                      <p className="text-lg text-black text-center mb-2">
                         {product.product.description}
                       </p>
                       <p className="text-red-500 text-center text-xl">
@@ -86,7 +87,7 @@ function Cart() {
                             : (product.product.price * product.quantity).toFixed(2)}
                         </strong>
                         {product.product.discountPercentage > 0 && (
-                          <span className="text-sm text-gray-400 line-through ml-2">
+                          <span className="text-sm text-gray-700 line-through ml-2">
                             ${(product.product.price * product.quantity).toFixed(2)}
                           </span>
                         )}{" "}
@@ -94,7 +95,7 @@ function Cart() {
                       <div className="text-center font-display">
                         <span>Qty: {product.quantity}</span>
                       </div>
-                      <div className="flex items-center justify-center">
+                      <div className="flex items-end justify-center">
                         <button
                           onClick={() => handleRemoveFromCart(product)}
                           className="bg-red-500 hover:bg-red-700 w-2/5 text-white font-bold py-2 my-2 lg:my-3 px-4 rounded-lg mt-2 lg:mt-4 mx-auto lg:mx-0">
@@ -107,25 +108,27 @@ function Cart() {
               ))}
             </div>
             <div className="h-fit flex items-center justify-start mx-3 my-3 col-span-2 row-span-2 md:col-span-1 md:row-span-1">
-              <div className="bg-slate-800 text-white p-4 rounded-md shadow-md w-full">
-                <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
+              <div className="bg-gray-50 text-black font-display p-4 rounded-md border border-gray-200/50 shadow-md w-full">
+                <h2 className="text-2xl text-center mb-4">Order Summary</h2>
+                <hr className="my-4 border-t border-gray-300" />
+                <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
                 <hr className="my-4 border-t border-gray-300" />
                 <div className="flex justify-between items-center space-x-5">
-                  <p className="font-bold">Products cost:</p>
+                  <p className="">Products cost:</p>
                   <p className="text-lg text-red-500">
                     <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
                 <hr className="my-4 border-t border-gray-300" />
                 <div className="flex justify-between items-center space-x-5">
-                  <p className="font-bold">Delivery fee:</p>
+                  <p className="">Delivery fee:</p>
                   <p className="text-lg text-green-500">
                     <strong>20$</strong>
                   </p>
                 </div>
                 <hr className="my-4 border-t border-gray-300" />
                 <div className="flex justify-between items-center">
-                  <p className="text-lg font-semibold">Total:</p>
+                  <p className="text-lg">Total:</p>
                   <p className="text-lg text-red-500">
                     <strong>{finalCost.toFixed(2)}$</strong>
                   </p>

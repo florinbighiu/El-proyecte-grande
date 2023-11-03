@@ -19,9 +19,9 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
       .join("\n");
 
   return (
-      <div className="relative bg-gradient-to-r from-slate-700 to-slate-800 rounded-lg shadow-lg duration-300 w-fit">
+      <div className="relative bg-white border border-gray-300/75 rounded-lg shadow-lg duration-300 w-fit">
         {product.discountPercentage > 0 && (
-            <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-white p-2 rounded-full">
+            <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-black p-2 rounded-full">
               <div className="text-md font-semibold">
                 <span className="text-lg">-</span>
                 {product.discountPercentage}%
@@ -29,14 +29,14 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
             </div>
         )}
         <Link to={`/product/${product.id}`}>
-          <img src={product.thumbnail} alt={product.title} className="w-full h-56 rounded-md mb-4" />
+          <img src={product.thumbnail} alt={product.title} className="w-full h-56 rounded-lg shadow-lg mb-4" />
         </Link>
 
-        <div className="text-white text-center p-2 ">
+        <div className="text-black text-center p-2 ">
           <Link to={`/product/${product.id}`}>
-            <h3 className="font-extrabold text-xl uppercase mb-1">{product.title}</h3>
+            <h3 className="font-extrabold text-lg uppercase mb-1">{product.title}</h3>
             <p
-                className={`text-gray-200 text-lg text-start font-display px-1  ${
+                className={`text-black text-lg text-start font-display px-1  ${
                     showMore ? "..." : "overflow-hidden h-14"
                 }`}>
               {showMore ? product.description : truncatedDescription}
@@ -61,16 +61,16 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
                   : product.price.toFixed(2)}
             </strong>
             {product.discountPercentage > 0 && (
-                <span className="text-sm text-gray-400 line-through ml-2">
+                <span className="text-sm text-gray-700 line-through ml-2">
               ${product.price.toFixed(2)}
             </span>
             )}
           </p>
         </div>
-        <div className=" p-2 flex flex-col items-center w-full">
+        <div className=" p-2 flex flex-col items-center w-full text-gray-100">
           <button
               onClick={() => handleAddToCart(product,product.id, quantity)}
-              className={`mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-md w-full focus:outline-none ${
+              className={`mb-2 bg-blue-600 hover:bg-blue-700  font-bold p-2 rounded-md w-full focus:outline-none ${
                   product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
               }`}>
             {product.stock === 0 ? "Out of stock" : `Add to Cart (${product.stock})`}
@@ -79,12 +79,12 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
               <div className="flex flex-row space-x-2 w-full">
                 <button
                     onClick={() => handleDeleteProduct(product.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md w-full focus:outline-none">
+                    className="bg-rose-600 hover:bg-rose-700  font-bold py-2 px-4 rounded-md w-full focus:outline-none">
                   Delete
                 </button>
                 <button
                     onClick={() => handleOpenUpdateForm(product.id)}
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md w-full focus:outline-none">
+                    className="bg-violet-600 hover:bg-violet-800  font-bold py-2 px-4 rounded-md w-full focus:outline-none">
                   Update
                 </button>
               </div>

@@ -36,22 +36,37 @@ function Homepage() {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (productId, quantity) => {
+  const handleAddToCart = async (product, productId, quantity) => {
     try {
-      const response = await axios.post(`http://localhost:8080/cart/add/${productId}/${quantity}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        toast.success("Product added to the cart!");
+      if (product.stock > 0) {
+        const response = await axios.post(
+          `http://localhost:8080/cart/add/${productId}/${quantity}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          toast.success("Product added to the cart!");
+          setProducts((prevProducts) =>
+            prevProducts.map((prevProduct) =>
+              prevProduct.id === productId
+                ? { ...prevProduct, stock: prevProduct.stock - quantity }
+                : prevProduct
+            )
+          );
+        } else {
+          toast.error("Failed to add the product!");
+        }
       } else {
-        toast.error("Failed to add the product!");
+        toast.error("Product is out of stock!");
       }
     } catch (error) {
       console.error("Error adding product to the cart", error);
-      alert("An error occurred while adding the product to the cart");
+      toast.error("An error occurred while adding the product to the cart");
     }
   };
 
@@ -90,18 +105,18 @@ function Homepage() {
         )}
       </section>
 
-      <section className="bg-transparent border border-gray-700 shadow-md py-16 text-center">
-        <h2 className="text-2xl font-bold text-gray-100 mb-4">What Our Customers Say</h2>
+      <section className="bg-transparent border border-gray-300/75 shadow-md py-16 text-center">
+        <h2 className="text-2xl font-bold text-black mb-4">What Our Customers Say</h2>
         <div className="max-w-3xl mx-auto">
           <div className="mb-4">
-            <p className="text-lg text-gray-100">
+            <p className="text-lg text-black">
               I love shopping at this store! The products are amazing, and the prices are
               unbeatable.
             </p>
             <p className="text-blue-500">- John Doe</p>
           </div>
           <div className="mb-4">
-            <p className="text-lg text-gray-100">
+            <p className="text-lg text-black">
               The customer service is top-notch. I received my order quickly and in perfect
               condition.
             </p>
