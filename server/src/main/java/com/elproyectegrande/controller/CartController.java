@@ -16,9 +16,11 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/add/{productId}")
-    public Cart addToCart(@PathVariable(name = "productId") Long productId) {
-        return cartService.addToCart(productId);
+    @PostMapping("/add/{productId}/{quantity}")
+    public Cart addToCart(
+            @PathVariable(name = "productId") Long productId,
+            @PathVariable(name = "quantity") Integer quantity) {
+        return cartService.addToCart(productId, quantity);
     }
 
     @DeleteMapping("/remove/{cartItemId}")

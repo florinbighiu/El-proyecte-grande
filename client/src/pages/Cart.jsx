@@ -21,11 +21,7 @@ function Cart() {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    const fetchedProducts = response.data;
-
-    setCartProducts(fetchedProducts);
-    console.log(cartProducts);
+    setCartProducts(response.data);
   };
 
   useEffect(() => {
@@ -35,7 +31,7 @@ function Cart() {
   const handleRemoveFromCart = async (product) => {
     try {
       await axios.delete(`http://localhost:8080/cart/remove/${product.id}`);
-      setCartProducts(cartProducts.filter((prod) => prod.id !== product.id));
+      setCartProducts((prevProducts) => prevProducts.filter((prod) => prod.id !== product.id));
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +40,8 @@ function Cart() {
   const totalCost = cartProducts.reduce((accumulator, product) => {
     return (
       accumulator +
-      (product.product.price - (product.product.price * product.product.discountPercentage) / 100)
+      (product.product.price - (product.product.price * product.product.discountPercentage) / 100) *
+        product.quantity
     );
   }, 0);
 
@@ -81,17 +78,22 @@ function Cart() {
                           $
                           {product.product.discountPercentage > 0
                             ? (
-                                product.product.price -
-                                (product.product.price * product.product.discountPercentage) / 100
+                                (product.product.price -
+                                  (product.product.price * product.product.discountPercentage) /
+                                    100) *
+                                product.quantity
                               ).toFixed(2)
-                            : product.product.price.toFixed(2)}
+                            : (product.product.price * product.quantity).toFixed(2)}
                         </strong>
                         {product.product.discountPercentage > 0 && (
                           <span className="text-sm text-gray-400 line-through ml-2">
-                            ${product.product.price.toFixed(2)}
+                            ${(product.product.price * product.quantity).toFixed(2)}
                           </span>
                         )}{" "}
                       </p>
+                      <div className="text-center font-display">
+                        <span>Qty: {product.quantity}</span>
+                      </div>
                       <div className="flex items-center justify-center">
                         <button
                           onClick={() => handleRemoveFromCart(product)}
@@ -111,7 +113,7 @@ function Cart() {
                 <div className="flex justify-between items-center space-x-5">
                   <p className="font-bold">Products cost:</p>
                   <p className="text-lg text-red-500">
-                    <strong>{totalCost}$</strong>
+                    <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
                 <hr className="my-4 border-t border-gray-300" />
@@ -140,7 +142,7 @@ function Cart() {
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-start col-span-3 mt-24">
+          <div className="flex flex-col items-center justify-start col-span-3 mt-12">
             <img src={EmptyCart} alt="EmptyCart" className="h-2/4 " />
             <h1 className="w-full text-center mt-14 text-lg">
               Your cart is empty. To add products to your cart go{" "}

@@ -49,7 +49,7 @@ const LoginPage = () => {
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
           <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
-        <form onSubmit={handleLogin} className="py-3 px-8  font-display">
+        <form onSubmit={handleLogin} className="py-3 px-8 font-display">
           <div className="mb-3">
             <label htmlFor="username" className="text-gray-300">
               Username

@@ -16,6 +16,7 @@ function ProductList() {
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
+  const quantity = 1;
 
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -54,27 +55,43 @@ function ProductList() {
   };
 
   useEffect(() => {
-      fetchProducts();
-  },[]);
+    fetchProducts();
+  }, []);
 
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (product, productId, quantity) => {
     try {
-      const response = await axios.post(`http://localhost:8080/cart/add/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        toast.success("Product added to the cart!");
+      if (product.stock > 0) {
+        const response = await axios.post(
+          `http://localhost:8080/cart/add/${productId}/${quantity}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          toast.success("Product added to the cart!");
+          setProducts((prevProducts) =>
+            prevProducts.map((prevProduct) =>
+              prevProduct.id === productId
+                ? { ...prevProduct, stock: prevProduct.stock - quantity }
+                : prevProduct
+            )
+          );
+        } else {
+          toast.error("Failed to add the product!");
+        }
       } else {
-        toast.error("Failed to add the product!");
+        toast.error("Product is out of stock!");
       }
     } catch (error) {
       console.error("Error adding product to the cart", error);
-      alert("An error occurred while adding the product to the cart");
+      toast.error("An error occurred while adding the product to the cart");
     }
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -93,7 +110,7 @@ function ProductList() {
       } else {
         const response = await axios.post("http://localhost:8080/products/create", newProduct, {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the bearer token in the request headers
+            Authorization: `Bearer ${token}`,
           },
         });
         setProducts((prevProducts) => [...prevProducts, response.data]);
@@ -178,6 +195,7 @@ function ProductList() {
                     <ProductCard
                       key={product.id}
                       product={product}
+                      quantity={quantity}
                       handleAddToCart={handleAddToCart}
                       handleDeleteProduct={handleDeleteProduct}
                       handleOpenUpdateForm={handleOpenUpdateForm}

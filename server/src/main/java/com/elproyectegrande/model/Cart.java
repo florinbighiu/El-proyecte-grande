@@ -18,8 +18,11 @@ public class Cart {
     @OneToOne
     private Role role;
 
-    public Cart(Product product) {
+    private Integer quantity;
+
+    public Cart(Product product, Integer quantity) {
         this.product = product;
+        this.quantity = quantity;
     }
 
     public Cart() {

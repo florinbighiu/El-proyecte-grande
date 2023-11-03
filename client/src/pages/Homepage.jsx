@@ -11,7 +11,7 @@ function Homepage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem("authToken");
-  console.log(token);
+  const quantity = 1;
 
   const fetchProducts = async () => {
     try {
@@ -36,9 +36,9 @@ function Homepage() {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (productId, quantity) => {
     try {
-      const response = await axios.post(`http://localhost:8080/cart/add/${productId}`, {
+      const response = await axios.post(`http://localhost:8080/cart/add/${productId}/${quantity}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -83,7 +83,7 @@ function Homepage() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} handleAddToCart={handleAddToCart} />
+                <ProductCard key={product.id} product={product} quantity={quantity} handleAddToCart={handleAddToCart} />
               ))}
             </div>
           </div>
