@@ -81,7 +81,7 @@ function ProductDetail() {
         <img
           src={product.thumbnail}
           alt="Thumbnail"
-          className="w-full h-96 object-fit border border-amber-50/50 shadow-lg rounded-xl"
+          className="w-full h-96 object-fit border border-gray-100/50 shadow-lg rounded-xl"
         />
       </div>
       <div className="w-full sm:w-1/2 px-20 py-4 text-black flex flex-col items-start justify-between">
@@ -121,7 +121,7 @@ function ProductDetail() {
         <div className="flex flex-col items-end justify-end w-full">
         <button
               onClick={() => handleAddToCart(product,product.id, quantity)}
-              className={`mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${
+              className={`mb-2 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${
                   product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
               }`}>
             {product.stock === 0 ? "Out of stock" : `Add to Cart`}

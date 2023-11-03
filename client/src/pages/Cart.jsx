@@ -57,7 +57,7 @@ function Cart() {
               {cartProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-gray-50 h-64 mx-3 my-3 rounded-lg border border-gray-100/75 shadow-md backdrop-blur-md hover:cursor-pointer">
+                  className="bg-gray-50 lg:h-64 mx-3 my-3 rounded-lg border border-gray-100/75 shadow-md backdrop-blur-md hover:cursor-pointer">
                   <div className="relative h-full flex flex-col lg:flex-row">
                     <div className="relative h-full lg:w-1/3">
                       <img
@@ -71,7 +71,7 @@ function Cart() {
                       <h3 className="text-lg text-black text-center font-semibold mb-2">
                         <strong>{product.product.title}</strong>
                       </h3>
-                      <p className="text-lg text-black text-center mb-2">
+                      <p className="text-lg text-black text-center font-display mb-2">
                         {product.product.description}
                       </p>
                       <p className="text-red-500 text-center text-xl">
@@ -114,14 +114,14 @@ function Cart() {
                 <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
                 <hr className="my-4 border-t border-gray-300" />
                 <div className="flex justify-between items-center space-x-5">
-                  <p className="">Products cost:</p>
+                  <p className="">Products cost</p>
                   <p className="text-lg text-red-500">
                     <strong>{totalCost.toFixed(2)}$</strong>
                   </p>
                 </div>
                 <hr className="my-4 border-t border-gray-300" />
                 <div className="flex justify-between items-center space-x-5">
-                  <p className="">Delivery fee:</p>
+                  <p className="">Delivery fee</p>
                   <p className="text-lg text-green-500">
                     <strong>20$</strong>
                   </p>
@@ -136,7 +136,7 @@ function Cart() {
                 <div className="flex items-center justify-center">
                   <button
                     onClick={() => setShowCheckout(true)}
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-5 w-full rounded-lg">
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 mt-5 w-full rounded-lg">
                     Proceed to Checkout
                   </button>
                 </div>

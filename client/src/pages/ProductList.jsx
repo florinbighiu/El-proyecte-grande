@@ -202,10 +202,10 @@ function ProductList() {
                     />
                   ))}
                 {userRole === "1" && (
-                  <div className="group bg-white border border-gray-200/70 bg-opacity-50 p-4 rounded-lg shadow-lg backdrop-blur-md hover:cursor-pointer relative flex items-center justify-center w-inherit h-inherit">
+                  <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
                     <button
                       onClick={() => setShowForm(true)}
-                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
+                      className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
                       Add
                     </button>
                   </div>

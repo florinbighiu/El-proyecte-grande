@@ -79,7 +79,7 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
               <div className="flex flex-row space-x-2 w-full">
                 <button
                     onClick={() => handleDeleteProduct(product.id)}
-                    className="bg-rose-600 hover:bg-rose-700  font-bold py-2 px-4 rounded-md w-full focus:outline-none">
+                    className="bg-pink-600 hover:bg-pink-700  font-bold py-2 px-4 rounded-md w-full focus:outline-none">
                   Delete
                 </button>
                 <button

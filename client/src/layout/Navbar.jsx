@@ -17,22 +17,22 @@ const Navbar = () => {
   const isAuthenticated = localStorage.getItem("authToken");
 
   const content = (
-    <div className="lg:hidden bg-gray-200 block absolute top-14 w-full left-0 right-0  text-white text-bold transition z-50">
+    <div className="lg:hidden bg-gray-200 block absolute top-14 w-full left-0 right-0  text-black text-bold transition z-50">
       <ul className="text-center text-xl p-20 ">
-        <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
           <a href="/">Home</a>
         </li>
-        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
           <a href="/products">Products</a>
         </li>
-        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
           <a href="/cart">Cart</a>
         </li>
-        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
           <a href="/contact">Contact</a>
         </li>
         {isAuthenticated ? (
-          <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+          <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
             <a href="/login" onClick={logout}>
               Logout
             </a>
@@ -94,7 +94,7 @@ const Navbar = () => {
           </div>
         </div>
         <div>{click && content}</div>
-        <button className="hidden visible-below-767 transition mr-5" onClick={handleClick}>
+        <button className="hidden text-black visible-below-767 transition mr-5" onClick={handleClick}>
           {click ? <FaTimes /> : <CiMenuFries />}
         </button>
       </div>
