@@ -1,10 +1,8 @@
-
 const Logout = () => {
-  
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem("authToken");
 
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   return (
@@ -14,8 +12,7 @@ const Logout = () => {
         <p className="text-gray-600 text-center">Are you sure you want to log out?</p>
         <button
           onClick={logout}
-          className="mt-4 w-full bg-red-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-red-600"
-        >
+          className="mt-4 w-full bg-red-500 text-white font-semibold py-2 rounded-md transition duration-300 hover:bg-red-600">
           Log Out
         </button>
       </div>

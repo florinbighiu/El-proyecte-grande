@@ -16,45 +16,35 @@ const Navbar = () => {
 
   const isAuthenticated = localStorage.getItem("authToken");
 
-
   const content = (
-    <>
-      <div className="lg:hidden bg-[#111827] block absolute top-14 w-full left-0 right-0  text-white text-bold transition z-50">
-        <ul className="text-center text-xl p-20 ">
-          <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-            <a href="/">Home</a>
-          </li>
+    <div className="lg:hidden bg-[#111827] block absolute top-14 w-full left-0 right-0  text-white text-bold transition z-50">
+      <ul className="text-center text-xl p-20 ">
+        <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+          <a href="/">Home</a>
+        </li>
+        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+          <a href="/products">Products</a>
+        </li>
+        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+          <a href="/cart">Cart</a>
+        </li>
+        <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
+          <a href="/contact">Contact</a>
+        </li>
+        {isAuthenticated ? (
           <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-            <a href="/products">Products</a>
+            <a href="/login" onClick={logout}>
+              Logout
+            </a>
           </li>
+        ) : (
           <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-            <a href="/cart">Cart</a>
+            <a href="/login">Log In</a>
           </li>
-          <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-            <a href="/contact">Contact</a>
-          </li>
-          {isAuthenticated ? (
-              <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-                <a
-                    href="/login"
-                    onClick={logout}
-                    >
-                  Logout
-                </a>
-              </li>
-          ) : (
-              <li className="my-4 py-4 border-b  border-slate-800 hover:bg-slate-700 hover:rounded hover: cursor-pointer">
-                <a
-                    href="/login">
-                  Log In
-                </a>
-              </li>
-          )}
-        </ul>
-      </div>
-    </>
+        )}
+      </ul>
+    </div>
   );
-
 
   return (
     <nav className="sticky top-0 z-50 text-sm font-medium text-white bg-gray-900 border-b border-gray-800/75">
@@ -64,7 +54,7 @@ const Navbar = () => {
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
           <a href="/">
-          <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
+            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
           </a>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">

@@ -2,11 +2,8 @@ package com.elproyectegrande;
 
 import com.elproyectegrande.model.ApplicationUser;
 import com.elproyectegrande.model.Role;
-import com.elproyectegrande.repository.CartRepository;
-import com.elproyectegrande.repository.ProductRepository;
 import com.elproyectegrande.repository.RoleRepository;
 import com.elproyectegrande.repository.UserRepository;
-import com.elproyectegrande.service.CartService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

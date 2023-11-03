@@ -54,23 +54,16 @@ function ProductList() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
       fetchProducts();
-    }, 1000);
-  }, []);
+  },[]);
 
   const handleAddToCart = async (productId) => {
     try {
-
-
-      const response = await axios.post(
-          `http://localhost:8080/cart/add/${productId}`
-          , {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-      );
+      const response = await axios.post(`http://localhost:8080/cart/add/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         toast.success("Product added to the cart!");
@@ -83,13 +76,10 @@ function ProductList() {
     }
   };
 
-
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
-
 
   const handleAddProduct = async () => {
     try {

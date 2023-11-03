@@ -1,27 +1,27 @@
 /* eslint-disable react/prop-types */
 
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 function UpdateForm({
   title,
-  description, 
-  price, 
+  description,
+  price,
   discountPercentage,
-  rating, 
-  stock, 
-  brand, 
-  category, 
+  rating,
+  stock,
+  brand,
+  category,
   thumbnail,
   handleInputChange,
-  handleUpdate, 
-  onClose 
+  handleUpdate,
+  onClose,
 }) {
   const toaster = () => toast.success("Product updated!");
 
   const update = () => {
     handleUpdate();
     toaster();
-  }
+  };
 
   return (
     <div className="fixed inset-0 overflow-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
@@ -29,7 +29,9 @@ function UpdateForm({
         <h2 className="text-xl font-semibold mb-2">Update Product</h2>
         <form>
           <div className="mb-4 flex flex-col max-h-96 overflow-y-auto px-2">
-            <label htmlFor="name" className="text-white mb-1">Product Name</label>
+            <label htmlFor="name" className="text-white mb-1">
+              Product Name
+            </label>
             <input
               type="text"
               name="title"
@@ -39,7 +41,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="description" className="text-white mb-1">Description</label>
+            <label htmlFor="description" className="text-white mb-1">
+              Description
+            </label>
             <input
               name="description"
               value={description}
@@ -49,7 +53,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="price" className="text-white mb-1">Price</label>
+            <label htmlFor="price" className="text-white mb-1">
+              Price
+            </label>
             <input
               type="text"
               name="price"
@@ -59,7 +65,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="discountpercentage" className="text-white mb-1">Discount Percentage</label>
+            <label htmlFor="discountpercentage" className="text-white mb-1">
+              Discount Percentage
+            </label>
             <input
               type="text"
               name="discountPercentage"
@@ -69,7 +77,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="rating" className="text-white mb-1">Rating</label>
+            <label htmlFor="rating" className="text-white mb-1">
+              Rating
+            </label>
             <input
               type="text"
               name="rating"
@@ -79,7 +89,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="stock" className="text-white mb-1">Stock</label>
+            <label htmlFor="stock" className="text-white mb-1">
+              Stock
+            </label>
             <input
               type="text"
               name="stock"
@@ -89,7 +101,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="brand" className="text-white mb-1">Brand</label>
+            <label htmlFor="brand" className="text-white mb-1">
+              Brand
+            </label>
             <input
               type="text"
               name="brand"
@@ -99,7 +113,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="category" className="text-white mb-1">Category</label>
+            <label htmlFor="category" className="text-white mb-1">
+              Category
+            </label>
             <input
               type="text"
               name="category"
@@ -109,7 +125,9 @@ function UpdateForm({
               className="mb-2 p-2 bg-slate-700 focus:outline-none rounded"
             />
 
-            <label htmlFor="image" className="text-white mb-1">Image URL</label>
+            <label htmlFor="image" className="text-white mb-1">
+              Image URL
+            </label>
             <input
               type="text"
               name="thumbnail"
@@ -120,7 +138,10 @@ function UpdateForm({
             />
           </div>
           <div className="flex flex-col justify-center">
-          <button type="button" onClick={update} className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
+            <button
+              type="button"
+              onClick={update}
+              className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
               Update Product
             </button>
             <button
@@ -128,7 +149,7 @@ function UpdateForm({
               className="mt-4 w-full py-2 text-center text-sm text-indigo-600 hover:text-indigo-800">
               Cancel
             </button>
-            </div>
+          </div>
         </form>
       </div>
     </div>

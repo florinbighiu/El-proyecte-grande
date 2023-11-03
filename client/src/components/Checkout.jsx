@@ -25,7 +25,7 @@ const Checkout = ({ onClose }) => {
         <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-200">
               Name
             </label>
             <input
@@ -39,7 +39,7 @@ const Checkout = ({ onClose }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-200">
               Email
             </label>
             <input
@@ -53,7 +53,7 @@ const Checkout = ({ onClose }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="address" className="block text-sm font-medium text-gray-200">
               Address
             </label>
             <textarea
@@ -73,7 +73,7 @@ const Checkout = ({ onClose }) => {
         </form>
         <button
           onClick={onClose}
-          className="mt-4 w-full py-2 text-center text-sm text-indigo-600 hover:text-indigo-800">
+          className="mt-4 w-full text-center text-sm text-indigo-600 hover:text-indigo-800">
           Cancel
         </button>
       </div>

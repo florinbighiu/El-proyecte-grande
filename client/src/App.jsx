@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import  { Toaster } from 'react-hot-toast';
-
+import { Toaster } from "react-hot-toast";
 
 import ProductList from "./pages/ProductList";
 import Navbar from "./layout/Navbar";
@@ -16,7 +15,6 @@ import Logout from "./pages/Logout";
 import ProductDetail from "./pages/ProductDetail";
 
 function App() {
- 
   return (
     <Router>
       <div>

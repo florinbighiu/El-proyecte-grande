@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 
 function AddForm({
   title,
@@ -130,9 +130,12 @@ function AddForm({
             />
           </div>
           <div className="flex flex-col justify-center">
-          <Toaster />
+            <Toaster />
 
-          <button type="button" onClick={handleAddProduct}  className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
+            <button
+              type="button"
+              onClick={handleAddProduct}
+              className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
               Add Product
             </button>
             <button
@@ -140,7 +143,7 @@ function AddForm({
               className="mt-4 w-full py-2 text-center text-sm text-indigo-600 hover:text-indigo-800">
               Cancel
             </button>
-            </div>
+          </div>
         </form>
       </div>
     </div>

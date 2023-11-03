@@ -46,8 +46,8 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
       <div className="bg-slate-800 rounded-lg shadow-md w-96">
         <div className="flex items-center mt-8 pl-24">
-            <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
-            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
+          <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
+          <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
         <form onSubmit={handleLogin} className="py-3 px-8  font-display">
           <div className="mb-3">
@@ -83,8 +83,7 @@ const LoginPage = () => {
           </p>
           <button
             className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-md transition duration-300 hover:bg-purple-600"
-            type="submit"
-          >
+            type="submit">
             Log In
           </button>
         </form>

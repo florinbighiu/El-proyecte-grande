@@ -1,4 +1,3 @@
-
 function Footer() {
   return (
     <footer className="border-t border-gray-800/75 bg-gray-900 text-gray-100 pt-8 mt-20">
@@ -7,7 +6,8 @@ function Footer() {
           <div>
             <h3 className="text-2xl font-bold mb-4">eCommerce</h3>
             <p className="text-gray-400 pr-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id justo eu lectus elementum placerat.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id justo eu lectus
+              elementum placerat.
             </p>
           </div>
           <div>
@@ -27,9 +27,12 @@ function Footer() {
           <div>
             <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
             <address className="text-gray-400">
-              123 Main Street<br />
-              City, State ZIP<br />
-              Email: info@example.com<br />
+              123 Main Street
+              <br />
+              City, State ZIP
+              <br />
+              Email: info@example.com
+              <br />
               Phone: (123) 456-7890
             </address>
           </div>
