@@ -43,7 +43,7 @@ function ProductDetail() {
             },
           }
         );
-  
+
         if (response.status === 200) {
           toast.success("Product added to the cart!");
           setProduct((prevProduct) => ({ ...prevProduct, stock: prevProduct.stock - quantity }));
@@ -76,27 +76,25 @@ function ProductDetail() {
   }
 
   return (
-    <div className="w-full p-8 flex flex-wrap rounded overflow-hidden">
-      <div className="w-full sm:w-1/2 bg-gray-100 rounded-xl p-1 my-5">
+    <div className="w-full my-8 md:p-6 space-y-8 md:space-x-8 flex md:flex-row flex-col overflow-hidden">
+      <div className="w-full h-fit md:w-1/2 bg-gray-100 rounded-xl p-1">
         <img
           src={product.thumbnail}
           alt="Thumbnail"
-          className="w-full h-96 object-fit border border-gray-100/50 shadow-lg rounded-xl"
+          className="w-full h-[55vh] sm:h-[65vh] object-fit border border-gray-100/50 shadow-lg rounded-xl"
         />
       </div>
-      <div className="w-full sm:w-1/2 px-20 py-4 text-black flex flex-col items-start justify-between">
+      <div className="w-full md:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">
         <h3 className="font-extrabold w-full text-3xl text-center uppercase mb-4">
           {product.title}
         </h3>
         <p className="text-xl font-display">{product.description}</p>
         <div className="mt-4 w-full flex flex-col">
           <p className="text-red-500 w-full text-2xl font-semibold mt-2">
-            <strong>
               $
               {product.discountPercentage > 0
                 ? (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
                 : product.price.toFixed(2)}
-            </strong>
             {product.discountPercentage > 0 && (
               <span className="text-sm text-black line-through ml-2">
                 ${product.price.toFixed(2)}
@@ -108,21 +106,26 @@ function ProductDetail() {
           </div>{" "}
           {product.stock < 25 ? (
             <p className="text-xl font-display my-2">
-              Limited quantity available / {product.stock} in stock
+              Limited quantity available /
+              <span className="text-xl text-red-600">{" " + product.stock + " "}</span>
+              in stock
             </p>
           ) : (
             <p className="text-xl font-display my-2">
-              Quantity available / {product.stock} in stock
+              Quantity available /
+              <span className="text-xl text-green-600">{" " + product.stock + " "}</span>
+              in stock
             </p>
           )}
           <p className="text-xl font-display my-2">Brand: {product.brand}</p>
-          <p className="text-xl font-display my-2 mb-5">Category: {product.category}</p>
+          <p className="text-xl font-display my-2 mb-5">Category:
+            <span className="uppercase">{" " + product.category}</span>
+          </p>
         </div>
         <div className="flex flex-col items-end justify-end w-full">
-        <button
-              onClick={() => handleAddToCart(product,product.id, quantity)}
-              className={`mb-2 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${
-                  product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
+          <button
+            onClick={() => handleAddToCart(product, product.id, quantity)}
+            className={`mb-2 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
               }`}>
             {product.stock === 0 ? "Out of stock" : `Add to Cart`}
           </button>

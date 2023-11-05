@@ -31,6 +31,6 @@ body {
   border-radius: 20px;
 }
 
-input {
-  color: #ffff;
+input, label {
+  color: black;
 }

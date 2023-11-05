@@ -21,7 +21,7 @@ public class ElproyectegrandeApplication {
 
 	@Bean
 	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository,
-						  PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder) {
 		return args -> {
 			if (roleRepository.findByAuthority("ADMIN").isPresent())
 				return;
@@ -32,11 +32,10 @@ public class ElproyectegrandeApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncoder.encode("password"), roles, "token", null);
+			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncoder.encode("password"), roles, "token",
+					null);
 
 			userRepository.save(admin);
-
-
 
 		};
 	}

@@ -19,7 +19,7 @@ function ProductList() {
   const quantity = 1;
 
   const [newProduct, setNewProduct] = useState({
-    name: "",
+    title: "",
     description: "",
     price: 0,
     discountPercentage: 0,
@@ -27,7 +27,7 @@ function ProductList() {
     stock: 0,
     brand: "",
     category: "",
-    image: "",
+    thumbnail: "",
   });
 
   const fetchProducts = async () => {
@@ -36,11 +36,7 @@ function ProductList() {
         return;
       }
 
-      const response = await axios.get("http://localhost:8080/products", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get("http://localhost:8080/products");
 
       if (response) {
         const data = await response.data;
@@ -101,12 +97,17 @@ function ProductList() {
   const handleAddProduct = async () => {
     try {
       if (
-        newProduct.name === "" ||
+        newProduct.title === "" ||
         newProduct.price === 0 ||
-        newProduct.image === "" ||
+        newProduct.stock === 0 ||
+        newProduct.discountPercentage === 0 ||
+        newProduct.brand === "" ||
+        newProduct.rating === 0 ||
+        newProduct.category === "" ||
+        newProduct.thumbnail === "" ||
         newProduct.description === ""
       ) {
-        console.error("Please fill in all required fields.");
+        toast.error("Please fill in all required fields.");
       } else {
         const response = await axios.post("http://localhost:8080/products/create", newProduct, {
           headers: {
@@ -116,7 +117,7 @@ function ProductList() {
         setProducts((prevProducts) => [...prevProducts, response.data]);
         setShowForm(false);
         setNewProduct({
-          name: "",
+          title: "",
           description: "",
           price: 0,
           discountPercentage: 0,
@@ -124,8 +125,9 @@ function ProductList() {
           stock: 0,
           brand: "",
           category: "",
-          image: "",
+          thumbnail: "",
         });
+        toast.success("Product added successfully!");
       }
     } catch (error) {
       console.error("Error creating product:", error.message);
@@ -143,7 +145,7 @@ function ProductList() {
       );
       setProducts(updatedProducts);
       setNewProduct({
-        name: "",
+        title: "",
         description: "",
         price: 0,
         discountPercentage: 0,
@@ -151,7 +153,7 @@ function ProductList() {
         stock: 0,
         brand: "",
         category: "",
-        image: "",
+        thumbnail: "",
       });
       setShowUpdateForm(false);
     } catch (error) {
@@ -184,7 +186,7 @@ function ProductList() {
         <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
           {Array.from(new Set(products.map((product) => product.category))).map((category) => (
             <div key={category} className="mb-28">
-              <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
+              <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
                 {category}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

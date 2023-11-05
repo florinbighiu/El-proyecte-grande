@@ -22,13 +22,13 @@ function App() {
         <div className="mx-5 pl-2 pr-3 py-1">
           <Routes>
             <Route element={<ProtectedRoutes />}>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
             </Route>
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
             <Route path="/reset" element={<PasswordReset />}></Route>

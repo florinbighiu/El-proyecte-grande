@@ -20,16 +20,10 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("authToken");
-
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/email/send", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post("http://localhost:8080/email/send", formData);
       toast.success("Message sent successfully!");
       setFormData({
         name: "",
@@ -64,7 +58,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="flex bg-gray-100 text-black flex-col justify-end p-8 rounded-2xl md:w-3/4">
+        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 text-black shadow-xl flex-col justify-end p-8 rounded-2xl md:w-3/4">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -77,7 +71,7 @@ const ContactPage = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-white-700 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
                 required
               />
             </div>
@@ -92,7 +86,7 @@ const ContactPage = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-white-700 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
                 required
               />
             </div>
@@ -107,7 +101,7 @@ const ContactPage = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="4"
-                className="w-full px-4 py-2 bg-white-700 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
                 required></textarea>
             </div>
 

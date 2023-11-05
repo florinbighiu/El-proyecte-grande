@@ -44,14 +44,14 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-slate-800 rounded-lg shadow-md w-96">
+      <div className="bg-gray-100 border border-gray-300/50 rounded-lg shadow-lg w-96">
         <div className="flex items-center mt-8 pl-24">
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
           <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
         <form onSubmit={handleLogin} className="py-3 px-8 font-display">
           <div className="mb-3">
-            <label htmlFor="username" className="text-gray-300">
+            <label htmlFor="username" className="text-black">
               Username
             </label>
             <input
@@ -60,12 +60,12 @@ const LoginPage = () => {
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
+              className="w-full px-4 py-2 bg-gray-200 text-black font-serif rounded-md focus:outline-none"
               placeholder="Your username"
             />
           </div>
           <div className="">
-            <label htmlFor="password" className="text-gray-300">
+            <label htmlFor="password" className="text-black">
               Password
             </label>
             <input
@@ -74,22 +74,22 @@ const LoginPage = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-slate-700 text-white font-serif rounded-md focus:outline-none"
+              className="w-full px-4 py-2 bg-gray-200 text-black font-serif rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>
-          <p className="my-3 text-start text-blue-500">
+          <p className="my-3 text-start text-blue-600">
             <a href="/forgotPassword">Forgot your password?</a>
           </p>
           <button
-            className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-md transition duration-300 hover:bg-purple-600"
+            className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
             type="submit">
             Log In
           </button>
         </form>
-        <p className="mb-4 text-gray-300 text-center font-display">
+        <p className="mb-4 text-black text-center font-display">
           Dont have an account?{" "}
-          <a href="/signup" className="text-blue-500 hover:underline">
+          <a href="/signup" className="text-blue-600 hover:underline">
             Sign up
           </a>
         </p>
