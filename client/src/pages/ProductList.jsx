@@ -36,7 +36,7 @@ function ProductList() {
         return;
       }
 
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
 
       if (response) {
         const data = await response.data;
@@ -58,7 +58,7 @@ function ProductList() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `http://localhost:8080/cart/add/${productId}/${quantity}`,
+          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
           {},
           {
             headers: {
@@ -109,7 +109,7 @@ function ProductList() {
       ) {
         toast.error("Please fill in all required fields.");
       } else {
-        const response = await axios.post("http://localhost:8080/products/create", newProduct, {
+        const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/products/create", newProduct, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -137,7 +137,7 @@ function ProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/products/${productIdToUpdate}`,
+        `https://el-proyecte-grande-osxq.onrender.com/products/${productIdToUpdate}`,
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
@@ -170,7 +170,7 @@ function ProductList() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`http://localhost:8080/products/${productId}`);
+      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`);
       const updatedProducts = products.filter((product) => product.id !== productId);
       setProducts(updatedProducts);
     } catch (error) {
