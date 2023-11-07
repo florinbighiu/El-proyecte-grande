@@ -17,7 +17,7 @@ function AddForm({
 }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
-      <div className="bg-gray-200 text-black p-4 rounded-md shadow-md sm:w-2/4 md:w-1/4">
+      <div className="bg-gray-200 text-black p-4 rounded-md shadow-md w-3/4 sm:w-2/4 md:w-1/4">
         <h2 className="text-xl font-semibold mb-2">Add Product</h2>
         <form>
           <div className="mb-4 flex text-black flex-col max-h-96 overflow-y-auto px-2">
