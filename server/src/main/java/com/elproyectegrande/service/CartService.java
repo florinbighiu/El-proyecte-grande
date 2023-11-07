@@ -7,8 +7,6 @@ import com.elproyectegrande.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class CartService {
 
@@ -25,24 +23,19 @@ public class CartService {
 
         if (product != null && quantity > 0) {
             if (product.getStock() >= quantity) {
-                // Update the product's stock in the database
                 product.setStock(product.getStock() - quantity);
                 productRepository.save(product);
 
-                // Check if the product is already in the cart
                 Cart existingCart = cartRepository.findByProductId(productId);
 
                 if (existingCart != null) {
-                    // Product is already in the cart, increase the quantity
                     existingCart.setQuantity(existingCart.getQuantity() + quantity);
                     return cartRepository.save(existingCart);
                 } else {
-                    // Product is not in the cart, create a new cart item
                     Cart cart = new Cart(product, quantity);
                     return cartRepository.save(cart);
                 }
             } else {
-                // Not enough stock to add to the cart
                 return null;
             }
         }

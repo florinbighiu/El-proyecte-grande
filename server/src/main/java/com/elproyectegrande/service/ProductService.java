@@ -2,7 +2,6 @@ package com.elproyectegrande.service;
 
 import com.elproyectegrande.model.*;
 import com.elproyectegrande.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -53,41 +51,8 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-//     public Product addProductToCart(Long productId) {
-//     Optional<Product> optionalProduct = productRepository.findById(productId);
-//
-//     if (optionalProduct.isPresent()) {
-//     Product product = optionalProduct.get();
-//     product.setIsInCart(true);
-//     return productRepository.save(product);
-//     }
-//
-//     return null;
-//     }
-//
-//    public List<Product> getCartProducts() {
-//        return productRepository.findByIsInCartTrue();
-//    }
-
-//     public boolean removeProductFromCart(Long productId) {
-//     Optional<Product> optionalProduct = productRepository.findById(productId);
-//
-//     if (optionalProduct.isPresent()) {
-//     Product product = optionalProduct.get();
-//     product.setIsInCart(false);
-//     productRepository.save(product);
-//     return true;
-//     }
-//
-//     return false;
-//     }
-
     public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
         return productRepository.findProductByTitleIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
     }
 
-    // public List<Product> getProductsInPriceRange(Double minPrice, Double
-    // maxPrice) {
-    // return productRepository.findByPriceBetween(minPrice, maxPrice);
-    // }
 }

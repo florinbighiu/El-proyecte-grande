@@ -1,10 +1,8 @@
 package com.elproyectegrande.controller;
 
 import com.elproyectegrande.model.Cart;
-import com.elproyectegrande.model.Product;
 import com.elproyectegrande.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +16,8 @@ public class CartController {
 
     @PostMapping("/add/{productId}/{quantity}")
     public Cart addToCart(
-            @PathVariable(name = "productId") Long productId,
-            @PathVariable(name = "quantity") Integer quantity) {
+            @PathVariable Long productId,
+            @PathVariable Integer quantity) {
         return cartService.addToCart(productId, quantity);
     }
 

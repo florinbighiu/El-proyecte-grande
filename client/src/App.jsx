@@ -19,7 +19,7 @@ function App() {
     <Router>
       <div>
         <Navbar />
-        <div className="mx-5 pl-2 pr-3 py-1">
+        <div className="mx-5 py-1">
           <Routes>
             <Route element={<ProtectedRoutes />}>
               <Route path="/cart" element={<Cart />} />

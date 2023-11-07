@@ -40,7 +40,7 @@ const ContactPage = () => {
   return (
     <div className="ml-5 p-6 text-black">
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="flex flex-col justify-center items-center text-center md:text-left">
           <img src={Logo} alt="Logo" className="h-32 mb-8" />
           <p className="mb-6">
@@ -58,7 +58,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 text-black shadow-xl flex-col justify-end p-8 rounded-2xl md:w-3/4">
+        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 text-black shadow-xl flex-col justify-end p-8 rounded-2xl md:w-4/5">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -71,7 +71,7 @@ const ContactPage = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-600/25 text-black font-bold font-mono rounded-md focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-600/2 font-bold font-mono rounded-md focus:outline-none"
                 required
               />
             </div>

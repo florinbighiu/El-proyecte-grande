@@ -66,10 +66,10 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
           )}
         </p>
       </div>
-      <div className=" p-2 flex flex-col items-center w-full text-gray-100">
+      <div className="p-2 flex flex-col space-y-1 items-center w-full text-gray-100">
         <button
           onClick={() => handleAddToCart(product, product.id, quantity)}
-          className={`mb-2 bg-blue-800 hover:bg-blue-900 font-bold p-2 rounded-md w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
+          className={`mb-1 bg-blue-800 hover:bg-blue-900 font-bold p-2 rounded-md w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
             }`}>
           {product.stock === 0 ? "Out of stock" : `Add to Cart (${product.stock})`}
         </button>

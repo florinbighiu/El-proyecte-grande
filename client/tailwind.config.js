@@ -43,6 +43,7 @@ export default {
         mono: ["ui-monospace", "SFMono-Regular"],
         display: ["Oswald"],
         body: ["Bungee Spice"],
+        helvetica: ["Helvetica"],
       },
     },
   },

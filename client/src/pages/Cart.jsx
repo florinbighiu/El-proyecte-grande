@@ -50,7 +50,7 @@ function Cart() {
   return (
     <div className="text-black mt-8">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 grid-rows-1 gap-x-5 gap-y-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-x-5">
         {cartProducts.length ? (
           <>
             <div className="flex flex-col col-span-2 row-span-1">

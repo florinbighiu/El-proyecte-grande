@@ -76,15 +76,16 @@ function ProductDetail() {
   }
 
   return (
-    <div className="w-full my-8 md:p-6 space-y-8 md:space-x-8 flex md:flex-row flex-col overflow-hidden">
-      <div className="w-full h-fit md:w-1/2 bg-gray-100 rounded-xl p-1">
+    <div className="w-full my-8 md:p-6 space-y-8 md:space-x-8 flex lg:flex-row flex-col items-start justify-between overflow-hidden">
+      <div className="w-full h-fit lg:w-1/2 bg-gray-100 rounded-xl p-1">
         <img
           src={product.thumbnail}
           alt="Thumbnail"
           className="w-full h-[55vh] sm:h-[65vh] object-fit border border-gray-100/50 shadow-lg rounded-xl"
         />
       </div>
-      <div className="w-full md:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">
+      <div className="w-full lg:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">
+        <div className="w-4/5 h-full">
         <h3 className="font-extrabold w-full text-3xl text-center uppercase mb-4">
           {product.title}
         </h3>
@@ -113,7 +114,7 @@ function ProductDetail() {
           ) : (
             <p className="text-xl font-display my-2">
               Quantity available /
-              <span className="text-xl text-green-600">{" " + product.stock + " "}</span>
+              <span className="text-xl text-green-600">{" "}{product.stock}{" "}</span>
               in stock
             </p>
           )}
@@ -125,11 +126,12 @@ function ProductDetail() {
         <div className="flex flex-col items-end justify-end w-full">
           <button
             onClick={() => handleAddToCart(product, product.id, quantity)}
-            className={`mb-2 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
+            className={`mb-2 bg-blue-800 hover:bg-blue-900 text-white font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
               }`}>
             {product.stock === 0 ? "Out of stock" : `Add to Cart`}
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
