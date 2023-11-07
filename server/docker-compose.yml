@@ -1,22 +1,16 @@
-version: '3'
-
+version: '3.8'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/ecommerce
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: swwsdf
-
-  db:
-    image: postgres:14
-    environment:
-      POSTGRES_DB: ecommerce
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: swwsdf
+  postgres_db:
+  image: postgres:latest
+  container_name: PostgresCont 
+  restart: always
+  environment:
+  - POSTGRES_USER=postgres
+  - POSTGRES_PASSWORD=swwsdf
+  ports:
+  - '5432:5432'
+  volumes:
+  - postgres_db:/var/lib/postgresql/data
+volumes:
+  postgres_db:
+  driver: local
