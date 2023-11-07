@@ -5,12 +5,12 @@ services:
   container_name: PostgresCont 
   restart: always
   environment:
-  - POSTGRES_USER=postgres
-  - POSTGRES_PASSWORD=swwsdf
+  - POSTGRES_USER=eccomerce_712u_user
+  - POSTGRES_PASSWORD=Qj4Fi8sQAUl7UmjdHl9Cno500reKOMnd
   ports:
   - '5432:5432'
   volumes:
   - postgres_db:/var/lib/postgresql/data
 volumes:
   postgres_db:
-  driver: local
+  driver: cloud
