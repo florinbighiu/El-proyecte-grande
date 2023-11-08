@@ -8,9 +8,8 @@ const StarRating = ({ product }) => {
           <svg
             key={index}
             xmlns="http://www.w3.org/2000/svg"
-            className={`text-center w-6 fill-current ${
-              index <= product.rating ? "text-yellow-400" : "text-gray-400"
-            }`}
+            className={`text-center w-6 fill-current ${index <= product.rating ? "text-yellow-400" : "text-gray-400"
+              }`}
             viewBox="0 0 24 24">
             <path
               fillRule="evenodd"

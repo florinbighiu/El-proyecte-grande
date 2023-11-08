@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   scroll-behavior: smooth;
 }
 
@@ -31,6 +31,7 @@ body {
   border-radius: 20px;
 }
 
-input, label {
+input,
+label {
   color: black;
 }

@@ -15,6 +15,7 @@ function AddForm({
   handleAddProduct,
   onClose,
 }) {
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
       <div className="bg-gray-200 text-black p-4 rounded-md shadow-md w-3/4 sm:w-2/4 md:w-1/4">
