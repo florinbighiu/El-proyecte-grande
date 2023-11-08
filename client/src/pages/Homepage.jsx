@@ -16,7 +16,7 @@ function Homepage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
 
       if (response) {
         setProducts(response.data);
@@ -37,7 +37,7 @@ function Homepage() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `http://localhost:8080/cart/add/${productId}/${quantity}`,
+          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
           {},
           {
             headers: {
@@ -66,6 +66,7 @@ function Homepage() {
       toast.error("An error occurred while adding the product to the cart");
     }
   };
+
 
   const featuredProducts = products.slice(0, 4);
 
