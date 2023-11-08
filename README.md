@@ -28,8 +28,6 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 
 <img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/html5-original.svg" height="auto" width="40">
 
-<img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/brand-removebg-preview.png" height="auto" width="40">
-
 <img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/docker.svg" height="auto" width="40">
 
 <img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/Postgresql_elephant.svg" height="auto" width="40">
@@ -49,10 +47,10 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 #### Frameworks and dependencies
 - [Spring](https://spring.io/) - Java Framework
 - [JWT](https://jwt.io/libraries) - Web Security Tokens Library
-- [PostgreSQL](https://www.postgresql.org/) - database used
+- [PostgreSQL](https://www.postgresql.org/) - Database used
 
 #### Project management
-- [Maven](https://maven.apache.org/) - project management and comprehension tool
+- [Maven](https://maven.apache.org/) - Project management and comprehension tool
 
 ### Client (Front-End)
 #### Programming Language
@@ -60,11 +58,7 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 #### Frameworks and dependencies
 - [Node.js](https://nodejs.org/) - JavaScript Runtime
 - [React.js](https://reactjs.org/) - JavaScript Library
-- [React-Bootstrap](https://react-bootstrap.github.io/) - Styling framework
-- [Chackra-ui](https://chakra-ui.com/) - Styling framework
-- [Mui](https://mui.com/) - Styling framework
-- [SCSS](https://sass-lang.com/) - styling language
-- [CSS](https://www.w3schools.com/css/) - styling language
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework 
 
 
 
