@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-hot-toast";
+
+import axios from "axios";
 
 import Loading from "../layout/Loading";
 import StarRating from "../components/StarRating";

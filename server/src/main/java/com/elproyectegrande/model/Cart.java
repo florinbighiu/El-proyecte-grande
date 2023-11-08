@@ -16,7 +16,7 @@ public class Cart {
     private Product product;
 
     @OneToOne
-    private Role role;
+    private ApplicationUser user;
 
     private Integer quantity;
 

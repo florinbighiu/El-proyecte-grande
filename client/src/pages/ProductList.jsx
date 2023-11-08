@@ -51,7 +51,7 @@ function ProductList() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts()
   }, []);
 
   const handleAddToCart = async (product, productId, quantity) => {
