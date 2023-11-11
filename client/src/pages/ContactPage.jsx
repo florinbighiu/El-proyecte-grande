@@ -23,7 +23,7 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("https://el-proyecte-grande-osxq.onrender.com/email/send", formData);
+      await axios.post("http://localhost:8080/email/send", formData);
       toast.success("Message sent successfully!");
       setFormData({
         name: "",

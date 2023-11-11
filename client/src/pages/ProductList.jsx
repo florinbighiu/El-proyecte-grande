@@ -16,6 +16,7 @@ function ProductList() {
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
+  const username = localStorage.getItem("username");
   const quantity = 1;
 
   const [newProduct, setNewProduct] = useState({
@@ -36,7 +37,7 @@ function ProductList() {
         return;
       }
 
-      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
+      const response = await axios.get("http://localhost:8080/products");
 
       if (response) {
         const data = await response.data;
@@ -58,12 +59,12 @@ function ProductList() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
+          `http://localhost:8080/cart/add/${productId}/${quantity}/${username}`,
           {},
           {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+              "Authorization": `Bearer ${token}`
+            }
           }
         );
   
@@ -137,7 +138,7 @@ function ProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
-        `https://el-proyecte-grande-osxq.onrender.com/products/${productIdToUpdate}`,
+        `http://localhost:8080/products/${productIdToUpdate}`,
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
@@ -170,7 +171,7 @@ function ProductList() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`);
+      await axios.delete(`http://localhost:8080/products/${productId}`);
       const updatedProducts = products.filter((product) => product.id !== productId);
       setProducts(updatedProducts);
     } catch (error) {

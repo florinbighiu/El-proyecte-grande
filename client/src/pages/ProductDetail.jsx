@@ -20,7 +20,7 @@ function ProductDetail() {
 
   useEffect(() => {
     axios
-      .get(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`)
+      .get(`http://localhost:8080/products/${productId}`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);
@@ -35,7 +35,7 @@ function ProductDetail() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
+          `http://localhost:8080/products/cart/add/${productId}/${quantity}`,
           {},
           {
             headers: {

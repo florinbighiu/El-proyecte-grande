@@ -10,18 +10,21 @@ function Cart() {
 
   const fetchCartItems = async () => {
     const token = localStorage.getItem("authToken");
+    const username = localStorage.getItem("username");
 
     if (!token) {
       console.error("Token not found in localStorage");
       return;
     }
 
-    const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/cart/items", {
+    const response = await axios.get(`http://localhost:8080/cart/items/${username}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setCartProducts(response.data);
+    if(response.status === 200) {
+      setCartProducts(response.data);
+    }
   };
 
   useEffect(() => {
@@ -30,7 +33,7 @@ function Cart() {
 
   const handleRemoveFromCart = async (product) => {
     try {
-      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}`);
+      await axios.delete(`http://localhost:8080/cart/remove/${product.id}`);
       setCartProducts((prevProducts) => prevProducts.filter((prod) => prod.id !== product.id));
     } catch (error) {
       console.log(error);

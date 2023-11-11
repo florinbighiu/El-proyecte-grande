@@ -16,7 +16,7 @@ function Homepage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
+      const response = await axios.get("http://localhost:8080/products");
 
       if (response) {
         setProducts(response.data);
@@ -37,7 +37,7 @@ function Homepage() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
+          `http://localhost:8080/cart/add/${productId}/${quantity}`,
           {},
           {
             headers: {

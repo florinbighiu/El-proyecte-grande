@@ -61,16 +61,16 @@ const Navbar = () => {
           <div className="flex-10 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             {isAuthenticated ? (
               <ul className="flex font-semibold font-serif text-md">
-                <li className="text-black py-2 px-2 cursor-pointer hover:bg-indigo-200 hover:bg-opacity-25 rounded-full">
+                <li className="text-black py-2 px-2 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/" className="px-1">Home</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-indigo-200 hover:bg-opacity-25 rounded-full">
+                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/products" className="px-1">Products</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-indigo-200 hover:bg-opacity-25 rounded-full">
+                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/cart" className="">Cart</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-indigo-200 hover:bg-opacity-25 rounded-full">
+                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/contact" className="px-1">Contact</a>
                 </li>
 
@@ -78,9 +78,10 @@ const Navbar = () => {
                   <a
                     href="/login"
                     onClick={logout}
-                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 focus:ring-4 focus:ring-blue-300 font-serif rounded-full px-5 py-2 mr-2 mb-2">
+                    className="text-black border border-indigo-600/50 transition-all duration-300  hover:text-white hover:bg-indigo-600 focus:ring-4 focus:ring-blue-300 font-serif rounded-full px-5 py-2 mr-2 mb-2">
                     Logout
                   </a>
+                  
                 </li>
               </ul>
             ) : (

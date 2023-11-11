@@ -27,7 +27,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/register", formData, {
+      const response = await axios.post("http://localhost:8080/auth/register", formData, {
         headers: {
           "Content-Type": "application/json",
         },
