@@ -10,6 +10,8 @@ const LoginPage = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -27,12 +29,16 @@ const LoginPage = () => {
     try {
       const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/login", formData);
 
+      if (!response) {
+        setLoading(true);
+
+      }
+
       if (response) {
         localStorage.setItem("authToken", response.data.jwt);
         localStorage.setItem("role", response.data.user.authorities[0].roleId);
-        console.log(response.data.user.authorities[0].roleId);
+        localStorage.setItem("userId", response.data.user.userId);
 
-        console.log("Login successful");
         navigate("/");
         window.location.reload();
       }
@@ -49,7 +55,7 @@ const LoginPage = () => {
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
           <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
-        <form onSubmit={handleLogin} className="py-3 px-8 font-display">
+        <form className="py-3 px-8 font-display">
           <div className="mb-3">
             <label htmlFor="username" className="text-black">
               Username
@@ -81,11 +87,19 @@ const LoginPage = () => {
           <p className="my-3 text-start text-blue-600">
             <a href="/forgotPassword">Forgot your password?</a>
           </p>
-          <button
-            className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
-            type="submit">
-            Log In
-          </button>
+          {loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
+            </div>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
+              type="submit">
+              Log In
+            </button>
+          )
+          }
         </form>
         <p className="mb-4 text-black text-center font-display">
           Dont have an account?{" "}

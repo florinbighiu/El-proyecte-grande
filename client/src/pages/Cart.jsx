@@ -1,162 +1,206 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import Checkout from "../components/Checkout";
 import axios from "axios";
 
 import EmptyCart from "../assets/empty.png";
+import toast from "react-hot-toast";
 
 function Cart() {
-  const [cartProducts, setCartProducts] = useState([]);
-  const [showCheckout, setShowCheckout] = useState(false);
+    const [cartProducts, setCartProducts] = useState([]);
+    const [showCheckout, setShowCheckout] = useState(false);
 
-  const fetchCartItems = async () => {
     const token = localStorage.getItem("authToken");
+    const userId = localStorage.getItem("userId");
+    const quantity = 1;
+    const fetchCartItems = async () => {
 
-    if (!token) {
-      console.error("Token not found in localStorage");
-      return;
-    }
 
-    const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/cart/items", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setCartProducts(response.data);
-  };
+        if (!token) {
+            console.error("Token not found in localStorage");
+            return;
+        }
 
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
+        const response = await axios.get(`https://el-proyecte-grande-osxq.onrender.com/cart/items/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (response.status === 200) {
+            setCartProducts(response.data);
+        }
+    };
 
-  const handleRemoveFromCart = async (product) => {
-    try {
-      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}`);
-      setCartProducts((prevProducts) => prevProducts.filter((prod) => prod.id !== product.id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
 
-  const totalCost = cartProducts.reduce((accumulator, product) => {
-    return (
-      accumulator +
-      (product.product.price - (product.product.price * product.product.discountPercentage) / 100) *
-      product.quantity
-    );
-  }, 0);
+    const decreaseQuantity = async (product) => {
+            try {
+                await axios.put(`https://el-proyecte-grande-osxq.onrender.com/cart/update/decrease/${product.id}/${quantity}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
-  const finalCost = totalCost + 20;
+                const updatedProducts = cartProducts.map((prod) => prod.id === product.id ? {
+                    ...prod, quantity: prod.quantity - 1,
+                } : prod);
 
-  return (
-    <div className="text-black mt-8">
-      <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-x-5">
-        {cartProducts.length ? (
-          <>
-            <div className="flex flex-col col-span-2 row-span-1">
-              {cartProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-gray-50 lg:h-64 mx-3 my-3 rounded-xl border border-gray-100/75 shadow-md backdrop-blur-md hover:cursor-pointer">
-                  <div className="relative h-full flex flex-col lg:flex-row">
-                    <div className="relative h-full lg:w-1/3">
-                      <img
-                        src={product.product.thumbnail}
-                        alt={product.product.title}
-                        className="w-full h-full object-fill border border-gray-100/75 shadow-lg rounded-lg"
-                      />
-                    </div>
+                setCartProducts(updatedProducts);
+                await fetchCartItems();
+            } catch {
+                toast.error('Error updating quantity!');
+            }
+    };
 
-                    <div className="p-8 flex-grow flex justify-evenly flex-col lg:w-1/2">
-                      <h3 className="text-xl text-black text-center font-semibold font-display mb-2">
-                        <strong>{product.product.title}</strong>
-                      </h3>
-                      <p className="text-lg text-black text-center font-display mb-2">
-                        {product.product.description}
-                      </p>
-                      <p className="text-red-500 text-center font-display text-xl">
-                        ${product.product.discountPercentage > 0
-                          ? (
-                            (product.product.price -
-                              (product.product.price * product.product.discountPercentage) /
-                              100) *
-                            product.quantity
-                          ).toFixed(2)
-                          : (product.product.price * product.quantity).toFixed(2)}
-                        {product.product.discountPercentage > 0 && (
-                          <span className="text-sm text-gray-700 line-through ml-2">
+    const increaseQuantity = async (product) => {
+        try {
+            await axios.put(`https://el-proyecte-grande-osxq.onrender.com/cart/update/increase/${product.id}/${quantity}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const updatedProducts = cartProducts.map((prod) => prod.id === product.id ? {
+                ...prod, quantity: prod.quantity + 1,
+            } : prod);
+            setCartProducts(updatedProducts);
+        } catch (error) {
+            toast.error('No more stock!');
+        }
+    };
+
+
+    const handleRemoveFromCart = async (product) => {
+        try {
+            const response = await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}/${quantity}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.status === 200) {
+                const updatedProducts = cartProducts.map((prod) => prod.id === product.id ? {
+                    ...prod, quantity: prod.quantity - quantity,
+                } : prod);
+
+                setCartProducts(updatedProducts.filter((prod) => prod.quantity > 0));
+            } else {
+                console.error('Failed to update cart.');
+            }
+        } catch (error) {
+            console.error('Error removing from cart:', error);
+        }
+    };
+
+    const totalCost = cartProducts.reduce((accumulator, product) => {
+        return (accumulator + (product.product.price - (product.product.price * product.product.discountPercentage) / 100) * product.quantity);
+    }, 0);
+
+    const finalCost = totalCost + 20;
+
+    return (<div className="text-black mt-8">
+            <h1 className="text-2xl text-start font-bold mb-4">Your Cart</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-x-5">
+                {cartProducts.length ? (<>
+                        <div className="flex flex-col col-span-2 row-span-1">
+                            {cartProducts.map((product) => (<div
+                                    key={product.id}
+                                    className="bg-gray-50 lg:h-64 mx-3 my-3 rounded-xl border border-gray-100/75 shadow-md backdrop-blur-md hover:cursor-pointer">
+                                    <div className="relative h-full flex flex-col lg:flex-row">
+                                        <div className="relative h-full lg:w-1/3">
+                                            <img
+                                                src={product.product.thumbnail}
+                                                alt={product.product.title}
+                                                className="w-full h-full object-fill border border-gray-100/75 shadow-lg rounded-lg"
+                                            />
+                                        </div>
+
+                                        <div className="p-8 flex-grow flex justify-evenly flex-col lg:w-1/2">
+                                            <h3 className="text-xl text-black text-center font-semibold font-display mb-2">
+                                                <strong>{product.product.title}</strong>
+                                            </h3>
+                                            <p className="text-lg text-black text-center font-display mb-2">
+                                                {product.product.description}
+                                            </p>
+                                            <p className="text-red-500 text-center font-display text-xl">
+                                                ${product.product.discountPercentage > 0 ? ((product.product.price - (product.product.price * product.product.discountPercentage) / 100) * product.quantity).toFixed(2) : (product.product.price * product.quantity).toFixed(2)}
+                                                {product.product.discountPercentage > 0 && (
+                                                    <span className="text-sm text-gray-700 line-through ml-2">
                             ${(product.product.price * product.quantity).toFixed(2)}
-                          </span>
-                        )}{" "}
-                      </p>
-                      <div className="flex items-center justify-center">
-                        <div className="mt-2 p-2 rounded-xl w-fit bg-gray-300 text-center font-display">
-                          <span>Qty: {product.quantity}</span>
+                          </span>)}{" "}
+                                            </p>
+                                            <div className="flex items-center justify-center space-x-1">
+                                                <button onClick={() => decreaseQuantity(product)}
+                                                        className="mt-2 p-2 rounded-full bg-gray-300 text-center hover:bg-gray-200">-
+                                                </button>
+                                                <div
+                                                    className="mt-2 p-2 rounded-xl w-fit bg-gray-300 text-center font-display">
+                                                    <span>Qty: {product.quantity}</span>
+                                                </div>
+                                                <button onClick={() => increaseQuantity(product)}
+                                                        className="mt-2 p-2 rounded-full bg-gray-300 text-center hover:bg-gray-200">+
+                                                </button>
+                                            </div>
+                                            <div className="flex items-end justify-center">
+                                                <button
+                                                    onClick={() => handleRemoveFromCart(product)}
+                                                    className="bg-red-500 hover:bg-red-700 w-2/5 text-white font-bold py-2 px-4 rounded-full mt-2 lg:mt-4 mx-auto lg:mx-0">
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>))}
                         </div>
-                      </div>
-                      <div className="flex items-end justify-center">
-                        <button
-                          onClick={() => handleRemoveFromCart(product)}
-                          className="bg-red-500 hover:bg-red-700 w-2/5 text-white font-bold py-2 px-4 rounded-full mt-2 lg:mt-4 mx-auto lg:mx-0">
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                        <div
+                            className="h-fit flex items-center justify-start mx-3 my-3 col-span-2 row-span-2 md:col-span-1 md:row-span-1">
+                            <div
+                                className="bg-gray-50 text-black font-display p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
+                                <h2 className="text-2xl text-center mb-4">Order Summary</h2>
+                                <hr className="my-4 border-t border-gray-300"/>
+                                <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
+                                <hr className="my-4 border-t border-gray-300"/>
+                                <div className="flex justify-between items-center space-x-5">
+                                    <p className="">Products cost</p>
+                                    <p className="text-lg text-red-500">
+                                        {totalCost.toFixed(2)}$
+                                    </p>
+                                </div>
+                                <hr className="my-4 border-t border-gray-300"/>
+                                <div className="flex justify-between items-center space-x-5">
+                                    <p className="">Delivery fee</p>
+                                    <p className="text-lg text-green-500">
+                                        $20
+                                    </p>
+                                </div>
+                                <hr className="my-4 border-t border-gray-300"/>
+                                <div className="flex justify-between items-center">
+                                    <p className="text-lg">Total:</p>
+                                    <p className="text-lg text-red-500">
+                                        {finalCost.toFixed(2)}$
+                                    </p>
+                                </div>
+                                <div className="flex items-center justify-center">
+                                    <button
+                                        onClick={() => setShowCheckout(true)}
+                                        className="bg-indigo-500 hover:bg-indigo-700 text-white font-serif font-bold py-2 px-4 mt-5 w-full rounded-full">
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                                {showCheckout && <Checkout onClose={() => setShowCheckout(false)}/>}
+                            </div>
+                        </div>
+                    </>) : (<div className="flex flex-col items-center justify-start col-span-3 mt-12">
+                        <img src={EmptyCart} alt="EmptyCart" className="h-2/4 "/>
+                        <h1 className="w-full text-center mt-14 text-lg">
+                            Your cart is empty. To add products to your cart go{" "}
+                            <a href="/products" className="text-blue-500">
+                                back to shop.
+                            </a>
+                        </h1>
+                    </div>)}
             </div>
-            <div className="h-fit flex items-center justify-start mx-3 my-3 col-span-2 row-span-2 md:col-span-1 md:row-span-1">
-              <div className="bg-gray-50 text-black font-display p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
-                <h2 className="text-2xl text-center mb-4">Order Summary</h2>
-                <hr className="my-4 border-t border-gray-300" />
-                <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
-                <hr className="my-4 border-t border-gray-300" />
-                <div className="flex justify-between items-center space-x-5">
-                  <p className="">Products cost</p>
-                  <p className="text-lg text-red-500">
-                    {totalCost.toFixed(2)}$
-                  </p>
-                </div>
-                <hr className="my-4 border-t border-gray-300" />
-                <div className="flex justify-between items-center space-x-5">
-                  <p className="">Delivery fee</p>
-                  <p className="text-lg text-green-500">
-                    $20
-                  </p>
-                </div>
-                <hr className="my-4 border-t border-gray-300" />
-                <div className="flex justify-between items-center">
-                  <p className="text-lg">Total:</p>
-                  <p className="text-lg text-red-500">
-                    {finalCost.toFixed(2)}$
-                  </p>
-                </div>
-                <div className="flex items-center justify-center">
-                  <button
-                    onClick={() => setShowCheckout(true)}
-                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-serif font-bold py-2 px-4 mt-5 w-full rounded-full">
-                    Proceed to Checkout
-                  </button>
-                </div>
-                {showCheckout && <Checkout onClose={() => setShowCheckout(false)} />}
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-start col-span-3 mt-12">
-            <img src={EmptyCart} alt="EmptyCart" className="h-2/4 " />
-            <h1 className="w-full text-center mt-14 text-lg">
-              Your cart is empty. To add products to your cart go{" "}
-              <a href="/products" className="text-blue-500">
-                back to shop.
-              </a>
-            </h1>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+        </div>);
 }
 
 export default Cart;

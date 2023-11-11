@@ -11,13 +11,14 @@ import StarRating from "../components/StarRating";
 function ProductDetail() {
   const { productId } = useParams();
 
-  const quantity = 1;
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("authToken");
+  const userId = localStorage.getItem("userId");
+  const quantity = 1;
+
 
   useEffect(() => {
     axios
@@ -32,17 +33,17 @@ function ProductDetail() {
       });
   }, []);
 
-  const handleAddToCart = async (product, productId, quantity) => {
+  const handleAddToCart = async (product) => {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
+            {},
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            }
         );
 
         if (response.status === 200) {
@@ -55,7 +56,6 @@ function ProductDetail() {
         toast.error("Product is out of stock!");
       }
     } catch (error) {
-      console.error("Error adding product to the cart", error);
       toast.error("An error occurred while adding the product to the cart");
     }
   };

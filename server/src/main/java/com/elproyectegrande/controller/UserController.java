@@ -1,11 +1,9 @@
 package com.elproyectegrande.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.elproyectegrande.model.ApplicationUser;
 import com.elproyectegrande.service.UserService;
@@ -21,8 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<ApplicationUser> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/{userId}")
+    public Optional<ApplicationUser> getUserById(@PathVariable Integer userId) {
+        return userService.getUserById(userId);
     }
 }

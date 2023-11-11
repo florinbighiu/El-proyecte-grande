@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,11 +24,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            return userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User is not valid"));
+            return userRepository.findByUsername(username);
+
         } catch (UsernameNotFoundException ex) {
             System.out.println("Username not found: " + ex.getMessage());
-            throw ex; 
+            throw ex;
         }
     }
 
@@ -35,10 +36,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public void updateResetPassword(String token, String email) {
-        ApplicationUser applicationUser = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email is not valid"));
+    public Optional<ApplicationUser> getUserById(Integer userId) {
+        return userRepository.findById(userId);
+    }
 
-        if(applicationUser != null) {
+    public void updateResetPassword(String token, String email) {
+        ApplicationUser applicationUser = userRepository.findByEmail(email);
+
+        if (applicationUser != null) {
             applicationUser.setResetPasswordToken(token);
             userRepository.save(applicationUser);
         } else {
@@ -47,10 +52,10 @@ public class UserService implements UserDetailsService {
     }
 
     public ApplicationUser getToken(String resetPasswordToken) {
-        return userRepository.findByResetPasswordToken(resetPasswordToken).orElseThrow(() -> new RuntimeException("Reset Token not valid"));
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
     }
 
-    public void updatePassword (ApplicationUser applicationUser, String newPassword) {
+    public void updatePassword(ApplicationUser applicationUser, String newPassword) {
         String encodePassword = passwordEncoder.encode(newPassword);
 
         applicationUser.setPassword(encodePassword);

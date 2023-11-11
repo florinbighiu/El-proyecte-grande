@@ -13,15 +13,17 @@ import SignupPage from "./pages/SignupPage";
 import PasswordReset from "./pages/PasswordReset";
 import Logout from "./pages/Logout";
 import ProductDetail from "./pages/ProductDetail";
+import UserProfile from "./pages/UserProfile.jsx";
 
 function App() {
   return (
     <Router>
       <div>
         <Navbar />
-        <div className="mx-5 py-1">
+        <div className="min-h-[80vh] px-3 flex items-start justify-center">
           <Routes>
             <Route element={<ProtectedRoutes />}>
+              <Route path="/user" element={<UserProfile />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<ProductList />} />
               <Route path="/logout" element={<Logout />} />

@@ -24,5 +24,4 @@ public class RegistrationDTO {
         this.email = email;
     }
 
-
 }

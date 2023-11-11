@@ -52,13 +52,8 @@ public class AuthenticationService {
 
 
     public LoginResponseDTO loginUser(String username, String password) {
-        Optional<ApplicationUser> userOptional = userRepository.findByUsername(username);
-    
-        if (userOptional.isEmpty()) {
-            throw new AuthenticationException("User not found");
-        }
-    
-        ApplicationUser user = userOptional.get();
+        
+        ApplicationUser user = userRepository.findByUsername(username);
     
         if (passwordEncoder.matches(password, user.getPassword())) {
             try {

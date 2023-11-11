@@ -16,6 +16,7 @@ function ProductList() {
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
   const quantity = 1;
 
   const [newProduct, setNewProduct] = useState({
@@ -58,12 +59,12 @@ function ProductList() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${productId}/${quantity}`,
+          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
           {},
           {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+              "Authorization": `Bearer ${token}`
+            }
           }
         );
   
@@ -83,7 +84,6 @@ function ProductList() {
         toast.error("Product is out of stock!");
       }
     } catch (error) {
-      console.error("Error adding product to the cart", error);
       toast.error("An error occurred while adding the product to the cart");
     }
   };

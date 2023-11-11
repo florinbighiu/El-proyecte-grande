@@ -57,10 +57,12 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/products/**").permitAll();
                     auth.requestMatchers("/cart/add/**").permitAll();
                     auth.requestMatchers("/cart/remove/**").permitAll();
+                    auth.requestMatchers("/cart/update/**").permitAll();
                     auth.requestMatchers("/cart/items/**").permitAll();
                     auth.requestMatchers("/email/send/**").permitAll();
+                    auth.requestMatchers("/users/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("users/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 });
 
