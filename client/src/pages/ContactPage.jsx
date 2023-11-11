@@ -23,7 +23,7 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/email/send", formData);
+      await axios.post("https://el-proyecte-grande-osxq.onrender.com/email/send", formData);
       toast.success("Message sent successfully!");
       setFormData({
         name: "",
@@ -38,10 +38,10 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="ml-5 p-6 text-black">
+    <div className="container min-w-full">
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <div className="flex flex-col justify-center items-center text-center md:text-left">
+      <div className=" grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="flex flex-col justify-center items-center text-center  md:text-left">
           <img src={Logo} alt="Logo" className="h-32 mb-8" />
           <p className="mb-6">
             Feel free to reach out to us for any inquiries or feedback.
@@ -58,7 +58,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 text-black shadow-xl flex-col justify-end p-8 rounded-2xl md:w-4/5">
+        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 mx-12 lg:max-w-lg text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

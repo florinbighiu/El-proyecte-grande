@@ -16,7 +16,7 @@ function ProductList() {
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
-  const username = localStorage.getItem("username");
+  const userId = localStorage.getItem("userId");
   const quantity = 1;
 
   const [newProduct, setNewProduct] = useState({
@@ -37,7 +37,7 @@ function ProductList() {
         return;
       }
 
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
 
       if (response) {
         const data = await response.data;
@@ -59,7 +59,7 @@ function ProductList() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `http://localhost:8080/cart/add/${productId}/${quantity}/${username}`,
+          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
           {},
           {
             headers: {
@@ -84,7 +84,6 @@ function ProductList() {
         toast.error("Product is out of stock!");
       }
     } catch (error) {
-      console.error("Error adding product to the cart", error);
       toast.error("An error occurred while adding the product to the cart");
     }
   };
@@ -138,7 +137,7 @@ function ProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/products/${productIdToUpdate}`,
+        `https://el-proyecte-grande-osxq.onrender.com/products/${productIdToUpdate}`,
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
@@ -171,7 +170,7 @@ function ProductList() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`http://localhost:8080/products/${productId}`);
+      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`);
       const updatedProducts = products.filter((product) => product.id !== productId);
       setProducts(updatedProducts);
     } catch (error) {

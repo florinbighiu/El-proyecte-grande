@@ -12,11 +12,12 @@ function Homepage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem("authToken");
+  const userId = localStorage.getItem("userId")
   const quantity = 1;
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
 
       if (response) {
         setProducts(response.data);
@@ -37,23 +38,23 @@ function Homepage() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `http://localhost:8080/cart/add/${productId}/${quantity}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+            `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
+            {},
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+            }
         );
 
         if (response.status === 200) {
           toast.success("Product added to the cart!");
           setProducts((prevProducts) =>
-            prevProducts.map((prevProduct) =>
-              prevProduct.id === productId
-                ? { ...prevProduct, stock: prevProduct.stock - quantity }
-                : prevProduct
-            )
+              prevProducts.map((prevProduct) =>
+                  prevProduct.id === productId
+                      ? { ...prevProduct, stock: prevProduct.stock - quantity }
+                      : prevProduct
+              )
           );
         } else {
           toast.error("Failed to add the product!");
@@ -62,7 +63,6 @@ function Homepage() {
         toast.error("Product is out of stock!");
       }
     } catch (error) {
-      console.error("Error adding product to the cart", error);
       toast.error("An error occurred while adding the product to the cart");
     }
   };

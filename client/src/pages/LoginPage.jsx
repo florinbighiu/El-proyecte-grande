@@ -27,7 +27,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", formData);
+      const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/login", formData);
 
       if (!response) {
         setLoading(true);
@@ -37,7 +37,7 @@ const LoginPage = () => {
       if (response) {
         localStorage.setItem("authToken", response.data.jwt);
         localStorage.setItem("role", response.data.user.authorities[0].roleId);
-        localStorage.setItem("username", response.data.user.username);
+        localStorage.setItem("userId", response.data.user.userId);
 
         navigate("/");
         window.location.reload();
