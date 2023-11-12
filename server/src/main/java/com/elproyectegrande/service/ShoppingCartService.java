@@ -91,29 +91,17 @@ public class ShoppingCartService {
     }
 
 
-    public void removeFromCart(Long cartItemId, Integer quantity) {
-        ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId).get();
+    public void removeFromCart(Long cartItemId) {
+        ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId).orElse(null);
 
-        Product product = cartItem.getProduct();
-        Integer productQuantity = cartItem.getQuantity();
-
-        if (quantity > 0 && productQuantity > 0) {
-            int newCartItemQuantity = productQuantity - quantity;
-
-            if (newCartItemQuantity < 0) {
-                newCartItemQuantity = 0;
-            }
-
-            cartItem.setQuantity(newCartItemQuantity);
-            shoppingCartRepository.save(cartItem);
+        if (cartItem != null) {
+            Product product = cartItem.getProduct();
+            Integer quantity = cartItem.getQuantity();
 
             product.setStock(product.getStock() + quantity);
             productRepository.save(product);
 
-            if (cartItem.getQuantity() == 0) {
-                shoppingCartRepository.deleteById(cartItemId);
-            }
+            shoppingCartRepository.deleteById(cartItemId);
         }
-
     }
 }

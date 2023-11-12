@@ -49,7 +49,7 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50  font-medium text-white bg-gray-200">
       <div className=" mx-auto my-1 w-full flex flex-wrap justify-between items-center">
-        <div className="flex items-center pl-24">
+        <div className="sticky left-0 flex items-center mx-12">
           <a href="/">
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
