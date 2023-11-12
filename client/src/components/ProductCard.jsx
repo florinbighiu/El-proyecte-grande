@@ -50,7 +50,7 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
           )}
           <div className="my-3 flex flex-row justify-around">
             <StarRating product={product} />
-            <p className="bg-red-100 bg-opacity-75 p-2 shadow-xl rounded-xl">Qty: {product.stock}</p>
+          <p className=" bg-opacity-25 p-2 border border-gray-50/75 rounded-2xl">Qty: {product.stock}</p>
           </div>
           <p className="text-red-500 text-xl font-semibold text-center">
 
