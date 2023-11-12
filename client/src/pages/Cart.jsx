@@ -80,7 +80,7 @@ function Cart() {
                 }
             });
             if (response.status === 200) {
-                setCartProducts(cartProducts.filter((prod) => prod.quantity > 0));
+                setCartProducts((prevProducts) => prevProducts.filter((prod) => prod.id !== product.id));
             } else {
                 console.error('Failed to update cart.');
             }
