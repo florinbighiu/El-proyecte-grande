@@ -23,9 +23,14 @@ function UpdateForm({
     toaster();
   };
 
+  const style = {
+    backgroundColor: '#faaca8',
+    backgroundImage: 'linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%)',
+  };
+
   return (
     <div className="fixed inset-0 overflow-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
-      <div className="bg-gray-200 text-black p-4 rounded-md shadow-md w-3/4 sm:w-3/4 md:w-1/4">
+      <div style={style} className=" text-black p-4 rounded-md shadow-md w-3/4 sm:w-3/4 md:w-1/4">
         <h2 className="text-xl font-semibold mb-2">Update Product</h2>
         <form>
           <div className="mb-4 flex text-black flex-col max-h-96 overflow-y-auto px-2">

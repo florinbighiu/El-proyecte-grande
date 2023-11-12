@@ -100,7 +100,8 @@ function Cart() {
             <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-x-5">
                 {cartProducts.length ? (<>
                     <div className="flex flex-col col-span-2 row-span-1">
-                        {cartProducts.map((product) => (<div
+                        {cartProducts.map((product) => (
+                        <div
                             key={product.id}
                             className="bg-white border border-gray-200/70 bg-opacity-25 backdrop-blur-md lg:h-64 mx-3 my-3 rounded-xl shadow-md  hover:cursor-pointer">
                             <div className="relative h-full flex flex-col lg:flex-row">
@@ -152,7 +153,7 @@ function Cart() {
                     <div
                         className="h-fit flex items-center justify-start mx-3 my-3 col-span-2 row-span-2 md:col-span-1 md:row-span-1">
                         <div
-                            className="bg-gray-50 text-black font-display p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
+                            className="bg-gray-100 bg-opacity-50 border-t border-t-white text-black font-display p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
                             <h2 className="text-2xl text-center mb-4">Order Summary</h2>
                             <hr className="my-4 border-t border-gray-300" />
                             <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
