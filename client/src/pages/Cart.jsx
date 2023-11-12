@@ -12,6 +12,7 @@ function Cart() {
     const token = localStorage.getItem("authToken");
     const userId = localStorage.getItem("userId");
     const quantity = 1;
+
     const fetchCartItems = async () => {
 
 
@@ -73,17 +74,13 @@ function Cart() {
 
     const handleRemoveFromCart = async (product) => {
         try {
-            const response = await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}/${quantity}`, {
+            const response = await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             if (response.status === 200) {
-                const updatedProducts = cartProducts.map((prod) => prod.id === product.id ? {
-                    ...prod, quantity: prod.quantity - quantity,
-                } : prod);
-
-                setCartProducts(updatedProducts.filter((prod) => prod.quantity > 0));
+                setCartProducts(cartProducts.filter((prod) => prod.quantity > 0));
             } else {
                 console.error('Failed to update cart.');
             }

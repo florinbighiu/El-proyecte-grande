@@ -25,9 +25,9 @@ public class ShoppingCartController {
         shoppingCartService.addToCart(userId, productId, quantity);
     }
 
-    @DeleteMapping ("/remove/{productId}/{quantity}")
-    public void removeFromCart(@PathVariable Long productId, @PathVariable Integer quantity) {
-        shoppingCartService.removeFromCart(productId, quantity);
+    @DeleteMapping ("/remove/{productId}")
+    public void removeFromCart(@PathVariable Long productId) {
+        shoppingCartService.removeFromCart(productId);
     }
 
     @PutMapping("/update/increase/{productId}/{newQuantity}")
