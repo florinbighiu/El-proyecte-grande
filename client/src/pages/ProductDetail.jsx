@@ -78,11 +78,11 @@ function ProductDetail() {
 
   return (
     <div className="w-full my-8 md:p-6 space-y-8 md:space-x-8 flex lg:flex-row flex-col items-start justify-between overflow-hidden">
-      <div className="w-full h-fit lg:w-1/2 bg-gray-100 rounded-xl p-1">
+      <div className="w-full h-fit lg:w-1/2 bg-white bg-opacity-25 backdrop-blur-md rounded-xl p-1">
         <img
           src={product.thumbnail}
           alt="Thumbnail"
-          className="w-full h-[55vh] sm:h-[65vh] object-fit border border-gray-100/50 shadow-lg rounded-xl"
+          className="w-full h-[55vh] sm:h-[65vh] object-fit shadow-lg rounded-xl"
         />
       </div>
       <div className="w-full lg:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">

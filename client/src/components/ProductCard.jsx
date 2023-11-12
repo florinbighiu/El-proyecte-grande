@@ -19,7 +19,7 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
     .join("\n");
 
   return (
-    <div className="relative bg-white border border-gray-300/75 rounded-lg shadow-lg duration-300 w-fit">
+    <div className="relative bg-white border border-gray-200/70 bg-opacity-20 backdrop-blur-md rounded-lg shadow-xl">
       {product.discountPercentage > 0 && (
         <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-black p-2 rounded-full">
           <div className="text-md font-semibold">

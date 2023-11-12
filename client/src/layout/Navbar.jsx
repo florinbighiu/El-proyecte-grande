@@ -47,7 +47,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50  font-medium text-white bg-gray-200">
+    <nav className="top-0 z-50 font-medium text-white">
       <div className=" mx-auto my-1 w-full flex flex-wrap justify-between items-center">
         <div className="sticky left-0 flex items-center mx-12">
           <a href="/">
@@ -95,7 +95,7 @@ const Navbar = () => {
                 <li className="text-black hover:text-yellow-500 my-2 pl-12">
                   <a
                     href="/login"
-                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 focus:ring-4 focus:ring-blue-300 font-serif text-base rounded-full px-5 py-2 mb-2">
+                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 font-serif text-base rounded-full px-5 py-2 mb-2">
                     Log in
                   </a>
                 </li>
