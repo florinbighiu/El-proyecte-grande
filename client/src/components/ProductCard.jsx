@@ -48,10 +48,11 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
               {showMore ? "Show Less" : "Show More"}
             </button>
           )}
-          <div className="my-1">
+          <div className="my-3 flex flex-row justify-around">
             <StarRating product={product} />
+            <p className="bg-red-100 bg-opacity-75 p-2 shadow-xl rounded-xl">Qty: {product.stock}</p>
           </div>
-          <p className="text-red-500 text-xl font-semibold mt-2 text-center">
+          <p className="text-red-500 text-xl font-semibold text-center">
 
             $
             {product.discountPercentage > 0
@@ -65,38 +66,28 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
             )}
           </p>
         </div>
-        <div className="p-2 flex flex-col space-y-1 items-center w-full text-gray-100">
-          
-          {userRole === "1" ? (
-            <div className="flex flex-col w-full">
+      <div className="p-2 flex flex-col space-y-1 items-center w-full text-gray-100">
+        <button
+          onClick={() => handleAddToCart(product, product.id, quantity)}
+          className={`mb-1 bg-blue-800 hover:bg-blue-900 font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
+            }`}>
+          {product.stock === 0 ? "Out of stock" : `Add to Cart`}
+        </button>
+        {userRole === "1" && (
+          <div className="flex flex-row space-x-2 w-full">
             <button
-              onClick={() => handleAddToCart(product, product.id, quantity)}
-              className={`mb-1 bg-blue-800 hover:bg-blue-900 font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
-                }`}>
-              {product.stock === 0 ? "Out of stock" : `Add to Cart (${product.stock})`}
+              onClick={() => handleDeleteProduct(product.id)}
+              className="bg-pink-600 hover:bg-pink-700  font-bold py-2 px-4 rounded-full w-full focus:outline-none">
+              Delete
             </button>
-              <button
-                onClick={() => handleDeleteProduct(product.id)}
-              className="mb-1 bg-pink-600 hover:bg-pink-700 font-bold p-2 rounded-full w-full focus:outline-none">
-                Delete
-              </button>
-              <button
-                onClick={() => handleOpenUpdateForm(product.id)}
-                className="mb-1 bg-violet-600 hover:bg-violet-800 font-bold p-2 rounded-full w-full focus:outline-none">
-                Update
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col w-full">
-              <button
-                onClick={() => handleAddToCart(product, product.id, quantity)}
-                className={`mb-1 bg-blue-800 hover:bg-blue-900 font-bold p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
-                  }`}>
-                {product.stock === 0 ? "Out of stock" : `Add to Cart (${product.stock})`}
-              </button>
-            </div>
-          )}
-        </div>
+            <button
+              onClick={() => handleOpenUpdateForm(product.id)}
+              className="bg-violet-600 hover:bg-violet-800  font-bold py-2 px-4 rounded-full w-full focus:outline-none">
+              Update
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
