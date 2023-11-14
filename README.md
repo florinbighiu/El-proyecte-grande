@@ -4,6 +4,8 @@
 Our user-friendly eCommerce platform provides a seamless shopping experience with secure registration and login functionality.  With our efficient product filtering system, customers can swiftly find their desired items. Furthermore, our secure checkout process allows for convenient transactions with card payments, while the order history feature enables users to track their purchases effortlessly.
 
 
+
+
 ## Features
 
 - Register/Login - spring security
@@ -62,4 +64,5 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 
 
 
-## Sample photos
+## Deployed website
+- https://el-proyecte-grande.vercel.app/
