@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Checkout from "../components/Checkout";
 import axios from "axios";
 
 import EmptyCart from "../assets/empty.png";
 import toast from "react-hot-toast";
+import { FaShoppingBag } from "react-icons/fa";
+
 
 function Cart() {
     const [cartProducts, setCartProducts] = useState([]);
@@ -109,7 +112,7 @@ function Cart() {
                                         <img
                                             src={product.product.thumbnail}
                                             alt={product.product.title}
-                                            className="w-full h-full object-fill border border-gray-100/75 shadow-lg rounded-lg"
+                                            className="w-full h-64 object-full border border-gray-100/75 shadow-lg rounded-lg"
                                         />
                                     </div>
 
@@ -195,9 +198,12 @@ function Cart() {
                             You don't have any items in your cart. Let's get shopping!
                         </h1>
                         <div className="h-1/4 flex items-center justify-center">
-                            <a href="/products" className="bg-pink-500 hover:bg-pink-600 font-semibold text-lg text-white rounded-full shadow-md p-3 px-20">
-                                Start shopping
-                            </a>
+                            <Link to="/products">
+                                <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl font-helvetica text-white rounded-full">
+                                        <FaShoppingBag />
+                                    <p>Start shopping</p>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 )}
