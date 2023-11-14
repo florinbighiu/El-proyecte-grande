@@ -99,7 +99,7 @@ function Cart() {
     const finalCost = totalCost + 20;
 
     return (
-        <div className="text-black mt-8">
+        <div className="text-black mt-8 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-x-5">
                 {cartProducts.length ? (<>
                     <div className="flex flex-col col-span-2 row-span-1">

@@ -63,7 +63,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div style={style} className="flex mx-12 lg:max-w-lg border-t border-white text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
+        <div style={style} className="flex mx-2 lg:mx-12 lg:max-w-lg border-t border-white text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

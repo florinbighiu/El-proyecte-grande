@@ -19,45 +19,35 @@ const UserProfile = () => {
     }, []);
 
     return (
-        <div className="container min-h-full mt-8 bg-gray-100 rounded-lg shadow-lg">
-            {userInfo ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-1 ">
-                    <div className="w-full p-4 col-span-1 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 rounded-lg">
-                        <div className="mb-4 ">
-                            <img
-                                src={"https://st3.depositphotos.com/7486768/17806/v/450/depositphotos_178065822-stock-illustration-profile-anonymous-face-icon-gray.jpg"}
-                                alt="User Avatar"
-                                className="w-32 h-32 rounded-full mx-auto"
-                            />
-                        </div>
-                        <div className="text-center p-4">
-                            <h2 className="text-xl font-bold">{userInfo.username}</h2>
-                            <p className="text-gray-600">{userInfo.email}</p>
-                        </div>
+        <div className="bg-gray-100 w-4/5 h-3/5 py-2 my-12 rounded-lg">
+            <div className="w-full mx-auto bg-white p-8 rounded-md shadow-md">
+                <div className="flex items-center mb-8 bg-pink-300 p-12 rounded-xl">
+                    <img
+                        src="https://avatars.githubusercontent.com/u/12345678?v=4"
+                        alt="Profile"
+                        className="rounded-full w-24 h-24 mr-4"
+                    />
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-800">John Doe</h1>
+                        <p className="text-gray-600">john.doe@example.com</p>
                     </div>
-                    <div className="col-span-2">
-                        <div className="bg-white h-full p-6 rounded-lg shadow">
-                            <h3 className="text-lg font-semibold mb-4">Profile Details</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p className="text-sm text-gray-500">Username</p>
-                                    <p className="text-lg font-medium">{userInfo.username}</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Phone</p>
-                                    <p className="text-lg font-medium"></p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Authority</p>
-                                    <p className="text-lg font-medium">{userInfo.authorities[0].authority}</p>
-                                </div>
-                            </div>
+                </div>
+                <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Order History</h2>
+                    {/* Replace the following with real order data */}
+                    <div className="flex flex-col space-y-4">
+                        <div className="flex justify-between items-center bg-gray-200 p-4 rounded-md">
+                            <span>Order #12345</span>
+                            <span>$150.00</span>
+                        </div>
+                        <div className="flex justify-between items-center bg-gray-200 p-4 rounded-md">
+                            <span>Order #67890</span>
+                            <span>$80.00</span>
                         </div>
                     </div>
                 </div>
-            ) : (
-                <p className="text-center">Loading...</p>
-            )}
+                
+            </div>
         </div>
     );
 };

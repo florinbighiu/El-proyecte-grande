@@ -87,7 +87,7 @@ function ProductDetail() {
       </div>
       <div className="w-full lg:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">
         <div className="w-4/5 h-full">
-        <h3 className="font-extrabold w-full text-3xl text-center uppercase mb-4">
+          <h3 className="p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-3xl text-center font-extrabold uppercase tracking-tighter text-transparent">
           {product.title}
         </h3>
         <p className="text-xl font-display">{product.description}</p>
