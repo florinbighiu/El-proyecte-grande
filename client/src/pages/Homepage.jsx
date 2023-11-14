@@ -67,6 +67,7 @@ function Homepage() {
     }
   };
 
+
   const featuredProducts = products.slice(0, 4);
 
   return (

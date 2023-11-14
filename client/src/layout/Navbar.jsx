@@ -17,22 +17,22 @@ const Navbar = () => {
   const isAuthenticated = localStorage.getItem("authToken");
 
   const content = (
-    <div className="lg:hidden bg-gray-200 block absolute top-14 w-full left-0 right-0  text-black text-bold transition z-50">
+    <div id="content" className="lg:hidden block absolute top-14 w-full left-0 right-0  text-black text-bold transition z-50">
       <ul className="text-center text-xl p-20 ">
-        <li className="my-4 py-4 border-b border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
           <a href="/">Home</a>
         </li>
-        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
           <a href="/products">Products</a>
         </li>
-        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
           <a href="/cart">Cart</a>
         </li>
-        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
+        <li className="my-4 py-4 border-b  border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
           <a href="/contact">Contact</a>
         </li>
         {isAuthenticated ? (
-          <li className="my-4 py-4 border-b  border-gray-400 hover:bg-gray-300 hover:rounded hover: cursor-pointer">
+          <li className="my-4 py-4 border-b  border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
             <a href="/login" onClick={logout}>
               Logout
             </a>
@@ -47,9 +47,9 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50  font-medium text-white bg-gray-200">
+    <nav className="top-0 z-50 font-medium text-white">
       <div className=" mx-auto my-1 w-full flex flex-wrap justify-between items-center">
-        <div className="flex items-center pl-24">
+        <div className="sticky left-0 flex items-center mx-12">
           <a href="/">
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
@@ -95,7 +95,7 @@ const Navbar = () => {
                 <li className="text-black hover:text-yellow-500 my-2 pl-12">
                   <a
                     href="/login"
-                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 focus:ring-4 focus:ring-blue-300 font-serif text-base rounded-full px-5 py-2 mb-2">
+                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 font-serif text-base rounded-full px-5 py-2 mb-2">
                     Log in
                   </a>
                 </li>

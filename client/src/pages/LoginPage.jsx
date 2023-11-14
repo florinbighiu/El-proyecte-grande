@@ -50,7 +50,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
-      <div className="bg-gray-100 border border-gray-300/50 rounded-lg shadow-lg w-96">
+      <div className="bg-gray-100 bg-opacity-40 border-t border-gray-100 rounded-xl shadow-lg w-96">
         <div className="flex items-center mt-8 pl-24">
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
           <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
@@ -66,7 +66,7 @@ const LoginPage = () => {
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-gray-200 text-black font-serif rounded-md focus:outline-none"
+              className="w-full px-4 py-2 bg-gray-100 text-black font-serif rounded-md focus:outline-none"
               placeholder="Your username"
             />
           </div>
@@ -80,7 +80,7 @@ const LoginPage = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-gray-200 text-black font-serif rounded-md focus:outline-none"
+              className="w-full px-4 py-2 bg-gray-100 text-black font-serif rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>

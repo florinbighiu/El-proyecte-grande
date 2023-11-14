@@ -14,6 +14,7 @@ import PasswordReset from "./pages/PasswordReset";
 import Logout from "./pages/Logout";
 import ProductDetail from "./pages/ProductDetail";
 import UserProfile from "./pages/UserProfile.jsx";
+import BackToTopButton from "./layout/BackToTopButton.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           </Routes>
           <Toaster />
         </div>
+        <BackToTopButton />
         <Footer />
       </div>
     </Router>

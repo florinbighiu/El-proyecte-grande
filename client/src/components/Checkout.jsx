@@ -19,9 +19,14 @@ const Checkout = ({ onClose }) => {
     e.preventDefault();
   };
 
+  const style = {
+    backgroundColor: '#faaca8',
+    backgroundImage: 'linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%)',
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
-      <div className="bg-gradient-to-r from-gray-100 to-gray-300 p-4 text-black rounded-xl shadow-md sm:w-2/4 md:w-1/4">
+      <div style={style} className="p-4 text-black rounded-xl shadow-md w-3/4 md:w-2/4 lg:w-1/4">
         <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

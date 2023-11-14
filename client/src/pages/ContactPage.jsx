@@ -37,6 +37,11 @@ const ContactPage = () => {
     }
   };
 
+  const style = {
+    backgroundColor: '#faaca8',
+    backgroundImage: 'linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%)',
+  };
+
   return (
     <div className="container min-w-full">
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
@@ -58,7 +63,7 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="flex bg-gradient-to-r from-gray-100 to-gray-300 mx-12 lg:max-w-lg text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
+        <div style={style} className="flex mx-12 lg:max-w-lg border-t border-white text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
