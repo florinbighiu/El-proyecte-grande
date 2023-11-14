@@ -112,7 +112,7 @@ function Cart() {
                                         <img
                                             src={product.product.thumbnail}
                                             alt={product.product.title}
-                                            className="w-full h-64 object-full border border-gray-100/75 shadow-lg rounded-lg"
+                                            className="w-full h-64 object-fill border border-gray-100/75 shadow-lg rounded-lg"
                                         />
                                     </div>
 
