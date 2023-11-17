@@ -39,7 +39,7 @@ export default {
       },
       fontFamily: {
         sans: ["ui-sans-serif", "system-ui"],
-        serif: ["Roboto"],
+        serif: ["GT Walsheim"],
         mono: ["ui-monospace", "SFMono-Regular"],
         display: ["Oswald"],
         body: ["Bungee Spice"],

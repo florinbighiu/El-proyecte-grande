@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Checkout from "../components/Checkout";
@@ -194,14 +195,14 @@ function Cart() {
                 </>) : (
                     <div className="flex flex-col items-center justify-start col-span-3 mt-8">
                         <img src={EmptyCart} alt="EmptyCart" className="h-2/5 " />
-                        <h1 className="w-full text-center text-2xl mt-2">
-                            You don't have any items in your cart. Let's get shopping!
+                        <h1 className="w-full text-center font-serif text-2xl mt-2">
+                            You don't have any items in your cart.
                         </h1>
                         <div className="h-1/4 flex items-center justify-center">
                             <Link to="/products">
                                 <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl font-helvetica text-white rounded-full">
                                         <FaShoppingBag />
-                                    <p>Start shopping</p>
+                                    <p className="font-serif">Start shopping</p>
                                 </div>
                             </Link>
                         </div>
