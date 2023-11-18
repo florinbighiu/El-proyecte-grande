@@ -50,7 +50,7 @@ const SignupPage = () => {
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
           <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
         </div>
-        <form onSubmit={handleRegistration} className="py-3 px-8 font-display">
+        <form onSubmit={handleRegistration} className="py-3 px-8">
           <div className="mb-3">
             <label htmlFor="username">
               Username
@@ -89,7 +89,7 @@ const SignupPage = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-gray-100 text-black font-display rounded-md focus:outline-none"
+              className="w-full px-4 py-2 bg-gray-100 text-black rounded-md focus:outline-none"
               placeholder="Your password"
             />
           </div>
@@ -100,7 +100,7 @@ const SignupPage = () => {
           </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mb-4 text-gray-500 text-center font-display">
+        <p className="mb-4 text-gray-500 text-center">
           Already have an account?{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Log in

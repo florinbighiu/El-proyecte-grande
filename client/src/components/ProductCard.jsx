@@ -19,7 +19,7 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
     .join("\n");
 
   return (
-    <div className="relative bg-white border border-gray-200/70 bg-opacity-20 backdrop-blur-md rounded-lg shadow-xl">
+    <div className="flex flex-col justify-between bg-white border border-gray-200/70 bg-opacity-20 backdrop-blur-md rounded-lg shadow-xl">
       {product.discountPercentage > 0 && (
         <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-black p-2 rounded-full">
           <div className="text-md font-semibold">
@@ -35,7 +35,7 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
           <Link to={`/product/${product.id}`}>
             <h3 className="font-extrabold text-lg uppercase mb-1">{product.title}</h3>
             <p
-              className={`text-black text-lg text-start font-display px-1  ${showMore ? "..." : "overflow-hidden h-14"
+              className={`text-black text-lg text-start font-serif px-1 ${showMore ? "..." : "overflow-hidden h-14"
                 }`}>
               {showMore ? product.description : truncatedDescription}
             </p>

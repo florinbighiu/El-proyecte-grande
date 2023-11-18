@@ -27,10 +27,10 @@ const Checkout = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
       <div style={style} className="p-4 text-black rounded-xl shadow-md w-3/4 md:w-2/4 lg:w-1/4">
-        <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+        <h2 className="text-2xl  mb-4">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium">
+            <label htmlFor="name" className="block text-sm ">
               Name
             </label>
             <input
@@ -44,7 +44,7 @@ const Checkout = ({ onClose }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium">
+            <label htmlFor="email" className="block text-sm">
               Email
             </label>
             <input
@@ -58,7 +58,7 @@ const Checkout = ({ onClose }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="address" className="block text-sm font-medium">
+            <label htmlFor="address" className="block text-sm">
               Address
             </label>
             <textarea

@@ -30,7 +30,7 @@ function UpdateForm({
 
   return (
     <div className="fixed inset-0 overflow-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75 ">
-      <div style={style} className=" text-black p-4 rounded-md shadow-md w-3/4 sm:w-3/4 md:w-1/4">
+      <div style={style} className=" text-black p-4 rounded-lg shadow-md w-3/4 sm:w-3/4 md:w-1/4">
         <h2 className="text-xl font-semibold mb-2">Update Product</h2>
         <form>
           <div className="mb-4 flex text-black flex-col max-h-96 overflow-y-auto px-2">
@@ -43,7 +43,7 @@ function UpdateForm({
               value={title}
               onChange={handleInputChange}
               placeholder="Product Name"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="description" className="mb-1">
@@ -55,7 +55,7 @@ function UpdateForm({
               onChange={handleInputChange}
               placeholder="Description"
               rows="4"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="price" className="mb-1">
@@ -67,7 +67,7 @@ function UpdateForm({
               value={price}
               onChange={handleInputChange}
               placeholder="Price"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="discountpercentage" className="mb-1">
@@ -79,7 +79,7 @@ function UpdateForm({
               value={discountPercentage}
               onChange={handleInputChange}
               placeholder="Discount Percentage"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="rating" className="mb-1">
@@ -91,7 +91,7 @@ function UpdateForm({
               value={rating}
               onChange={handleInputChange}
               placeholder="Rating"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="stock" className="mb-1">
@@ -103,7 +103,7 @@ function UpdateForm({
               value={stock}
               onChange={handleInputChange}
               placeholder="Stock"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="brand" className="mb-1">
@@ -115,7 +115,7 @@ function UpdateForm({
               value={brand}
               onChange={handleInputChange}
               placeholder="Brand"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="category" className="mb-1">
@@ -127,7 +127,7 @@ function UpdateForm({
               value={category}
               onChange={handleInputChange}
               placeholder="Category"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="image" className="mb-1">
@@ -139,14 +139,14 @@ function UpdateForm({
               value={thumbnail}
               onChange={handleInputChange}
               placeholder="Image URL"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
           </div>
           <div className="flex flex-col justify-center">
             <button
               type="button"
               onClick={update}
-              className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded">
+              className="bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded-full">
               Update Product
             </button>
             <button

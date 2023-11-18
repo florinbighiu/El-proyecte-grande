@@ -100,8 +100,9 @@ const LoginPage = () => {
             </button>
           )
           }
+          {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
-        <p className="mb-4 text-black text-center font-display">
+        <p className="mb-4 text-black text-center">
           Dont have an account?{" "}
           <a href="/signup" className="text-blue-600 hover:underline">
             Sign up

@@ -36,7 +36,7 @@ function AddForm({
               value={title}
               onChange={handleInputChange}
               placeholder="Product Name"
-              className="mb-2 p-2 bg-gray-300 focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 focus:outline-none rounded"
             />
 
             <label htmlFor="description" className="text-black mb-1">
@@ -48,7 +48,7 @@ function AddForm({
               onChange={handleInputChange}
               placeholder="Description"
               rows="4"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="price" className="text-black mb-1">
@@ -60,7 +60,7 @@ function AddForm({
               value={price}
               onChange={handleInputChange}
               placeholder="Price"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="discountpercentage" className="text-black mb-1">
@@ -72,7 +72,7 @@ function AddForm({
               value={discountPercentage}
               onChange={handleInputChange}
               placeholder="Discount Percentage"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="rating" className="text-black mb-1">
@@ -84,7 +84,7 @@ function AddForm({
               value={rating}
               onChange={handleInputChange}
               placeholder="Rating"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="stock" className="text-black mb-1">
@@ -96,7 +96,7 @@ function AddForm({
               value={stock}
               onChange={handleInputChange}
               placeholder="Stock"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="brand" className="text-black mb-1">
@@ -108,7 +108,7 @@ function AddForm({
               value={brand}
               onChange={handleInputChange}
               placeholder="Brand"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="category" className="text-black mb-1">
@@ -120,7 +120,7 @@ function AddForm({
               value={category}
               onChange={handleInputChange}
               placeholder="Category"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
 
             <label htmlFor="image" className="text-black mb-1">
@@ -132,7 +132,7 @@ function AddForm({
               value={thumbnail}
               onChange={handleInputChange}
               placeholder="Image URL"
-              className="mb-2 p-2 bg-gray-300 text-black focus:outline-none rounded"
+              className="mb-2 p-2 bg-gray-100 border border-white/75 text-black focus:outline-none rounded"
             />
           </div>
           <div className="flex flex-col justify-center">
