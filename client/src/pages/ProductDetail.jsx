@@ -90,7 +90,7 @@ function ProductDetail() {
           <h3 className="p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-3xl text-center font-extrabold uppercase tracking-tighter text-transparent">
           {product.title}
         </h3>
-        <p className="text-xl font-display">{product.description}</p>
+        <p className="text-xl">{product.description}</p>
         <div className="mt-4 w-full flex flex-col">
           <p className="text-red-500 w-full text-2xl font-semibold mt-2">
               $
@@ -107,20 +107,20 @@ function ProductDetail() {
             <StarRating product={product} />
           </div>{" "}
           {product.stock < 25 ? (
-            <p className="text-xl font-display my-2">
+            <p className="text-xl my-2">
               Limited quantity available /
               <span className="text-xl text-red-600">{" " + product.stock + " "}</span>
               in stock
             </p>
           ) : (
-            <p className="text-xl font-display my-2">
+            <p className="text-xl my-2">
               Quantity available /
               <span className="text-xl text-green-600">{" "}{product.stock}{" "}</span>
               in stock
             </p>
           )}
-          <p className="text-xl font-display my-2">Brand: {product.brand}</p>
-          <p className="text-xl font-display my-2 mb-5">Category:
+          <p className="text-xl my-2">Brand: {product.brand}</p>
+          <p className="text-xl my-2 mb-5">Category:
             <span className="uppercase">{" " + product.category}</span>
           </p>
         </div>
