@@ -25,14 +25,10 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/login", formData);
-
-      if (!response) {
-        setLoading(true);
-
-      }
 
       if (response) {
         localStorage.setItem("authToken", response.data.jwt);
