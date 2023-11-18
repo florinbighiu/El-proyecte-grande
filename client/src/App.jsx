@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
+import './fonts.css';
+
+
 import ProductList from "./pages/ProductList";
 import Navbar from "./layout/Navbar";
 import Cart from "./pages/Cart";

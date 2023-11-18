@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @media screen and (max-width: 767px) {
-  .visible-below-767{
+  .visible-below-767 {
     display: block;
   }
 }
 
 body {
-  font-family: "GT Walsheim";
+  font-family: 'GTWalsheimPro-Regular', sans-serif;
   scroll-behavior: smooth;
 }
 
