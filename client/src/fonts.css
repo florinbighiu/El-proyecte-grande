@@ -1,7 +1,7 @@
 
 @font-face {
-    font-family: 'GTWalsheimPro-Regular';
-    src: local('GTWalsheimPro-Regular'), url('../assets/fonts/GTWalsheimPro-Regular.woff2') format('woff2');
+    font-family: 'GTWalsheim Regular';
+    src: local('GTWalsheim Regular'), url('../src/assets/fonts/GT\ Walsheim\ Regular.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
