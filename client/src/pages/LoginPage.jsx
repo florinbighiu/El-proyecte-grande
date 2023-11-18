@@ -84,19 +84,20 @@ const LoginPage = () => {
           <p className="my-3 text-start text-blue-600">
             <a href="/forgotPassword">Forgot your password?</a>
           </p>
-          {loading ? (
-            <div className="flex justify-center">
-              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
-            </div>
-          ) : (
-            <button
-              onClick={handleLogin}
-              className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
-              type="submit">
-              Log In
-            </button>
-          )
-          }
+          <button
+            onClick={handleLogin}
+            className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
+            type="submit">
+            {loading ? (
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
+              </div>
+            ) :
+              (
+                "Log In"
+              )
+            }
+          </button>
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
         </form>
         <p className="mb-4 text-black text-center">
