@@ -39,6 +39,7 @@ const LoginPage = () => {
         window.location.reload();
       }
     } catch (error) {
+      setLoading(false)
       console.error("Login failed:", error);
       setError("Login failed. Please check your credentials.");
     }
