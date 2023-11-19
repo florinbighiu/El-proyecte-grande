@@ -2,7 +2,7 @@
 function CategoryDropdown({ categories, selectedCategory, onSelectCategory, searchQuery, setSearchQuery }) {
     
     return (
-        <div className="my-5 flex flex-row border border-white/50 shadow-md rounded-lg">
+        <div className="my-5 w-full flex flex-row border border-white/50 shadow-md rounded-lg">
             <input
                 className="w-full bg-white bg-opacity-25 rounded-l-lg px-3 focus:outline-none"
                 type="text"
