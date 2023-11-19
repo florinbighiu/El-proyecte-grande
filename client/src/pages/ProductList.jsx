@@ -5,6 +5,8 @@ import AddForm from "../components/AddForm";
 import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
 import Loading from "../layout/Loading.jsx";
+import CategoryDropdown from "../components/CategoryDropdown.jsx";
+
 import toast from "react-hot-toast";
 
 function ProductList() {
@@ -13,6 +15,8 @@ function ProductList() {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [productIdToUpdate, setProductIdToUpdate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const token = localStorage.getItem("authToken");
   const userRole = localStorage.getItem("role");
@@ -30,6 +34,10 @@ function ProductList() {
     category: "",
     thumbnail: "",
   });
+
+  const filteredProducts = products.filter(product =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const fetchProducts = async () => {
     try {
@@ -67,7 +75,7 @@ function ProductList() {
             }
           }
         );
-  
+
         if (response.status === 200) {
           toast.success("Product added to the cart!");
           setProducts((prevProducts) =>
@@ -87,7 +95,7 @@ function ProductList() {
       toast.error("An error occurred while adding the product to the cart");
     }
   };
-  
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -178,21 +186,30 @@ function ProductList() {
     }
   };
 
+  const uniqueCategories = Array.from(new Set(products.map((product) => product.category)));
+
+
   return (
     <div className="flex flex-col text-white">
       {isLoading ? (
         <Loading />
       ) : (
         <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
-          {Array.from(new Set(products.map((product) => product.category))).map((category) => (
-            <div key={category} className="mb-28">
+          <CategoryDropdown
+            categories={Array.from(new Set(products.map((product) => product.category)))}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          {selectedCategory !== "" ? (
+            <div key={selectedCategory} className="my-12">
               <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
-                {category}
+                {selectedCategory}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {" "}
-                {products
-                  .filter((product) => product.category === category)
+                {filteredProducts
+                  .filter((product) => product.category === selectedCategory)
                   .map((product) => (
                     <ProductCard
                       key={product.id}
@@ -214,7 +231,48 @@ function ProductList() {
                 )}
               </div>
             </div>
-          ))}
+          ) : (
+            <div>
+              {uniqueCategories
+                .filter(category => {
+                  const matchingProducts = filteredProducts.filter(product => product.category === category);
+                  return matchingProducts.length > 0;
+                })
+                .map((category) => (
+                  <div key={category} className="mb-28">
+                    <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
+                      {category}
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {" "}
+                      {filteredProducts
+                        .filter((product) => product.category === category)
+                        .map((product) => (
+                          <ProductCard
+                            key={product.id}
+                            product={product}
+                            quantity={quantity}
+                            handleAddToCart={handleAddToCart}
+                            handleDeleteProduct={handleDeleteProduct}
+                            handleOpenUpdateForm={handleOpenUpdateForm}
+                          />
+                        ))}
+                      {userRole === "1" && (
+                        <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
+                          <button
+                            onClick={() => setShowForm(true)}
+                            className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
+                            Add
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          )
+          }
 
           {showUpdateForm && (
             <UpdateForm
