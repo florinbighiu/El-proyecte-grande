@@ -118,13 +118,13 @@ function Cart() {
                                     </div>
 
                                     <div className="p-8 flex-grow flex justify-evenly flex-col lg:w-1/2">
-                                        <h3 className="text-xl text-black text-center font-semibold font-display mb-2">
+                                        <h3 className="text-xl text-black text-center font-semibold mb-2">
                                             <strong>{product.product.title}</strong>
                                         </h3>
-                                        <p className="text-lg text-black text-center font-display mb-2">
+                                        <p className="text-lg text-black text-center mb-2">
                                             {product.product.description}
                                         </p>
-                                        <p className="text-red-500 text-center font-display text-xl">
+                                        <p className="text-red-500 text-center text-xl">
                                             ${product.product.discountPercentage > 0 ? ((product.product.price - (product.product.price * product.product.discountPercentage) / 100) * product.quantity).toFixed(2) : (product.product.price * product.quantity).toFixed(2)}
                                             {product.product.discountPercentage > 0 && (
                                                 <span className="text-sm text-gray-700 line-through ml-2">
@@ -157,8 +157,8 @@ function Cart() {
                     <div
                         className="h-fit flex items-center justify-start mx-3 my-3 col-span-2 row-span-2 md:col-span-1 md:row-span-1">
                         <div
-                            className="bg-gray-100 bg-opacity-50 border-t border-t-white text-black font-display p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
-                            <h2 className="text-2xl text-center mb-4">Order Summary</h2>
+                            className="bg-gray-100 bg-opacity-50 border-t border-t-white text-black p-4 rounded-xl border border-gray-200/50 shadow-md w-full">
+                            <h2 className="text-2xl text-center font-bold mb-4">Order Summary</h2>
                             <hr className="my-4 border-t border-gray-300" />
                             <h2 className="text-xl mb-4">Total items: {cartProducts.length}</h2>
                             <hr className="my-4 border-t border-gray-300" />
@@ -200,7 +200,7 @@ function Cart() {
                         </h1>
                         <div className="h-1/4 flex items-center justify-center">
                             <Link to="/products">
-                                <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl font-helvetica text-white rounded-full">
+                                <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl  text-white rounded-full">
                                         <FaShoppingBag />
                                     <p className="font-serif">Start shopping</p>
                                 </div>

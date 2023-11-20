@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: 'GT Walsheim Regular';
+  font-family: 'GT Walsheim Pro';
   scroll-behavior: smooth;
 }
 
@@ -48,4 +48,16 @@ option {
 select {
   -webkit-appearance: none;
   appearance: none;
+}
+
+@font-face {
+  font-family: 'GT Walsheim Pro';
+  src: url('GTWalsheimPro-Regular.eot');
+  src: local('GT Walsheim Pro Regular'), local('GTWalsheimPro-Regular'),
+    url('./assets/fonts/GTWalsheimPro-Regular.eot') format('embedded-opentype'),
+    url('./assets/fonts/GTWalsheimPro-Regular.woff2') format('woff2'),
+    url('./assets/fonts/GTWalsheimPro-Regular.woff') format('woff'),
+    url('./assets/fonts/GTWalsheimPro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
