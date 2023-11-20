@@ -16,6 +16,7 @@ import Logout from "./pages/Logout";
 import ProductDetail from "./pages/ProductDetail";
 import UserProfile from "./pages/UserProfile.jsx";
 import BackToTopButton from "./layout/BackToTopButton.jsx";
+import AboutUsPage from "./pages/AboutUsPage.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/product/:productId" element={<ProductDetail />} />
             </Route>
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutUsPage />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>

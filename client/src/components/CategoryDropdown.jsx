@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import { TiArrowSortedDown } from "react-icons/ti";
-
 function CategoryDropdown({ categories, selectedCategory, onSelectCategory, searchQuery, setSearchQuery }) {
 
     return (
@@ -12,11 +10,12 @@ function CategoryDropdown({ categories, selectedCategory, onSelectCategory, sear
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <div className="flex flex-row items-center justify-center pr-1 text-black">
+            <div className="flex flex-row items-center justify-center text-black">
+                <div className="p-1 pr-3 rounded-full">
                 <select
                     value={selectedCategory}
                     onChange={(e) => onSelectCategory(e.target.value)}
-                    className="block text-black bg-white bg-opacity-25 hover:cursor-pointer rounded-r-full py-2 px-3 focus:outline-none sm:text-sm"
+                    className="block text-black bg-transparent hover:cursor-pointer rounded-full py-2 px-3 focus:outline-none sm:text-sm"
                 >
                     <option value="">All Categories</option>
                     {categories.map((category) => (
@@ -25,7 +24,7 @@ function CategoryDropdown({ categories, selectedCategory, onSelectCategory, sear
                         </option>
                     ))}
                 </select>
-                <TiArrowSortedDown />
+                </div>
             </div>
         </div>
     );
