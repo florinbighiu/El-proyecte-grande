@@ -1,26 +1,13 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Loading from '../layout/Loading';
+
+import { getUserInfo } from '../api/userInfo';
 
 const UserProfile = () => {
     const [userInfo, setUserInfo] = useState(null);
 
-    const userId = localStorage.getItem("userId")
-    const token = localStorage.getItem("authToken")
-
-
     useEffect(() => {
-        axios.get(`https://el-proyecte-grande-osxq.onrender.com/users/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then((response) => {
-                setUserInfo(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching user data:', error);
-            });
+        getUserInfo(setUserInfo);
     }, []);
 
     if (!userInfo) {
