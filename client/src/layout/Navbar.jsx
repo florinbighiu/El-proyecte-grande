@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
+import { FaUserAlt } from "react-icons/fa";
+
 
 import LogoImage from "../assets/carton.png";
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-  const logout = () => {
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
     localStorage.clear();
 
     window.location.href = "/login";
@@ -33,7 +40,7 @@ const Navbar = () => {
         </li>
         {isAuthenticated ? (
           <li className="my-4 py-4 border-b  border-gray-400 hover:bg-indigo-300 hover:bg-opacity-25 hover:rounded hover: cursor-pointer">
-            <a href="/login" onClick={logout}>
+            <a href="/login" onClick={handleLogout}>
               Logout
             </a>
           </li>
@@ -46,6 +53,40 @@ const Navbar = () => {
     </div>
   );
 
+  const profileDropdown = (
+    <div className="origin-top-right absolute right-4 top-12 mt-2 w-36 h-36 rounded-md shadow-lg bg-white border border-t-white/75 ring-1 ring-black ring-opacity-5">
+      <div
+        className="py-1 h-full flex flex-col items-center justify-evenly"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="options-menu"
+      >
+        <a
+          href="/user"
+          className="block px-4 py-2 text-sm w-full text-center text-gray-700 hover:bg-gray-100"
+          role="menuitem"
+        >
+          Profile
+        </a>
+        <a
+          href="#"
+          className="block px-4 py-2 text-sm w-full text-center text-gray-700 hover:bg-gray-100"
+          role="menuitem"
+        >
+          Settings
+        </a>
+        <button
+          onClick={handleLogout}
+          className="block px-4 py-2 text-sm w-full text-gray-700 hover:bg-gray-100"
+          role="menuitem"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+
+  )
+
   return (
     <nav>
       <div className=" mx-auto my-1 w-full flex flex-wrap justify-between items-center">
@@ -54,7 +95,7 @@ const Navbar = () => {
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
           <a href="/">
-            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">eCommerce</div>
+            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">EcomX</div>
           </a>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">
@@ -73,16 +114,16 @@ const Navbar = () => {
                 <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/contact" className="px-1">Contact</a>
                 </li>
-
-                <li className="text-black hover:text-yellow-500 my-2 pl-8">
-                  <a
-                    href="/login"
-                    onClick={logout}
-                    className="text-black border border-indigo-600/50 transition-all duration-300  hover:text-white hover:bg-indigo-600 focus:ring-4 focus:ring-blue-300 font-serif rounded-full px-5 py-2 mr-2 mb-2">
-                    Logout
-                  </a>
-                  
-                </li>
+                <div>
+                  <button
+                    onClick={toggleDropdown}
+                    type="button"
+                    className="text-black ml-8 p-2 rounded-full border border-black/50 text-xl focus:outline-none"
+                  >
+                    <FaUserAlt />
+                  </button>
+                </div>
+                {isDropdownOpen && profileDropdown}
               </ul>
             ) : (
               <ul className="flex font-bold font-serif text-base">

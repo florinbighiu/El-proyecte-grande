@@ -4,7 +4,7 @@ function Footer() {
       <div className="flex items-center justify-evenly">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ml-12 pl-10">
           <div>
-            <h3 className="text-2xl font-bold mb-4">eCommerce</h3>
+            <h3 className="text-2xl font-bold mb-4">EcomX</h3>
             <p className="text-black font-display pr-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id justo eu lectus
               elementum placerat.
@@ -39,7 +39,7 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-gray-500/25 text-black font-display py-4 mt-2 text-center">
-        <p>&copy; {new Date().getFullYear()} eCommerce. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} EcomX. All rights reserved.</p>
       </div>
     </footer>
   );
