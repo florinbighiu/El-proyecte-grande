@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav>
       <div className="my-1 w-full flex flex-wrap justify-between items-center">
-        <div className="sticky left-0 flex items-center mx-12">
+        <div className="sticky left-0 flex items-center ml-5">
           <a href="/">
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
@@ -46,7 +46,6 @@ const Navbar = () => {
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">
           <div className="flex-10 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             {isAuthenticated ? (
-              <>
               <ul className="flex font-semibold font-serif text-md">
                 <li className="text-black py-2 px-2 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
                   <a href="/" className="px-1">Home</a>
@@ -61,8 +60,6 @@ const Navbar = () => {
                   <a href="/contact" className="px-1">Contact</a>
                 </li>
               </ul>
-              {isDropdownOpen && isAuthenticated && <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />}
-              </>
             ) : (
               <ul className="flex font-bold font-serif text-base">
                 <li className="text-black hover:text-yellow-500 my-2">
@@ -82,9 +79,10 @@ const Navbar = () => {
             )}
           </div>
         </div>
+        {isDropdownOpen && isAuthenticated && <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />}
         <div className="flex flex-row items-center justify-end space-x-5">
           {click && <DropdownContent isAuthenticated={isAuthenticated} handleLogout={handleLogout} />}
-          <button className="hidden text-black visible-below-767 transition mx-0" onClick={handleClick}>
+          <button className="hidden text-black visible-below-767 transition mx-2" onClick={handleClick}>
             {click ? <FaTimes /> : <CiMenuFries />}
           </button>
           {isAuthenticated && <UserProfileButton toggleDropdown={toggleDropdown} />}

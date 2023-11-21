@@ -6,7 +6,7 @@ const AboutUsPage = () => {
             <h2 className="text-center text-3xl mb-6rem">The complete ecommerce platform to create an exceptional experience.</h2>
             <div className="w-full flex flex-col items-center justify-center my-6rem">
                 <h2 className="text-2xl font-bold text-center mb-4">Our E-Commerce Success</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 w-2/3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 w-2/3 text-center">
                     <div className="p-4 rounded-lg bg-blue-500 text-white hover:scale-105  transition-all 300 ease cursor-pointer">
                         <p className="text-3xl font-bold">$10M+</p>
                         <p className="text-sm">Total Sales</p>
