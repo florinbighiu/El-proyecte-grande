@@ -40,7 +40,7 @@ const Navbar = () => {
             <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
           </a>
           <a href="/">
-            <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">EcomX</div>
+            <div className="text-3xl text-[#bd927c] ml-4 font-semibold">EcomX</div>
           </a>
         </div>
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">

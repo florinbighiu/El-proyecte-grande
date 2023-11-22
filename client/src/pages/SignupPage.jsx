@@ -46,9 +46,9 @@ const SignupPage = () => {
   return (
     <div className="min-h-screen flex items-start justify-center mt-28 bg-transparent">
       <div className="bg-gray-100 bg-opacity-40  border-t border-gray-100 rounded-xl shadow-lg w-96">
-        <div className="flex items-center mt-8 pl-24">
+        <div className="w-full flex items-center justify-center mt-6">
           <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
-          <div className="text-xl text-[#bd927c] ml-4 font-semibold font-body">EcomX</div>
+          <div className="text-3xl text-[#bd927c] ml-4 font-semibold">EcomX</div>
         </div>
         <form onSubmit={handleRegistration} className="py-3 px-8">
           <div className="mb-3">

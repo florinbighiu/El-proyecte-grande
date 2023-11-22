@@ -43,7 +43,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="container min-w-full">
+    <div className="container min-w-full my-12">
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
       <div className=" grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="flex flex-col justify-center items-center text-center  md:text-left">

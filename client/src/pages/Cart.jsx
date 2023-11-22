@@ -202,7 +202,7 @@ function Cart() {
                             <Link to="/products">
                                 <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl  text-white rounded-full">
                                         <FaShoppingBag />
-                                    <p className="font-serif">Start shopping</p>
+                                    <p className="text-md">Start shopping</p>
                                 </div>
                             </Link>
                         </div>
