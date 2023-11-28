@@ -37,8 +37,6 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 <img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/IntelliJ_IDEA_Icon.svg" height="auto" width="40">
 
 <img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/git-original.svg" height="auto" width="40">
-
-<img src="https://raw.githubusercontent.com/SidorAndrei/SidorAndrei/master/assets/github-original.svg" height="auto" width="40">
 </p>
 
 ### Server (Back-End)
