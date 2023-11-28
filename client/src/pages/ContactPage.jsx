@@ -3,6 +3,8 @@ import Logo from "../assets/carton.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+import { API_BASE_URL } from "../api/apiRoute";
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,7 +25,7 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("https://el-proyecte-grande-osxq.onrender.com/email/send", formData);
+      await axios.post(`${API_BASE_URL}/email/send`, formData);
       toast.success("Message sent successfully!");
       setFormData({
         name: "",

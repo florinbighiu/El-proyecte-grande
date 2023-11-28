@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Checkout from "../components/Checkout";
+import { API_BASE_URL } from "../api/apiRoute";
+
 import axios from "axios";
 
 import EmptyCart from "../assets/empty.png";
@@ -18,20 +20,15 @@ function Cart() {
     const quantity = 1;
 
     const fetchCartItems = async () => {
-
-
-        if (!token) {
-            console.error("Token not found in localStorage");
-            return;
-        }
-
-        const response = await axios.get(`https://el-proyecte-grande-osxq.onrender.com/cart/items/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if (response.status === 200) {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/cart/items/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             setCartProducts(response.data);
+        } catch (error) {
+            console.error(error.message)
         }
     };
 
@@ -41,7 +38,7 @@ function Cart() {
 
     const decreaseQuantity = async (product) => {
         try {
-            await axios.put(`https://el-proyecte-grande-osxq.onrender.com/cart/update/decrease/${product.id}/${quantity}`, {
+            await axios.put(`${API_BASE_URL}/cart/update/decrease/${product.id}/${quantity}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -60,7 +57,7 @@ function Cart() {
 
     const increaseQuantity = async (product) => {
         try {
-            await axios.put(`https://el-proyecte-grande-osxq.onrender.com/cart/update/increase/${product.id}/${quantity}`, {
+            await axios.put(`${API_BASE_URL}/cart/update/increase/${product.id}/${quantity}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -78,7 +75,7 @@ function Cart() {
 
     const handleRemoveFromCart = async (product) => {
         try {
-            const response = await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/cart/remove/${product.id}`, {
+            const response = await axios.delete(`${API_BASE_URL}/cart/remove/${product.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -201,7 +198,7 @@ function Cart() {
                         <div className="h-1/4 flex items-center justify-center">
                             <Link to="/products">
                                 <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl  text-white rounded-full">
-                                        <FaShoppingBag />
+                                    <FaShoppingBag />
                                     <p className="text-md">Start shopping</p>
                                 </div>
                             </Link>

@@ -6,6 +6,8 @@ import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
 import Loading from "../layout/Loading.jsx";
 import CategoryDropdown from "../components/CategoryDropdown.jsx";
+import { getUserRole, getToken, getUserId, defaultQuantity } from "../utils/authConstants.js";
+import { API_BASE_URL } from "../api/apiRoute.js";
 
 import toast from "react-hot-toast";
 
@@ -18,10 +20,10 @@ function ProductList() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const token = localStorage.getItem("authToken");
-  const userRole = localStorage.getItem("role");
-  const userId = localStorage.getItem("userId");
-  const quantity = 1;
+  const token = getToken();
+  const userId = getUserId();
+  const userRole = getUserRole();
+  const quantity = defaultQuantity;
 
   const [newProduct, setNewProduct] = useState({
     title: "",
@@ -41,11 +43,7 @@ function ProductList() {
 
   const fetchProducts = async () => {
     try {
-      if (!token) {
-        return;
-      }
-
-      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
+      const response = await axios.get(`${API_BASE_URL}/products`);
 
       if (response) {
         const data = await response.data;
@@ -67,7 +65,7 @@ function ProductList() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-          `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
+          `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
           {},
           {
             headers: {
@@ -117,7 +115,7 @@ function ProductList() {
       ) {
         toast.error("Please fill in all required fields.");
       } else {
-        const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/products/create", newProduct, {
+        const response = await axios.post(`${API_BASE_URL}/products/create`, newProduct, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -145,7 +143,7 @@ function ProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await axios.put(
-        `https://el-proyecte-grande-osxq.onrender.com/products/${productIdToUpdate}`,
+        `${API_BASE_URL}/products/${productIdToUpdate}`,
         newProduct
       );
       const updatedProducts = products.map((prevProduct) =>
@@ -178,7 +176,7 @@ function ProductList() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`);
+      await axios.delete(`${API_BASE_URL}/products/${productId}`);
       const updatedProducts = products.filter((product) => product.id !== productId);
       setProducts(updatedProducts);
     } catch (error) {

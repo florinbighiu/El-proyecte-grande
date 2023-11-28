@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { getToken, getUserId, defaultQuantity } from "../utils/authConstants";
+import { API_BASE_URL } from "../api/apiRoute";
 
 import axios from "axios";
 
@@ -15,14 +17,14 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem("authToken");
-  const userId = localStorage.getItem("userId");
-  const quantity = 1;
+  const token = getToken();
+  const userId = getUserId();
+  const quantity = defaultQuantity;
 
 
   useEffect(() => {
     axios
-      .get(`https://el-proyecte-grande-osxq.onrender.com/products/${productId}`)
+      .get(`${API_BASE_URL}/products/${productId}`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);
@@ -37,7 +39,7 @@ function ProductDetail() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-            `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
+          `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
             {},
             {
               headers: {

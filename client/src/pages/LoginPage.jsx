@@ -1,7 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
+
+import { API_BASE_URL } from "../api/apiRoute";
 import Logo from "../assets/carton.png";
 
 const LoginPage = () => {
@@ -28,7 +30,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/login", formData);
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, formData);
 
       if (response) {
         localStorage.setItem("authToken", response.data.jwt);

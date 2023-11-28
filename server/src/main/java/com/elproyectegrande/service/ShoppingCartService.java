@@ -6,22 +6,25 @@ import com.elproyectegrande.model.ShoppingCart;
 import com.elproyectegrande.repository.ProductRepository;
 import com.elproyectegrande.repository.ShoppingCartRepository;
 import com.elproyectegrande.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ShoppingCartService {
 
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+    
+    private final ShoppingCartRepository shoppingCartRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
+   
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    
+    private final UserRepository userRepository;
 
     public void addToCart(Integer userId, Long productId, Integer quantity) {
         Optional<Product> optionalProduct = productRepository.findById(productId);

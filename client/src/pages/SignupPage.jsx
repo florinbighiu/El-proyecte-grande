@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../assets/carton.png";
+import { API_BASE_URL } from "../api/apiRoute";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://el-proyecte-grande-osxq.onrender.com/auth/register", formData, {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, formData, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import ProductCard from "../components/ProductCard.jsx";
 import Loading from "../layout/Loading.jsx";
+import { API_BASE_URL } from "../api/apiRoute.js";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -17,7 +19,7 @@ function Homepage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://el-proyecte-grande-osxq.onrender.com/products");
+      const response = await axios.get(`${API_BASE_URL}/products`);
 
       if (response) {
         setProducts(response.data);
@@ -38,23 +40,23 @@ function Homepage() {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
-            `https://el-proyecte-grande-osxq.onrender.com/cart/add/${userId}/${productId}/${quantity}`,
-            {},
-            {
-              headers: {
-                "Authorization": `Bearer ${token}`
-              }
+          `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
+          {},
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
             }
+          }
         );
 
         if (response.status === 200) {
           toast.success("Product added to the cart!");
           setProducts((prevProducts) =>
-              prevProducts.map((prevProduct) =>
-                  prevProduct.id === productId
-                      ? { ...prevProduct, stock: prevProduct.stock - quantity }
-                      : prevProduct
-              )
+            prevProducts.map((prevProduct) =>
+              prevProduct.id === productId
+                ? { ...prevProduct, stock: prevProduct.stock - quantity }
+                : prevProduct
+            )
           );
         } else {
           toast.error("Failed to add the product!");
@@ -105,7 +107,7 @@ function Homepage() {
 
       <section className="my-32 bg-transparent text-center flex flex-col space-x-8 space-y-8 xl:flex-row">
         <div className="flex items-baseline justify-center">
-        <h2 className="md:p-24 p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">What Our Customers Say</h2>
+          <h2 className="md:p-24 p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">What Our Customers Say</h2>
         </div>
         <div className="lg:p-12 p-6 rounded-3xl bg-gradient-to-r shadow-lg from-pink-300 via-purple-300 to-indigo-400 flex flex-col items-start justify-around space-y-8 sm:w-full">
           <p className="py-8 text-4xl w-full text-left font-body font-extralight text-black">
