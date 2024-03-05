@@ -1,7 +1,7 @@
 # About the project
 
 
-Our user-friendly eCommerce platform provides a seamless shopping experience with secure registration and login functionality.  With our efficient product filtering system, customers can swiftly find their desired items. Furthermore, our secure checkout process allows for convenient transactions with card payments, while the order history feature enables users to track their purchases effortlessly.
+Our eCommerce platform provides a seamless shopping experience with secure registration and login functionality, shopping cart and a user-friendly interface. With our efficient product filtering system, customers can swiftly find their desired items.
 
 
 
@@ -11,9 +11,9 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 - Register/Login - spring security
 - Send Email - you can contact us through our contact form
 - Admin Panel - you can add products if you have the admin role
-- Add Product - setting all the necessary details depending on the product you add
-- Search Bar - you can filter the products by writing the country or product type in the search bar
-- Filter products
+- Shopping cart - you can add products to cart to save them for later
+- Search Bar
+- Category filter
 
 
 ## Tech
@@ -42,11 +42,12 @@ Our user-friendly eCommerce platform provides a seamless shopping experience wit
 ### Server (Back-End)
 #### Programming language
 - [Java](https://www.java.com/)
-- JPA - Java Persistence API
+
 
 #### Frameworks and dependencies
 - [Spring](https://spring.io/) - Java Framework
 - [JWT](https://jwt.io/libraries) - Web Security Tokens Library
+- JPA - Java Persistence API
 - [PostgreSQL](https://www.postgresql.org/) - Database used
 
 #### Project management
