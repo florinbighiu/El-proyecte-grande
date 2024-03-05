@@ -38,7 +38,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-gray-500/25 text-black font-display py-4 mt-2 text-center">
+      <div className="border-t border-gray-500/25 text-black py-4 mt-2 text-center">
         <p>&copy; {new Date().getFullYear()} EcomX. All rights reserved.</p>
       </div>
     </footer>

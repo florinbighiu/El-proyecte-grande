@@ -110,7 +110,7 @@ function Cart() {
                                         <img
                                             src={product.product.thumbnail}
                                             alt={product.product.title}
-                                            className="w-full h-64 object-fill border border-gray-100/75 shadow-lg rounded-lg"
+                                            className="w-full h-64 object-cover border border-gray-100/75 shadow-lg rounded-lg"
                                         />
                                     </div>
 
@@ -190,14 +190,14 @@ function Cart() {
                         </div>
                     </div>
                 </>) : (
-                    <div className="flex flex-col items-center justify-start col-span-3 mt-8">
+                    <div className="flex flex-col items-center justify-center col-span-3 mt-8">
                         <img src={EmptyCart} alt="EmptyCart" className="h-2/5 " />
                         <h1 className="w-full text-center font-serif text-2xl mt-2">
                             You don't have any items in your cart.
                         </h1>
                         <div className="h-1/4 flex items-center justify-center">
                             <Link to="/products">
-                                <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-3 px-8 text-xl  text-white rounded-full">
+                                <div className="flex flex-row items-center space-x-2 bg-pink-500 hover:bg-pink-600 p-2 px-6 text-xl  text-white rounded-full">
                                     <FaShoppingBag />
                                     <p className="text-md">Start shopping</p>
                                 </div>

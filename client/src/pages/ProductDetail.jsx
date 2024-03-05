@@ -43,7 +43,7 @@ function ProductDetail() {
   }, [productId]);
 
 
-  const handleAddToCart = async(product, product_id, quantity) => {
+  const handleAddToCart = async (product, product_id, quantity) => {
     try {
       if (product.stock > 0) {
         const response = await axios.post(
@@ -87,21 +87,21 @@ function ProductDetail() {
   }
 
   return (
-    <div className="w-full my-8 md:p-6 space-y-8 md:space-x-8 flex lg:flex-row flex-col items-start justify-between overflow-hidden">
-      <div className="w-full h-fit lg:w-1/2 bg-white bg-opacity-25 backdrop-blur-md rounded-xl p-1">
+    <div className="w-full mt-[4rem] md:p-6 flex lg:flex-row flex-col items-center justify-between">
+      <div className="w-full lg:w-1/2 bg-white bg-opacity-25 backdrop-blur-md rounded-xl p-1">
         <img
           src={product.thumbnail}
           alt="Thumbnail"
-          className="w-full h-[55vh] sm:h-[65vh] object-fit shadow-lg rounded-xl"
+          className="w-full h-[33rem] object-cover shadow-lg rounded-xl"
         />
       </div>
-      <div className="w-full lg:w-1/2 md:px-8 text-black flex flex-col items-center justify-start">
-        <div className="w-4/5 h-full">
+      <div className="w-full lg:w-1/2 h-[33rem] md:px-8 my-0.5 text-black flex flex-col items-start justify-center">
+        <div className="h-full mx-6 flex items-center justify-center flex-col">
           <h3 className="p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-3xl text-center font-extrabold uppercase tracking-tighter text-transparent">
             {product.title}
           </h3>
           <p className="text-xl">{product.description}</p>
-          <div className="mt-4 w-full flex flex-col">
+          <div className="mt-4 w-full flex flex-col items-start justify-center">
             <p className="text-red-500 w-full text-2xl font-semibold mt-2">
               $
               {product.discountPercentage > 0

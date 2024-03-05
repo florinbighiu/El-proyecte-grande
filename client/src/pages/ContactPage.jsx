@@ -45,9 +45,9 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="container min-w-full my-12">
-      <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
-      <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div className="container min-w-full">
+      <h1 className="text-3xl font-semibold mb-10 text-center my-[3rem]">Contact Us</h1>
+      <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12 my-12">
         <div className="flex flex-col justify-center items-center text-center  md:text-left">
           <img src={Logo} alt="Logo" className="h-32 mb-8" />
           <p className="mb-6">
