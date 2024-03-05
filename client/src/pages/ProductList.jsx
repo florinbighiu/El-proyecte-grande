@@ -6,8 +6,10 @@ import UpdateForm from "../components/UpdateForm";
 import ProductCard from "../components/ProductCard";
 import Loading from "../layout/Loading.jsx";
 import CategoryDropdown from "../components/CategoryDropdown.jsx";
-import { getUserRole, getToken, getUserId, defaultQuantity } from "../utils/authConstants.js";
+import { getUserRole, getToken, defaultQuantity } from "../utils/authConstants.js";
 import { API_BASE_URL } from "../api/apiRoute.js";
+import { handleAddToCart } from "../api/addToCart.js";
+import { fetchProducts } from "../api/fetchProducts.js";
 
 import toast from "react-hot-toast";
 
@@ -21,7 +23,6 @@ function ProductList() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const token = getToken();
-  const userId = getUserId();
   const userRole = getUserRole();
   const quantity = defaultQuantity;
 
@@ -41,59 +42,12 @@ function ProductList() {
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/products`);
+  const uniqueCategories = Array.from(new Set(products.map((product) => product.category)));
 
-      if (response) {
-        const data = await response.data;
-        setProducts(data);
-        setIsLoading(false);
-      } else {
-        console.error("Failed to fetch products");
-      }
-    } catch (error) {
-      console.error("Error fetching products", error);
-    }
-  };
 
   useEffect(() => {
-    fetchProducts()
+    fetchProducts(setProducts, setIsLoading);
   }, []);
-
-  const handleAddToCart = async (product, productId, quantity) => {
-    try {
-      if (product.stock > 0) {
-        const response = await axios.post(
-          `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
-          {},
-          {
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          }
-        );
-
-        if (response.status === 200) {
-          toast.success("Product added to the cart!");
-          setProducts((prevProducts) =>
-            prevProducts.map((prevProduct) =>
-              prevProduct.id === productId
-                ? { ...prevProduct, stock: prevProduct.stock - quantity }
-                : prevProduct
-            )
-          );
-        } else {
-          toast.error("Failed to add the product!");
-        }
-      } else {
-        toast.error("Product is out of stock!");
-      }
-    } catch (error) {
-      toast.error("An error occurred while adding the product to the cart");
-    }
-  };
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -184,8 +138,6 @@ function ProductList() {
     }
   };
 
-  const uniqueCategories = Array.from(new Set(products.map((product) => product.category)));
-
 
   return (
     <div className="flex flex-col text-white">
@@ -213,7 +165,7 @@ function ProductList() {
                       key={product.id}
                       product={product}
                       quantity={quantity}
-                      handleAddToCart={handleAddToCart}
+                      handleAddToCart={() => handleAddToCart(product, product.id, quantity, setProducts)}
                       handleDeleteProduct={handleDeleteProduct}
                       handleOpenUpdateForm={handleOpenUpdateForm}
                     />
@@ -250,7 +202,7 @@ function ProductList() {
                             key={product.id}
                             product={product}
                             quantity={quantity}
-                            handleAddToCart={handleAddToCart}
+                            handleAddToCart={() => handleAddToCart(product, product.id, quantity, setProducts)}
                             handleDeleteProduct={handleDeleteProduct}
                             handleOpenUpdateForm={handleOpenUpdateForm}
                           />

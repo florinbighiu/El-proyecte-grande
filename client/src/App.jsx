@@ -28,11 +28,11 @@ function App() {
             <Route element={<ProtectedRoutes />}>
               <Route path="/user" element={<UserProfile />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/products" element={<ProductList />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
             </Route>
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/products" element={<ProductList />} />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<LoginPage />}></Route>

@@ -20,9 +20,9 @@ const UserProfile = () => {
             <h1 className="text-6xl text-center font-bold my-12">{`Welcome, ${userInfo.username}!`}</h1>
             <div className="flex flex-col md:flex-row items-center bg-white bg-opacity-25 p-3 rounded-lg">
                 <div className='m-5'>
-                    <img src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-user-icon-person-head-icons-anonymous-male-female-businessman-photo-placeholder-social-network-272206807.jpg" 
-                    alt="User avatar"
-                    className="w-32 h-32 rounded-full mr-4" />
+                    <img src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-user-icon-person-head-icons-anonymous-male-female-businessman-photo-placeholder-social-network-272206807.jpg"
+                        alt="User avatar"
+                        className="w-32 h-32 rounded-full mr-4" />
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md w-full flex flex-row space-x-12 items-center justify-around">
                     <div className="mb-4">

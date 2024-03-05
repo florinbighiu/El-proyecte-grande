@@ -46,27 +46,30 @@ const Navbar = () => {
         <div className="lg:flex md:flex lg: flex-1 items center justify-end font-normal hidden">
           <div className="flex-10 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             {isAuthenticated ? (
-              <ul className="flex font-semibold font-serif text-md">
-                <li className="text-black py-2 px-2 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
-                  <a href="/" className="px-1">Home</a>
+              <ul className="flex font-semibold font-serif text-base">
+                <li className="text-black hover:text-yellow-500 my-2">
+                  <a href="/" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-full px-3 py-2 mb-2">Home</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
-                  <a href="/products" className="px-1">Products</a>
+                <li className="text-black hover:text-yellow-500 my-2">
+                  <a href="/products" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-full px-3 py-2 mb-2">Products</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
-                  <a href="/cart" className="">Cart</a>
+                <li className="text-black hover:text-yellow-500 my-2">
+                  <a href="/cart" className="text-black hover:bg-indigo-400 hover:bg-opacity-25  rounded-full px-3 py-2 mb-2">Cart</a>
                 </li>
-                <li className="text-black p-2 px-3 cursor-pointer hover:bg-slate-500 hover:bg-opacity-5 hover:shadow-xl rounded-full">
-                  <a href="/contact" className="px-1">Contact</a>
+                <li className="text-black hover:text-yellow-500 my-2">
+                  <a href="/contact" className="text-black hover:bg-indigo-400 hover:bg-opacity-25  rounded-full px-3 py-2 mb-2">Contact</a>
                 </li>
               </ul>
             ) : (
-              <ul className="flex font-bold font-serif text-base">
+              <ul className="flex font-semibold font-serif text-base">
                 <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/" className="text-black hover:bg-indigo-200 hover:bg-opacity-25 font-serif text-base rounded-full px-2 py-3 mb-2">Home</a>
+                  <a href="/" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-full px-3 py-2 mb-2">Home</a>
                 </li>
+                  <li className="text-black hover:text-yellow-500 my-2">
+                    <a href="/products" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-full px-3 py-2 mb-2">Products</a>
+                  </li>
                 <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/contact" className="text-black hover:bg-indigo-200 hover:bg-opacity-25  font-serif text-base rounded-full px-3 py-2 mb-2">Contact</a>
+                  <a href="/contact" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-full px-3 py-2 mb-2">Contact</a>
                 </li>
                 <li className="text-black hover:text-yellow-500 my-2 pl-12">
                   <a

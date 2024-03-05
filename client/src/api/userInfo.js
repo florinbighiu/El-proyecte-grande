@@ -6,7 +6,7 @@ const token = localStorage.getItem("authToken");
 export const getUserInfo = async (setUserInfo) => {
   try {
     const response = await axios.get(
-      `https://el-proyecte-grande-osxq.onrender.com/users/${userId}`,
+      `http://localhost:8080/users/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

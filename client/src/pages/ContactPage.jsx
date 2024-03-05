@@ -47,7 +47,7 @@ const ContactPage = () => {
   return (
     <div className="container min-w-full my-12">
       <h1 className="text-3xl font-semibold mb-10 text-center">Contact Us</h1>
-      <div className=" grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="flex flex-col justify-center items-center text-center  md:text-left">
           <img src={Logo} alt="Logo" className="h-32 mb-8" />
           <p className="mb-6">
@@ -64,8 +64,7 @@ const ContactPage = () => {
             <strong>Address:</strong> 123 Main St, City, Country
           </p>
         </div>
-
-        <div style={style} className="flex mx-2 lg:mx-12 lg:max-w-lg border-t border-white text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
+        <div style={style} className="flex w-3/4 mx-auto lg:mx-0 lg:max-w-lg border-t border-white text-black shadow-xl flex-col justify-center p-8 rounded-2xl">
           <h2 className="text-xl font-semibold mb-2">Contact Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
