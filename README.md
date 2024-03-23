@@ -61,7 +61,3 @@ Our eCommerce platform provides a seamless shopping experience with secure regis
 - [React.js](https://reactjs.org/) - JavaScript Library
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework 
 
-
-
-## Deployed website
-- https://el-proyecte-grande.vercel.app/
