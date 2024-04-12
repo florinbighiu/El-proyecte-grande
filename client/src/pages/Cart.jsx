@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { FaShoppingBag } from "react-icons/fa";
 
 
-function Cart() {
+const Cart = () => {
     const [cartProducts, setCartProducts] = useState([]);
     const [showCheckout, setShowCheckout] = useState(false);
 
@@ -114,7 +114,7 @@ function Cart() {
                                         />
                                     </div>
 
-                                    <div className="p-8 flex-grow flex justify-evenly flex-col lg:w-1/2">
+                                    <div className="p-2 flex-grow flex justify-evenly flex-col lg:w-1/2">
                                         <h3 className="text-xl text-black text-center font-semibold mb-2">
                                             <strong>{product.product.title}</strong>
                                         </h3>

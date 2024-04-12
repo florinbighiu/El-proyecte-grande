@@ -2,7 +2,7 @@
 
 import toast from "react-hot-toast";
 
-function UpdateForm({
+const UpdateForm = ({
   title,
   description,
   price,
@@ -15,7 +15,7 @@ function UpdateForm({
   handleInputChange,
   handleUpdate,
   onClose,
-}) {
+}) => {
   const toaster = () => toast.success("Product updated!");
 
   const update = () => {

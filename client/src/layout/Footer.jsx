@@ -1,4 +1,4 @@
-function Footer() {
+const  Footer = () => {
   return (
     <footer className="border-t z-50 border-gray-500/25 text-black pt-8 mt-20">
       <div className="flex items-center justify-evenly">

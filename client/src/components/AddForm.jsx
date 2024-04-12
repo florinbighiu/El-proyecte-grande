@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Toaster } from "sonner";
 
-function AddForm({
+const AddForm = ({
   title,
   description,
   price,
@@ -14,13 +14,13 @@ function AddForm({
   handleInputChange,
   handleAddProduct,
   onClose,
-}) {
+}) => {
 
   const style = {
     backgroundColor: '#faaca8',
     backgroundImage: 'linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%)',
   };
-  
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
       <div style={style} className="border border-gray-200/70 p-4 rounded-lg shadow-lg text-black w-3/4 sm:w-2/4 md:w-1/4">

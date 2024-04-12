@@ -3,7 +3,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { getToken, getUserId } from "../utils/authConstants.js";
 
-
 export const handleAddToCart = async (product, productId, quantity, setProducts) => {
   const token = getToken();
   const userId = getUserId();
@@ -37,6 +36,6 @@ export const handleAddToCart = async (product, productId, quantity, setProducts)
     }
   } catch (error) {
     toast.error("An error occured!");
-    console.log(error.message)
+    console.log(error.message);
   }
 };

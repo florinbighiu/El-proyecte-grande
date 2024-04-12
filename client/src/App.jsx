@@ -18,7 +18,7 @@ import UserProfile from "./pages/UserProfile.jsx";
 import BackToTopButton from "./layout/BackToTopButton.jsx";
 import AboutUsPage from "./pages/AboutUsPage.jsx";
 
-function App() {
+const  App = () => {
   return (
     <Router>
       <div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import StarRating from "./StarRating";
 
-function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, handleOpenUpdateForm }) {
+const ProductCard = ({ product, handleAddToCart, quantity, handleDeleteProduct, handleOpenUpdateForm }) => {
   const userRole = localStorage.getItem("role");
   const maxDescriptionLines = 3;
   const [showMore, setShowMore] = useState(false);
@@ -31,41 +31,41 @@ function ProductCard({ product, handleAddToCart, quantity, handleDeleteProduct, 
       <Link to={`/product/${product.id}`}>
         <img src={product.thumbnail} alt={product.title} className="w-full h-56 rounded-lg shadow-lg mb-4" />
       </Link>
-        <div className="text-black text-center p-2 ">
-          <Link to={`/product/${product.id}`}>
-            <h3 className="font-extrabold text-lg uppercase mb-1">{product.title}</h3>
-            <p
-              className={`text-black text-lg text-start font-serif px-1 ${showMore ? "..." : "overflow-hidden h-14"
-                }`}>
-              {showMore ? product.description : truncatedDescription}
-            </p>
-          </Link>
-
-          {product.description.split("\n").length > maxDescriptionLines && (
-            <button
-              onClick={toggleDescription}
-              className="text-blue-400 font-semibold hover:underline mt-2 focus:outline-none">
-              {showMore ? "Show Less" : "Show More"}
-            </button>
-          )}
-          <div className="my-3 flex flex-row justify-around">
-            <StarRating product={product} />
-          <p className=" bg-opacity-25 p-2 border border-gray-50/75 rounded-2xl">Qty: {product.stock}</p>
-          </div>
-          <p className="text-red-500 text-xl font-semibold text-center">
-
-            $
-            {product.discountPercentage > 0
-              ? (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
-              : product.price.toFixed(2)}
-
-            {product.discountPercentage > 0 && (
-              <span className="text-sm text-gray-700 line-through ml-2">
-                ${product.price.toFixed(2)}
-              </span>
-            )}
+      <div className="text-black text-center p-2 ">
+        <Link to={`/product/${product.id}`}>
+          <h3 className="font-extrabold text-lg uppercase mb-1">{product.title}</h3>
+          <p
+            className={`text-black text-lg text-start font-serif px-1 ${showMore ? "..." : "overflow-hidden h-14"
+              }`}>
+            {showMore ? product.description : truncatedDescription}
           </p>
+        </Link>
+
+        {product.description.split("\n").length > maxDescriptionLines && (
+          <button
+            onClick={toggleDescription}
+            className="text-blue-400 font-semibold hover:underline mt-2 focus:outline-none">
+            {showMore ? "Show Less" : "Show More"}
+          </button>
+        )}
+        <div className="my-3 flex flex-row justify-around">
+          <StarRating product={product} />
+          <p className=" bg-opacity-25 p-2 border border-gray-50/75 rounded-2xl">Qty: {product.stock}</p>
         </div>
+        <p className="text-red-500 text-xl font-semibold text-center">
+
+          $
+          {product.discountPercentage > 0
+            ? (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
+            : product.price.toFixed(2)}
+
+          {product.discountPercentage > 0 && (
+            <span className="text-sm text-gray-700 line-through ml-2">
+              ${product.price.toFixed(2)}
+            </span>
+          )}
+        </p>
+      </div>
       <div className="p-2 flex flex-col space-y-1 items-center w-full text-gray-100">
         <button
           onClick={() => handleAddToCart(product, product.id, quantity)}

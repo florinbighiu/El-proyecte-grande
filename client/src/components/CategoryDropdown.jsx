@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-function CategoryDropdown({ categories, selectedCategory, onSelectCategory, searchQuery, setSearchQuery }) {
+const CategoryDropdown = ({ categories, selectedCategory, onSelectCategory, searchQuery, setSearchQuery }) => {
 
     return (
         <div className="my-5 w-full flex flex-row border border-white/75 rounded-full">
@@ -12,18 +12,18 @@ function CategoryDropdown({ categories, selectedCategory, onSelectCategory, sear
             />
             <div className="flex flex-row items-center justify-center text-black">
                 <div className="p-1 pr-3 rounded-full">
-                <select
-                    value={selectedCategory}
-                    onChange={(e) => onSelectCategory(e.target.value)}
-                    className="block text-black bg-transparent hover:cursor-pointer rounded-full py-2 px-3 focus:outline-none sm:text-sm"
-                >
-                    <option value="">All Categories</option>
-                    {categories.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
+                    <select
+                        value={selectedCategory}
+                        onChange={(e) => onSelectCategory(e.target.value)}
+                        className="block text-black bg-transparent hover:cursor-pointer rounded-full py-2 px-3 focus:outline-none sm:text-sm"
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
         </div>

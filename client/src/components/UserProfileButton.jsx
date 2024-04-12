@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaUserAlt } from "react-icons/fa";
 
-function UserProfileButton({ toggleDropdown }) {
+const UserProfileButton = ({ toggleDropdown }) => {
 
     return (
         <div className="pr-4">

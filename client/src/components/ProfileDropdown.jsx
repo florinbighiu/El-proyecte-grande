@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-function ProfileDropdown({ handleLogout, userInfo }) {
+const ProfileDropdown = ({ handleLogout, userInfo }) => {
 
     return (
         <div className="absolute right-4 top-12 mt-2 w-36 h-36 rounded-lg shadow-lg bg-white">
@@ -10,7 +10,7 @@ function ProfileDropdown({ handleLogout, userInfo }) {
                 aria-labelledby="options-menu"
             >
                 {userInfo &&
-                        <h1 className="block px-4 py-2 text-md w-full text-center text-gray-700 rounded-t-lg bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">{userInfo?.username}</h1>
+                    <h1 className="block px-4 py-2 text-md w-full text-center text-gray-700 rounded-t-lg bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">{userInfo?.username}</h1>
                 }
                 <a
                     href="/user"

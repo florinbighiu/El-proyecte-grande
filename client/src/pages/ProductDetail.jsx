@@ -10,7 +10,7 @@ import axios from "axios";
 import Loading from "../layout/Loading";
 import StarRating from "../components/StarRating";
 
-function ProductDetail() {
+const ProductDetail = () => {
   const { productId } = useParams();
 
   const [product, setProduct] = useState(null);

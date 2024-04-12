@@ -9,7 +9,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import Loading from "../layout/Loading.jsx";
 import { API_BASE_URL } from "../api/apiRoute.js";
 
-function Homepage() {
+const  Homepage = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

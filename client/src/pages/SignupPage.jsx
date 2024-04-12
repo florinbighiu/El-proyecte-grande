@@ -12,9 +12,10 @@ const SignupPage = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+
 
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

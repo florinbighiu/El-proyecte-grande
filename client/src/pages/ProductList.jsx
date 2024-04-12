@@ -13,7 +13,7 @@ import { fetchProducts } from "../api/fetchProducts.js";
 
 import toast from "react-hot-toast";
 
-function ProductList() {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
