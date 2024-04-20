@@ -1,7 +1,7 @@
 # About the project
 
 
-Our eCommerce platform provides a seamless shopping experience with secure registration and login functionality, shopping cart and a user-friendly interface. With our efficient product filtering system, customers can swiftly find their desired items.
+eCommerce platform that provides a seamless shopping experience with secure registration and login functionality, shopping cart and a user-friendly interface. With our efficient product filtering system, customers can swiftly find their desired items.
 
 <p align="center" border-radius="25%">
   <img src="https://github.com/florinbighiu/El-proyecte-grande/assets/120215264/d7529bcd-e715-4335-b3d2-7e56dd546477" width="1250" height="500" title="hover text">
