@@ -2,6 +2,8 @@
 
 
 Our eCommerce platform provides a seamless shopping experience with secure registration and login functionality, shopping cart and a user-friendly interface. With our efficient product filtering system, customers can swiftly find their desired items.
+![Screenshot 2024-02-16 190004](https://github.com/florinbighiu/El-proyecte-grande/assets/120215264/d7529bcd-e715-4335-b3d2-7e56dd546477)
+![Screenshot 2024-02-16 190133](https://github.com/florinbighiu/El-proyecte-grande/assets/120215264/4f8337cf-e47b-410c-bcf2-f4dbb6c91ac0)
 
 
 
