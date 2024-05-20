@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import AddForm from "../components/AddForm";
-import UpdateForm from "../components/UpdateForm";
+import ProductForm from "../components/ProductForm";
 import ProductCard from "../components/ProductCard";
 import Loading from "../layout/Loading.jsx";
 import CategoryDropdown from "../components/CategoryDropdown.jsx";
@@ -21,6 +20,7 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [errors, setErrors] = useState({});
 
   const token = getToken();
   const userRole = getUserRole();
@@ -67,7 +67,18 @@ const ProductList = () => {
         newProduct.thumbnail === "" ||
         newProduct.description === ""
       ) {
-        toast.error("Please fill in all required fields.");
+        const newErrors = {
+          title: newProduct.title === "" ? "Title is required." : null,
+          price: newProduct.price === 0 ? "Price is required." : null,
+          stock: newProduct.stock === 0 ? "Stock is required." : null,
+          discountPercentage: newProduct.discountPercentage === 0 ? "Discount Percentage is required." : null,
+          brand: newProduct.brand === "" ? "Brand is required." : null,
+          rating: newProduct.rating === 0 ? "Rating is required." : null,
+          category: newProduct.category === "" ? "Category is required." : null,
+          thumbnail: newProduct.thumbnail === "" ? "Thumbnail is required." : null,
+          description: newProduct.description === "" ? "Description is required." : null,
+        };
+        setErrors(newErrors);
       } else {
         const response = await axios.post(`${API_BASE_URL}/products/create`, newProduct, {
           headers: {
@@ -104,6 +115,7 @@ const ProductList = () => {
         prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
       );
       setProducts(updatedProducts);
+      toast.success("Product updated successfully!");
       setNewProduct({
         title: "",
         description: "",
@@ -140,11 +152,11 @@ const ProductList = () => {
 
 
   return (
-    <div className="flex flex-col text-white">
+    <div className="flex flex-col w-full text-white">
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="m-0.5 p-4 text-slate-500 dark:text-white rounded-xl">
+        <div className="m-0.5 p-4 w-full text-slate-500 dark:text-white rounded-xl">
           <CategoryDropdown
             categories={Array.from(new Set(products.map((product) => product.category)))}
             selectedCategory={selectedCategory}
@@ -152,6 +164,15 @@ const ProductList = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
+          {userRole === "1" && (
+            <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
+              <button
+                onClick={() => setShowForm(true)}
+                className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
+                Add
+              </button>
+            </div>
+          )}
           {selectedCategory !== "" ? (
             <div key={selectedCategory} className="my-12">
               <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
@@ -170,15 +191,6 @@ const ProductList = () => {
                       handleOpenUpdateForm={handleOpenUpdateForm}
                     />
                   ))}
-                {userRole === "1" && (
-                  <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
-                    <button
-                      onClick={() => setShowForm(true)}
-                      className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
-                      Add
-                    </button>
-                  </div>
-                )}
               </div>
             </div>
           ) : (
@@ -225,18 +237,21 @@ const ProductList = () => {
           }
 
           {showUpdateForm && (
-            <UpdateForm
+            <ProductForm
               {...newProduct}
+              isAddOrEditProduct={false}
               handleInputChange={handleInputChange}
-              handleUpdate={handleUpdateProduct}
+              onSaveProduct={handleUpdateProduct}
               onClose={() => setShowUpdateForm(false)}
             />
           )}
           {showForm && (
-            <AddForm
+            <ProductForm
               {...newProduct}
+              errors={errors}
+              isAddOrEditProduct={true}
               handleInputChange={handleInputChange}
-              handleAddProduct={handleAddProduct}
+              onSaveProduct={handleAddProduct}
               onClose={() => setShowForm(false)}
             />
           )}
