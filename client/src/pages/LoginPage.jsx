@@ -1,62 +1,67 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
-
-import { API_BASE_URL } from "../api/apiRoute";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import apiService from "../api/apiService";
 import Logo from "../assets/carton.png";
 
-const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+const validate = (formData) => {
+  const errors = {};
+  if (!formData.username.trim()) errors.username = "Username is required.";
+  if (!formData.password) errors.password = "Password is required.";
+  return errors;
+};
 
+const LoginPage = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
+    setServerError("");
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const validationErrors = validate(formData);
+    if (Object.values(validationErrors).some(Boolean)) {
+      setErrors(validationErrors);
+      return;
+    }
+
     setLoading(true);
-
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, formData);
-
-      if (response) {
-        localStorage.setItem("authToken", response.data.jwt);
-        localStorage.setItem("role", response.data.user.authorities[0].roleId);
-        localStorage.setItem("userId", response.data.user.userId);
-
-        navigate("/");
-        window.location.reload();
-      }
-    } catch (error) {
-      setLoading(false)
-      console.error("Login failed:", error);
-      setError("Login failed. Please check your credentials.");
+      const response = await apiService.post("/auth/login", formData);
+      const { jwt, user } = response.data;
+      const role = user.authorities?.[0]?.authority ?? "USER";
+      login(jwt, user.userId, role);
+      navigate("/");
+    } catch (err) {
+      const msg = err.response?.data?.message || "Invalid username or password.";
+      setServerError(msg);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-transparent">
-      <div className="bg-gray-100 bg-opacity-40 border-t border-gray-100 rounded-xl shadow-lg w-96">
-        <div className="w-full flex items-center justify-center mt-6">
-          <img src={Logo} alt="Logo" className="w-10 h-10 my-1" />
-          <h1 className="text-3xl text-[#bd927c] ml-4 font-semibold">EcomX</h1>
+      <div className="bg-white bg-opacity-40 border border-gray-200/60 backdrop-blur-md rounded-2xl shadow-xl w-full max-w-sm">
+        <div className="flex items-center justify-center gap-3 pt-8 pb-2">
+          <img src={Logo} alt="Logo" className="w-10 h-10" />
+          <h1 className="text-3xl text-[#bd927c] font-semibold">EcomX</h1>
         </div>
-        <form className="py-3 px-8">
-          <div className="mb-3">
-            <label htmlFor="username" className="text-black">
+        <p className="text-center text-gray-500 text-sm mb-4">Sign in to your account</p>
+
+        <form onSubmit={handleLogin} className="px-8 pb-6 space-y-4">
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
               Username
             </label>
             <input
@@ -64,13 +69,15 @@ const LoginPage = () => {
               id="username"
               name="username"
               value={formData.username}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-gray-100 text-black font-serif rounded-md focus:outline-none"
+              onChange={handleChange}
+              className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-indigo-400 transition ${errors.username ? "border-red-400" : "border-gray-300"}`}
               placeholder="Your username"
             />
+            {errors.username && <p className="mt-1 text-xs text-red-500">{errors.username}</p>}
           </div>
-          <div className="">
-            <label htmlFor="password" className="text-black">
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -78,34 +85,37 @@ const LoginPage = () => {
               id="password"
               name="password"
               value={formData.password}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 bg-gray-100 text-black font-serif rounded-md focus:outline-none"
+              onChange={handleChange}
+              className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-indigo-400 transition ${errors.password ? "border-red-400" : "border-gray-300"}`}
               placeholder="Your password"
             />
+            {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
           </div>
-          <p className="my-3 text-start text-blue-600">
-            <a href="/forgotPassword">Forgot your password?</a>
-          </p>
-          {loading ? (
-            <div className="flex justify-center">
-              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-rose-700"></div>
+
+          {serverError && (
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-2">
+              {serverError}
             </div>
-          ) : (
-            <button
-              onClick={handleLogin}
-              className="w-full bg-purple-500 text-white font-semibold font-serif py-2 rounded-full transition duration-300 hover:bg-purple-600"
-              type="submit">
-              Log in
-            </button>
           )}
-          {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-full transition duration-200 flex items-center justify-center gap-2">
+            {loading ? (
+              <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" />
+            ) : (
+              "Log in"
+            )}
+          </button>
+
+          <p className="text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-indigo-600 hover:underline font-medium">
+              Sign up
+            </Link>
+          </p>
         </form>
-        <p className="mb-4 text-black text-center">
-          Dont have an account?{" "}
-          <a href="/signup" className="text-blue-600 hover:underline">
-            Sign up
-          </a>
-        </p>
       </div>
     </div>
   );

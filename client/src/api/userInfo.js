@@ -1,18 +1,10 @@
-import axios from "axios";
-
-const userId = localStorage.getItem("userId");
-const token = localStorage.getItem("authToken");
+import apiService from "./apiService";
 
 export const getUserInfo = async (setUserInfo) => {
+  const userId = localStorage.getItem("userId");
+  if (!userId) return;
   try {
-    const response = await axios.get(
-      `http://localhost:8080/users/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await apiService.get(`/users/${userId}`);
     setUserInfo(response.data);
   } catch (error) {
     console.error("Error fetching user data:", error);

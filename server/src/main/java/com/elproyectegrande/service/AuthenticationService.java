@@ -41,7 +41,8 @@ public class AuthenticationService {
     public ApplicationUser registerUser(String username, String password, String email) {
 
         String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").get();
+        Role userRole = roleRepository.findByAuthority("USER")
+                .orElseThrow(() -> new RuntimeException("USER role not found"));
 
         Set<Role> authorities = new HashSet<>();
 
@@ -54,7 +55,11 @@ public class AuthenticationService {
     public LoginResponseDTO loginUser(String username, String password) {
         
         ApplicationUser user = userRepository.findByUsername(username);
-    
+
+        if (user == null) {
+            throw new AuthenticationException("Invalid username or password");
+        }
+
         if (passwordEncoder.matches(password, user.getPassword())) {
             try {
                 Authentication auth = authenticationManager.authenticate(

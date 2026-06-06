@@ -59,27 +59,24 @@ public class ShoppingCartService {
 
     public void increaseCartItemQuantity(Long cartItemId, Integer newQuantity) {
         if (newQuantity >= 0) {
-            ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId).orElse(null);
-            assert cartItem != null;
+            ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId)
+                    .orElseThrow(() -> new RuntimeException("Cart item not found: " + cartItemId));
             Product product = cartItem.getProduct();
 
-            if (product.getStock() > 0) {
-
+            if (product.getStock() >= newQuantity) {
                 product.setStock(product.getStock() - newQuantity);
-
                 cartItem.setQuantity(cartItem.getQuantity() + newQuantity);
                 shoppingCartRepository.save(cartItem);
             } else {
-                throw new Error("The selected product does not have enough stock");
+                throw new RuntimeException("The selected product does not have enough stock");
             }
         }
     }
 
     public void decreaseCartItemQuantity(Long cartItemId, Integer newQuantity) {
         if (newQuantity >= 0) {
-            ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId).orElse(null);
-
-            assert cartItem != null;
+            ShoppingCart cartItem = shoppingCartRepository.findById(cartItemId)
+                    .orElseThrow(() -> new RuntimeException("Cart item not found: " + cartItemId));
             Product product = cartItem.getProduct();
 
             product.setStock(product.getStock() + newQuantity);

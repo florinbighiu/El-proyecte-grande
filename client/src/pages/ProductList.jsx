@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
+import { useEffect, useState, useMemo } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import apiService from "../api/apiService";
 import ProductForm from "../components/ProductForm";
 import ProductCard from "../components/ProductCard";
-import Loading from "../layout/Loading.jsx";
-import CategoryDropdown from "../components/CategoryDropdown.jsx";
-import { getUserRole, getToken, defaultQuantity } from "../utils/authConstants.js";
-import { API_BASE_URL } from "../api/apiRoute.js";
-import { handleAddToCart } from "../api/addToCart.js";
-import { fetchProducts } from "../api/fetchProducts.js";
-
+import Loading from "../layout/Loading";
+import CategoryDropdown from "../components/CategoryDropdown";
+import { defaultQuantity } from "../utils/authConstants";
+import { handleAddToCart } from "../api/addToCart";
+import { fetchProducts } from "../api/fetchProducts";
 import toast from "react-hot-toast";
 
+const EMPTY_PRODUCT = {
+  title: "", description: "", price: 0, discountPercentage: 0,
+  rating: 0, stock: 0, brand: "", category: "", thumbnail: "",
+};
+
+const PRODUCTS_PER_PAGE = 12;
+
 const ProductList = () => {
+  const { isAdmin } = useAuth();
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -21,224 +27,183 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [errors, setErrors] = useState({});
-
-  const token = getToken();
-  const userRole = getUserRole();
-  const quantity = defaultQuantity;
-
-  const [newProduct, setNewProduct] = useState({
-    title: "",
-    description: "",
-    price: 0,
-    discountPercentage: 0,
-    rating: 0,
-    stock: 0,
-    brand: "",
-    category: "",
-    thumbnail: "",
-  });
-
-  const filteredProducts = products.filter(product =>
-    product.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const uniqueCategories = Array.from(new Set(products.map((product) => product.category)));
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [newProduct, setNewProduct] = useState(EMPTY_PRODUCT);
 
   useEffect(() => {
     fetchProducts(setProducts, setIsLoading);
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
+
+  const filteredProducts = useMemo(() =>
+    products.filter((p) => {
+      const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = !selectedCategory || p.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    }), [products, searchQuery, selectedCategory]
+  );
+
+  const uniqueCategories = useMemo(
+    () => Array.from(new Set(products.map((p) => p.category))),
+    [products]
+  );
+
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewProduct((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
+  };
+
+  const validateProduct = () => {
+    const required = ["title", "description", "brand", "category", "thumbnail"];
+    const newErrors = {};
+    required.forEach((key) => {
+      if (!newProduct[key]) newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required.`;
+    });
+    if (!newProduct.price || newProduct.price <= 0) newErrors.price = "Price must be greater than 0.";
+    if (!newProduct.stock || newProduct.stock <= 0) newErrors.stock = "Stock must be greater than 0.";
+    return newErrors;
   };
 
   const handleAddProduct = async () => {
+    const validationErrors = validateProduct();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
     try {
-      if (
-        newProduct.title === "" ||
-        newProduct.price === 0 ||
-        newProduct.stock === 0 ||
-        newProduct.discountPercentage === 0 ||
-        newProduct.brand === "" ||
-        newProduct.rating === 0 ||
-        newProduct.category === "" ||
-        newProduct.thumbnail === "" ||
-        newProduct.description === ""
-      ) {
-        const newErrors = {
-          title: newProduct.title === "" ? "Title is required." : null,
-          price: newProduct.price === 0 ? "Price is required." : null,
-          stock: newProduct.stock === 0 ? "Stock is required." : null,
-          discountPercentage: newProduct.discountPercentage === 0 ? "Discount Percentage is required." : null,
-          brand: newProduct.brand === "" ? "Brand is required." : null,
-          rating: newProduct.rating === 0 ? "Rating is required." : null,
-          category: newProduct.category === "" ? "Category is required." : null,
-          thumbnail: newProduct.thumbnail === "" ? "Thumbnail is required." : null,
-          description: newProduct.description === "" ? "Description is required." : null,
-        };
-        setErrors(newErrors);
-      } else {
-        const response = await axios.post(`${API_BASE_URL}/products/create`, newProduct, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProducts((prevProducts) => [...prevProducts, response.data]);
-        setShowForm(false);
-        setNewProduct({
-          title: "",
-          description: "",
-          price: 0,
-          discountPercentage: 0,
-          rating: 0,
-          stock: 0,
-          brand: "",
-          category: "",
-          thumbnail: "",
-        });
-        toast.success("Product added successfully!");
-      }
-    } catch (error) {
-      console.error("Error creating product:", error.message);
+      const response = await apiService.post("/products/create", newProduct);
+      setProducts((prev) => [...prev, response.data]);
+      setShowForm(false);
+      setNewProduct(EMPTY_PRODUCT);
+      toast.success("Product added successfully!");
+    } catch {
+      toast.error("Failed to create product.");
     }
   };
 
   const handleUpdateProduct = async () => {
     try {
-      const response = await axios.put(
-        `${API_BASE_URL}/products/${productIdToUpdate}`,
-        newProduct
-      );
-      const updatedProducts = products.map((prevProduct) =>
-        prevProduct.id === productIdToUpdate ? { ...response.data } : prevProduct
-      );
-      setProducts(updatedProducts);
+      const response = await apiService.put(`/products/${productIdToUpdate}`, newProduct);
+      setProducts((prev) => prev.map((p) => (p.id === productIdToUpdate ? response.data : p)));
       toast.success("Product updated successfully!");
-      setNewProduct({
-        title: "",
-        description: "",
-        price: 0,
-        discountPercentage: 0,
-        rating: 0,
-        stock: 0,
-        brand: "",
-        category: "",
-        thumbnail: "",
-      });
       setShowUpdateForm(false);
-    } catch (error) {
-      console.error("Error updating product:", error.message);
+      setNewProduct(EMPTY_PRODUCT);
+    } catch {
+      toast.error("Failed to update product.");
     }
   };
 
   const handleOpenUpdateForm = (productId) => {
-    const productToUpdate = products.find((product) => product.id === productId);
+    const product = products.find((p) => p.id === productId);
     setProductIdToUpdate(productId);
-    setNewProduct({ ...productToUpdate });
+    setNewProduct({ ...product });
     setShowUpdateForm(true);
   };
 
   const handleDeleteProduct = async (productId) => {
     try {
-      await axios.delete(`${API_BASE_URL}/products/${productId}`);
-      const updatedProducts = products.filter((product) => product.id !== productId);
-      setProducts(updatedProducts);
-    } catch (error) {
-      console.error("Error deleting product:", error);
+      await apiService.delete(`/products/${productId}`);
+      setProducts((prev) => prev.filter((p) => p.id !== productId));
+      toast.success("Product deleted.");
+    } catch {
+      toast.error("Failed to delete product.");
     }
   };
 
+  const categoriesToShow = selectedCategory
+    ? [selectedCategory]
+    : uniqueCategories.filter((cat) => paginatedProducts.some((p) => p.category === cat));
 
   return (
-    <div className="flex flex-col w-full text-white">
+    <div className="flex flex-col w-full">
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="m-0.5 p-4 w-full text-slate-500 dark:text-white rounded-xl">
+        <div className="m-0.5 p-4 w-full rounded-xl">
           <CategoryDropdown
-            categories={Array.from(new Set(products.map((product) => product.category)))}
+            categories={uniqueCategories}
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-          {userRole === "1" && (
-            <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
+
+          {isAdmin && (
+            <div className="flex items-center justify-between mb-4 py-2">
+              <p className="text-xs text-slate-500 font-medium">Admin mode — you can add, edit and delete products.</p>
               <button
-                onClick={() => setShowForm(true)}
-                className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
-                Add
+                onClick={() => { setNewProduct(EMPTY_PRODUCT); setErrors({}); setShowForm(true); }}
+                className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-5 rounded-full transition">
+                + Add Product
               </button>
             </div>
           )}
-          {selectedCategory !== "" ? (
-            <div key={selectedCategory} className="my-12">
-              <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
-                {selectedCategory}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredProducts
-                  .filter((product) => product.category === selectedCategory)
-                  .map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      quantity={quantity}
-                      handleAddToCart={() => handleAddToCart(product, product.id, quantity, setProducts)}
-                      handleDeleteProduct={handleDeleteProduct}
-                      handleOpenUpdateForm={handleOpenUpdateForm}
-                    />
-                  ))}
-              </div>
-            </div>
+
+          {filteredProducts.length === 0 ? (
+            <p className="text-center text-gray-400 mt-16 text-lg">No products found.</p>
           ) : (
-            <div>
-              {uniqueCategories
-                .filter(category => {
-                  const matchingProducts = filteredProducts.filter(product => product.category === category);
-                  return matchingProducts.length > 0;
-                })
-                .map((category) => (
-                  <div key={category} className="mb-28">
-                    <h2 className="m-1 my-2 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-5xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
+            <>
+              {categoriesToShow.map((category) => {
+                const categoryProducts = paginatedProducts.filter((p) => p.category === category);
+                if (!categoryProducts.length) return null;
+                return (
+                  <div key={category} className="mb-16">
+                    <h2 className="m-1 my-3 px-1 text-2xl font-bold text-slate-700 capitalize">
                       {category}
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                      {" "}
-                      {filteredProducts
-                        .filter((product) => product.category === category)
-                        .map((product) => (
-                          <ProductCard
-                            key={product.id}
-                            product={product}
-                            quantity={quantity}
-                            handleAddToCart={() => handleAddToCart(product, product.id, quantity, setProducts)}
-                            handleDeleteProduct={handleDeleteProduct}
-                            handleOpenUpdateForm={handleOpenUpdateForm}
-                          />
-                        ))}
-                      {userRole === "1" && (
-                        <div className="group bg-white border border-gray-200/70 bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md relative flex items-center justify-center w-inherit h-inherit">
-                          <button
-                            onClick={() => setShowForm(true)}
-                            className="bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded-full sm:w-full md:w-32">
-                            Add
-                          </button>
-                        </div>
-                      )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {categoryProducts.map((product) => (
+                        <ProductCard
+                          key={product.id}
+                          product={product}
+                          quantity={defaultQuantity}
+                          handleAddToCart={() => handleAddToCart(product, product.id, defaultQuantity, setProducts)}
+                          handleDeleteProduct={handleDeleteProduct}
+                          handleOpenUpdateForm={handleOpenUpdateForm}
+                        />
+                      ))}
                     </div>
                   </div>
-                ))
-              }
-            </div>
-          )
-          }
+                );
+              })}
+
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-3 mt-8 mb-4">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-5 py-2 rounded-full bg-white bg-opacity-40 border border-gray-200 text-gray-700 disabled:opacity-40 hover:bg-opacity-60 transition text-sm font-medium">
+                    ← Prev
+                  </button>
+                  <span className="text-sm text-gray-600">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-5 py-2 rounded-full bg-white bg-opacity-40 border border-gray-200 text-gray-700 disabled:opacity-40 hover:bg-opacity-60 transition text-sm font-medium">
+                    Next →
+                  </button>
+                </div>
+              )}
+            </>
+          )}
 
           {showUpdateForm && (
             <ProductForm
               {...newProduct}
+              errors={errors}
               isAddOrEditProduct={false}
               handleInputChange={handleInputChange}
               onSaveProduct={handleUpdateProduct}
@@ -252,13 +217,13 @@ const ProductList = () => {
               isAddOrEditProduct={true}
               handleInputChange={handleInputChange}
               onSaveProduct={handleAddProduct}
-              onClose={() => setShowForm(false)}
+              onClose={() => { setShowForm(false); setErrors({}); }}
             />
           )}
         </div>
       )}
     </div>
   );
-}
+};
 
 export default ProductList;

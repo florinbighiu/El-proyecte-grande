@@ -1,148 +1,139 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import ProductCard from "../components/ProductCard.jsx";
 import Loading from "../layout/Loading.jsx";
-import { API_BASE_URL } from "../api/apiRoute.js";
+import apiService from "../api/apiService.js";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
-const  Homepage = () => {
+const TestimonialCard = ({ quote, author }) => (
+  <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-2xl p-8 shadow-sm text-left">
+    <div className="text-indigo-300 text-5xl font-serif leading-none mb-3">"</div>
+    <p className="text-slate-600 text-base leading-relaxed mb-6">{quote}</p>
+    <div className="flex items-center gap-3">
+      <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-bold flex items-center justify-center text-sm">
+        {author[0]}
+      </div>
+      <span className="text-slate-800 font-semibold text-sm">{author}</span>
+    </div>
+  </div>
+);
+
+const Homepage = () => {
+  const { userId, token } = useAuth();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = localStorage.getItem("authToken");
-  const userId = localStorage.getItem("userId")
-  const quantity = 1;
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/products`);
-
-      if (response) {
-        setProducts(response.data);
-        setIsLoading(false);
-      } else {
-        console.error("Failed to fetch products");
-      }
-    } catch (error) {
-      console.error("Error fetching products", error);
-    }
-  };
-
   useEffect(() => {
-    fetchProducts();
+    apiService
+      .get("/products")
+      .then((res) => setProducts(res.data))
+      .catch(() => console.error("Failed to fetch products"))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const handleAddToCart = async (product, productId, quantity) => {
+    if (!token) {
+      toast.error("Please log in to add items to your cart.");
+      return;
+    }
+    if (product.stock <= 0) {
+      toast.error("Product is out of stock!");
+      return;
+    }
     try {
-      if (product.stock > 0) {
-        const response = await axios.post(
-          `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
-          {},
-          {
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          }
-        );
-
-        if (response.status === 200) {
-          toast.success("Product added to the cart!");
-          setProducts((prevProducts) =>
-            prevProducts.map((prevProduct) =>
-              prevProduct.id === productId
-                ? { ...prevProduct, stock: prevProduct.stock - quantity }
-                : prevProduct
-            )
-          );
-        } else {
-          toast.error("Failed to add the product!");
-        }
-      } else {
-        toast.error("Product is out of stock!");
-      }
-    } catch (error) {
-      toast.error("An error occurred while adding the product to the cart");
+      await apiService.post(`/cart/add/${userId}/${productId}/${quantity}`, {});
+      toast.success("Added to cart!");
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === productId ? { ...p, stock: p.stock - quantity } : p
+        )
+      );
+    } catch {
+      toast.error("Could not add to cart. Please try again.");
     }
   };
 
-
   const featuredProducts = products.slice(0, 4);
+  const quantity = 1;
 
   return (
-    <div>
-      <section className="bg-transparent py-16 mt-8 text-center rounded-lg">
-        <h1 className="mt-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">
-          Discover the Best Deals
+    <div className="w-full max-w-7xl mx-auto px-4">
+      <section className="py-24 text-center">
+        <div className="inline-block mb-5 px-4 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold tracking-wide uppercase">
+          New arrivals every week
+        </div>
+        <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-800 tracking-tight leading-tight mb-5">
+          Discover the<br />
+          <span className="text-indigo-600">Best Deals</span>
         </h1>
-        <p className="order-first text-2xl bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text font-medium tracking-wide text-transparent m-3">
-          Explore our wide range of products at amazing prices.
+        <p className="text-lg text-slate-500 max-w-xl mx-auto mb-8">
+          Explore our wide range of products at amazing prices, delivered straight to your door.
         </p>
         <Link to="/products">
-          <button className="bg-indigo-600 text-white py-2 px-6 rounded-full hover:bg-indigo-700">
+          <button className="bg-indigo-600 text-white py-3 px-8 rounded-full hover:bg-indigo-700 font-semibold shadow-lg shadow-indigo-200 transition">
             Shop Now
           </button>
         </Link>
       </section>
 
-      <section className="py-12 px-4 mb-24">
+      <section className="py-12 mb-16">
         {isLoading ? (
           <Loading />
         ) : (
           <div>
-            <h2 className="m-1 px-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-3xl w-fit font-extrabold uppercase tracking-tighter text-transparent">
-              Featured Products
-            </h2>
+            <div className="flex items-baseline justify-between mb-6">
+              <h2 className="text-2xl font-bold text-slate-800">Featured Products</h2>
+              <Link to="/products" className="text-indigo-600 hover:underline text-sm font-medium">
+                View all →
+              </Link>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} quantity={quantity} handleAddToCart={handleAddToCart} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  quantity={quantity}
+                  handleAddToCart={handleAddToCart}
+                />
               ))}
             </div>
           </div>
         )}
       </section>
 
-      <section className="my-32 bg-transparent text-center flex flex-col space-x-8 space-y-8 xl:flex-row">
-        <div className="flex items-baseline justify-center">
-          <h2 className="md:p-24 p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-4xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">What Our Customers Say</h2>
+      <section className="my-16">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-slate-800 tracking-tight mb-2">What Our Customers Say</h2>
+          <p className="text-slate-500 text-sm">Real reviews from real shoppers</p>
         </div>
-        <div className="lg:p-12 p-6 rounded-3xl bg-gradient-to-r shadow-lg from-pink-300 via-purple-300 to-indigo-400 flex flex-col items-start justify-around space-y-8 sm:w-full">
-          <p className="py-8 text-4xl w-full text-left font-body font-extralight text-black">
-            "I love shopping at this store! The products are amazing, and the prices are unbeatable."
-          </p>
-          <div className="w-full flex items-center justify-start">
-            <p className="text-black text-xl font-serif font-bold bg-fuchsia-400 rounded-full p-4 w-fit">John Doe</p>
-          </div>
-        </div>
-        <div className="lg:p-12 p-6 rounded-3xl shadow-lg bg-gradient-to-r from-rose-400 to-orange-300 flex flex-col items-start justify-around sm:w-full">
-          <p className="py-8 text-4xl w-full text-left font-body font-extralight text-black">
-            "The customer service is top-notch. I received my order quickly and in perfect condition."
-          </p>
-          <div className="w-full flex items-center justify-start">
-            <p className="text-black text-xl font-serif font-bold bg-red-500 rounded-full p-4 w-fit">Jane Smith</p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <TestimonialCard
+            quote="I love shopping at this store! The products are amazing, and the prices are unbeatable."
+            author="John Doe"
+          />
+          <TestimonialCard
+            quote="The customer service is top-notch. I received my order quickly and in perfect condition."
+            author="Jane Smith"
+          />
         </div>
       </section>
 
-
-      <section className="my-12 bg-transparent text-center text-white py-16 w-full">
-        <h2 className="mt-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-7xl font-extrabold uppercase tracking-tighter text-transparent sm:text-5xl lg:text-7xl">
-          Ready to Shop?
-        </h2>
-        <p className="order-first bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text font-medium text-2xl tracking-wide text-transparent m-5">
+      <section className="my-16 rounded-3xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white py-16 px-8 text-center">
+        <h2 className="text-4xl font-extrabold tracking-tight mb-3">Ready to Shop?</h2>
+        <p className="text-indigo-100 text-base mb-8 max-w-md mx-auto">
           Start exploring our products and find your next favorite item.
         </p>
         <Link to="/products">
-          <button className="bg-indigo-600 text-white py-2 px-6 rounded-full hover:bg-indigo-500">
+          <button className="bg-white text-indigo-700 py-3 px-8 rounded-full hover:bg-indigo-50 font-semibold shadow-lg transition">
             Get Started
           </button>
         </Link>
       </section>
     </div>
   );
-}
+};
 
 export default Homepage;

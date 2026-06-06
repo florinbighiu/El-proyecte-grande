@@ -1,41 +1,31 @@
-import { API_BASE_URL } from "../api/apiRoute.js";
-import axios from "axios";
+import apiService from "./apiService";
 import toast from "react-hot-toast";
-import { getToken, getUserId } from "../utils/authConstants.js";
+import { getUserId } from "../utils/authConstants";
 
 export const handleAddToCart = async (product, productId, quantity, setProducts) => {
-  const token = getToken();
   const userId = getUserId();
 
-  try {
-    if (product.stock > 0) {
-      const response = await axios.post(
-        `${API_BASE_URL}/cart/add/${userId}/${productId}/${quantity}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  if (!userId) {
+    toast.error("Please log in to add items to your cart.");
+    return;
+  }
 
-      if (response.status === 200) {
-        toast.success("Product added to the cart!");
-        setProducts((prevProducts) =>
-          prevProducts.map((prevProduct) =>
-            prevProduct.id === productId
-              ? { ...prevProduct, stock: prevProduct.stock - quantity }
-              : prevProduct
-          )
-        );
-      } else {
-        toast.error("Failed to add the product!");
-      }
-    } else {
-      toast.error("Product is out of stock!");
+  if (product.stock <= 0) {
+    toast.error("Product is out of stock!");
+    return;
+  }
+
+  try {
+    const response = await apiService.post(`/cart/add/${userId}/${productId}/${quantity}`);
+    if (response.status === 200) {
+      toast.success("Added to cart!");
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === productId ? { ...p, stock: p.stock - quantity } : p
+        )
+      );
     }
-  } catch (error) {
-    toast.error("An error occured!");
-    console.log(error.message);
+  } catch {
+    toast.error("Failed to add to cart. Please try again.");
   }
 };

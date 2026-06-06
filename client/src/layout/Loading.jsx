@@ -1,12 +1,10 @@
-const Loading = () => {
-  return (
-    <div className="bg-star-wars-bg bg-cover bg-center min-h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center">
-        <div className="w-16 h-16 border-t-4 border-b-4 border-rose-500 rounded-full animate-spin"></div>
-        <p className="text-rose-500 text-2xl mt-4">Loading...</p>
-      </div>
+const Loading = () => (
+  <div className="min-h-[40vh] flex items-center justify-center">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+      <p className="text-slate-400 text-sm font-medium">Loading...</p>
     </div>
-  );
-};
+  </div>
+);
 
 export default Loading;

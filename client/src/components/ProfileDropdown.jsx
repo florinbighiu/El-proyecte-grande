@@ -1,41 +1,45 @@
 /* eslint-disable react/prop-types */
-const ProfileDropdown = ({ handleLogout, userInfo }) => {
+import { Link } from "react-router-dom";
+import { FiUser, FiLogOut } from "react-icons/fi";
 
-    return (
-        <div className="absolute right-4 top-12 mt-2 w-36 h-36 rounded-lg shadow-lg bg-white">
-            <div
-                className="py-1 h-full flex flex-col items-center justify-evenly"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-            >
-                {userInfo &&
-                    <h1 className="block px-4 py-2 text-md w-full text-center text-gray-700 rounded-t-lg bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">{userInfo?.username}</h1>
-                }
-                <a
-                    href="/user"
-                    className="block px-4 py-2 text-sm w-full text-center text-gray-700 hover:bg-gray-100"
-                    role="menuitem"
-                >
-                    Profile
-                </a>
-                <a
-                    href="#"
-                    className="block px-4 py-2 text-sm w-full text-center text-gray-700 hover:bg-gray-100"
-                    role="menuitem"
-                >
-                    Settings
-                </a>
-                <button
-                    onClick={handleLogout}
-                    className="block px-4 py-2 text-sm w-full text-gray-700 hover:bg-gray-100 hover:rounded-lg"
-                    role="menuitem"
-                >
-                    Logout
-                </button>
-            </div>
+const ProfileDropdown = ({ handleLogout, userInfo }) => {
+  const initial = userInfo?.username?.[0]?.toUpperCase() ?? "U";
+
+  return (
+    <div className="absolute right-4 top-14 mt-1 w-56 rounded-2xl shadow-xl bg-white border border-gray-100 z-50 overflow-hidden">
+      <div className="px-4 py-3 bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center gap-3">
+        <div className="w-9 h-9 rounded-full bg-white/25 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+          {initial}
         </div>
-    )
-}
+        <div className="overflow-hidden">
+          <p className="text-white font-semibold text-sm truncate">{userInfo?.username ?? "User"}</p>
+          {userInfo?.email && (
+            <p className="text-indigo-100 text-xs truncate">{userInfo.email}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="py-1">
+        <Link
+          to="/user"
+          className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition"
+          role="menuitem"
+        >
+          <FiUser className="text-indigo-500" size={15} />
+          My Profile
+        </Link>
+        <div className="border-t border-gray-100 mx-3" />
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 w-full transition"
+          role="menuitem"
+        >
+          <FiLogOut size={15} />
+          Log Out
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default ProfileDropdown;

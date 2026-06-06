@@ -1,95 +1,84 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useAuth } from "../contexts/AuthContext";
 import StarRating from "./StarRating";
 
 const ProductCard = ({ product, handleAddToCart, quantity, handleDeleteProduct, handleOpenUpdateForm }) => {
-  const userRole = localStorage.getItem("role");
-  const maxDescriptionLines = 3;
-  const [showMore, setShowMore] = useState(false);
+  const { isAdmin } = useAuth();
 
-  const toggleDescription = () => {
-    setShowMore(!showMore);
-  };
-
-  const truncatedDescription = product.description
-    .split("\n")
-    .slice(0, maxDescriptionLines)
-    .join("\n");
+  const discountedPrice =
+    product.discountPercentage > 0
+      ? product.price - (product.price * product.discountPercentage) / 100
+      : product.price;
 
   return (
-    <div className="relative flex flex-col justify-between bg-white border border-gray-200/70 bg-opacity-20 backdrop-blur-md rounded-lg shadow-xl">
+    <div className="relative flex flex-col bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
       {product.discountPercentage > 0 && (
-        <div className="absolute top-2 right-2 bg-gradient-to-r from-red-400 to-red-600 text-black p-2 rounded-full">
-          <div className="text-md font-semibold">
-            <span className="text-lg">-</span>
-            {product.discountPercentage.toFixed(2)}%
-          </div>
+        <div className="absolute top-2.5 right-2.5 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
+          -{product.discountPercentage.toFixed(0)}%
         </div>
       )}
-      <Link to={`/product/${product.id}`}>
-        <img src={product.thumbnail} alt={product.title} className="w-full h-56 rounded-lg shadow-lg mb-4" />
+
+      <Link to={`/product/${product.id}`} className="block">
+        <div className="w-full h-48 bg-slate-50 flex items-center justify-center p-4 border-b border-gray-100">
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="max-h-full max-w-full object-contain"
+            loading="lazy"
+          />
+        </div>
       </Link>
-      <div className="text-black text-center p-2 ">
-        <Link to={`/product/${product.id}`}>
-          <h3 className="font-extrabold text-lg uppercase mb-1">{product.title}</h3>
-          <p
-            className={`text-black text-lg text-start font-serif px-1 ${showMore ? "..." : "overflow-hidden h-14"
-              }`}>
-            {showMore ? product.description : truncatedDescription}
-          </p>
+
+      <div className="p-4 flex flex-col flex-1">
+        <Link to={`/product/${product.id}`} className="block mb-2">
+          <h3 className="font-semibold text-sm text-slate-800 truncate">{product.title}</h3>
+          <p className="text-slate-400 text-xs mt-0.5 line-clamp-2 leading-relaxed">{product.description}</p>
         </Link>
 
-        {product.description.split("\n").length > maxDescriptionLines && (
-          <button
-            onClick={toggleDescription}
-            className="text-blue-400 font-semibold hover:underline mt-2 focus:outline-none">
-            {showMore ? "Show Less" : "Show More"}
-          </button>
-        )}
-        <div className="my-3 flex flex-row justify-around">
+        <div className="flex items-center justify-between mb-3">
           <StarRating product={product} />
-          <p className=" bg-opacity-25 p-2 border border-gray-50/75 rounded-2xl">Qty: {product.stock}</p>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${product.stock > 0 ? "bg-slate-100 text-slate-500" : "bg-red-100 text-red-500"}`}>
+            {product.stock > 0 ? `${product.stock} left` : "Out of stock"}
+          </span>
         </div>
-        <p className="text-red-500 text-xl font-semibold text-center">
 
-          $
-          {product.discountPercentage > 0
-            ? (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
-            : product.price.toFixed(2)}
-
-          {product.discountPercentage > 0 && (
-            <span className="text-sm text-gray-700 line-through ml-2">
-              ${product.price.toFixed(2)}
-            </span>
-          )}
-        </p>
-      </div>
-      <div className="p-2 flex flex-col space-y-1 items-center w-full text-gray-100">
-        <button
-          onClick={() => handleAddToCart(product, product.id, quantity)}
-          className={`mb-1 bg-blue-800 hover:bg-blue-900 p-2 rounded-full w-full focus:outline-none ${product.stock === 0 ? "opacity-50 bg-red-500 hover:bg-red-700" : ""
-            }`}>
-          {product.stock === 0 ? "Out of stock" : `Add to Cart`}
-        </button>
-        {userRole === "1" && (
-          <div className="flex flex-row space-x-2 w-full">
-            <button
-              onClick={() => handleDeleteProduct(product.id)}
-              className="bg-pink-600 hover:bg-pink-700 py-2 px-4 rounded-full w-full focus:outline-none">
-              Delete
-            </button>
-            <button
-              onClick={() => handleOpenUpdateForm(product.id)}
-              className="bg-violet-600 hover:bg-violet-800 py-2 px-4 rounded-full w-full focus:outline-none">
-              Update
-            </button>
+        <div className="mt-auto">
+          <div className="flex items-baseline gap-2 mb-3">
+            <span className="text-lg font-bold text-slate-800">${discountedPrice.toFixed(2)}</span>
+            {product.discountPercentage > 0 && (
+              <span className="text-xs text-slate-400 line-through">${product.price.toFixed(2)}</span>
+            )}
           </div>
-        )}
+
+          <button
+            onClick={() => handleAddToCart(product, product.id, quantity)}
+            disabled={product.stock === 0}
+            className={`w-full py-2 rounded-full text-sm font-semibold transition ${
+              product.stock === 0
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white"
+            }`}>
+            {product.stock === 0 ? "Out of stock" : "Add to Cart"}
+          </button>
+
+          {isAdmin && (
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={() => handleDeleteProduct(product.id)}
+                className="flex-1 border border-red-200 text-red-500 hover:bg-red-50 text-xs py-1.5 rounded-full transition">
+                Delete
+              </button>
+              <button
+                onClick={() => handleOpenUpdateForm(product.id)}
+                className="flex-1 border border-indigo-200 text-indigo-600 hover:bg-indigo-50 text-xs py-1.5 rounded-full transition">
+                Edit
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default ProductCard;

@@ -38,12 +38,8 @@ export default {
         50: 50,
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui"],
-        serif: ["GT Walsheim Pro"],
+        sans: ["Poppins", "ui-sans-serif", "system-ui"],
         mono: ["ui-monospace", "SFMono-Regular"],
-        display: ["Oswald"],
-        body: ["Bungee Spice"],
-        helvetica: ["Helvetica"],
       },
     },
   },

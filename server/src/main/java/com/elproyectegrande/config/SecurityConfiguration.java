@@ -62,7 +62,6 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/email/send/**").permitAll();
                     auth.requestMatchers("/users/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("users/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 });
 

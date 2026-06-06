@@ -31,3 +31,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment variables ###
+.env
+.env.local
+client/.env
+server/.env
+
+### Sensitive server config ###
+server/src/main/resources/application.properties
+
+### Tool files ###
+.agents/
+skills-lock.json

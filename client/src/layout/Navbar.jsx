@@ -1,96 +1,89 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuFries } from "react-icons/ci";
 
+import { FiShield } from "react-icons/fi";
+import { useAuth } from "../contexts/AuthContext";
 import { getUserInfo } from "../api/userInfo";
 import ProfileDropdown from "../components/ProfileDropdown";
 import DropdownContent from "../components/DropdownContent";
 import UserProfileButton from "../components/UserProfileButton";
-
 import LogoImage from "../assets/carton.png";
 
+const navLinkClass =
+  "text-slate-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg px-3 py-2 text-sm font-medium transition";
+
 const Navbar = () => {
-  const [click, setClick] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { isAuthenticated, isAdmin, logout } = useAuth();
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    getUserInfo(setUserInfo)
-  }, [])
-
-  const handleClick = () => setClick(!click);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+    if (isAuthenticated) getUserInfo(setUserInfo);
+    else setUserInfo(null);
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
-    localStorage.clear();
-
-    window.location.href = "/login";
+    logout();
+    setDropdownOpen(false);
+    setMobileOpen(false);
+    navigate("/login");
   };
 
-  const isAuthenticated = localStorage.getItem("authToken");
-
   return (
-    <nav>
-      <div className="my-1 w-full flex flex-wrap justify-between items-center">
-        <div className="sticky left-0 flex items-center ml-5">
-          <a href="/">
-            <img src={LogoImage} alt="Logo" className="w-10 h-10 my-1" />
-          </a>
-          <a href="/">
-            <div className="text-3xl text-[#bd927c] ml-4 font-semibold">EcomX</div>
-          </a>
+    <nav className="w-full bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={LogoImage} alt="Logo" className="w-8 h-8" />
+          <span className="text-xl text-[#bd927c] font-semibold">EcomX</span>
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-1">
+          <Link to="/" className={navLinkClass}>Home</Link>
+          <Link to="/products" className={navLinkClass}>Products</Link>
+          {isAuthenticated && <Link to="/cart" className={navLinkClass}>Cart</Link>}
+          <Link to="/contact" className={navLinkClass}>Contact</Link>
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="flex items-center gap-1.5 text-sm font-medium text-violet-600 hover:text-violet-800 hover:bg-violet-50 rounded-lg px-3 py-2 transition">
+              <FiShield size={14} />
+              Admin
+            </Link>
+          )}
+          {!isAuthenticated && (
+            <Link
+              to="/login"
+              className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-full px-5 py-2 transition">
+              Log in
+            </Link>
+          )}
         </div>
-        <div className="lg:flex md:flex lg: flex-1 items center justify-end hidden">
-          <div className="flex-10 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
-            {isAuthenticated ? (
-              <ul className="flex font-semibold font-serif">
-                <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-lg px-3 py-2 mb-2">Home</a>
-                </li>
-                <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/products" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-lg px-3 py-2 mb-2">Products</a>
-                </li>
-                <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/cart" className="text-black hover:bg-indigo-400 hover:bg-opacity-25  rounded-lg px-3 py-2 mb-2">Cart</a>
-                </li>
-                <li className="text-black hover:text-yellow-500 my-2">
-                  <a href="/contact" className="text-black hover:bg-indigo-400 hover:bg-opacity-25  rounded-lg px-3 py-2 mb-2">Contact</a>
-                </li>
-              </ul>
-            ) : (
-              <ul className="flex font-semibold font-serif">
-                <li className="text-black hover:text-yellow-500 my-2">
-                    <a href="/" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-lg px-3 py-2 mb-2">Home</a>
-                </li>
-                  <li className="text-black hover:text-yellow-500 my-2">
-                    <a href="/products" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-lg px-3 py-2 mb-2">Products</a>
-                  </li>
-                <li className="text-black hover:text-yellow-500 my-2">
-                    <a href="/contact" className="text-black hover:bg-indigo-400 hover:bg-opacity-25 rounded-lg px-3 py-2 mb-2">Contact</a>
-                </li>
-                <li className="text-black hover:text-yellow-500 my-2 pl-12">
-                  <a
-                    href="/login"
-                    className="text-black border border-indigo-600/50 hover:text-white hover:bg-indigo-600 hover:shadow-lg focus:ring-4 focus:ring-blue-300 font-serif text-base rounded-full px-5 py-2 mb-2">
-                    Log in
-                  </a>
-                </li>
-              </ul>
-            )}
-          </div>
-        </div>
-        {isDropdownOpen && isAuthenticated && <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />}
-        <div className="flex flex-row items-center justify-end space-x-5">
-          {click && <DropdownContent isAuthenticated={isAuthenticated} handleLogout={handleLogout} />}
-          <button className="hidden text-black visible-below-767 transition mx-2" onClick={handleClick}>
-            {click ? <FaTimes /> : <CiMenuFries />}
+
+        <div className="flex items-center gap-3">
+          {isAuthenticated && (
+            <UserProfileButton
+              toggleDropdown={() => setDropdownOpen((o) => !o)}
+              userInfo={userInfo}
+            />
+          )}
+          <button
+            className="lg:hidden text-slate-600 hover:text-indigo-700 transition p-1"
+            onClick={() => setMobileOpen((o) => !o)}>
+            {mobileOpen ? <FaTimes size={18} /> : <CiMenuFries size={20} />}
           </button>
-          {isAuthenticated && <UserProfileButton toggleDropdown={toggleDropdown} />}
         </div>
       </div>
+
+      {mobileOpen && (
+        <DropdownContent isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+      )}
+      {dropdownOpen && isAuthenticated && (
+        <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />
+      )}
     </nav>
   );
 };

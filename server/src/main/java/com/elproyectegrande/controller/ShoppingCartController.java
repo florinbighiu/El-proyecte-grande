@@ -25,17 +25,17 @@ public class ShoppingCartController {
         shoppingCartService.addToCart(userId, productId, quantity);
     }
 
-    @DeleteMapping ("/remove/{productId}")
-    public void removeFromCart(@PathVariable Long productId) {
-        shoppingCartService.removeFromCart(productId);
+    @DeleteMapping("/remove/{cartItemId}")
+    public void removeFromCart(@PathVariable Long cartItemId) {
+        shoppingCartService.removeFromCart(cartItemId);
     }
 
-    @PutMapping("/update/increase/{productId}/{newQuantity}")
+    @PutMapping("/update/increase/{cartItemId}/{newQuantity}")
     public ResponseEntity<String> increaseItemQuantity(
-            @PathVariable Long productId,
+            @PathVariable Long cartItemId,
             @PathVariable Integer newQuantity) {
         try {
-            shoppingCartService.increaseCartItemQuantity(productId, newQuantity);
+            shoppingCartService.increaseCartItemQuantity(cartItemId, newQuantity);
             return ResponseEntity.ok("Cart item updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update cart item: " + e.getMessage());
