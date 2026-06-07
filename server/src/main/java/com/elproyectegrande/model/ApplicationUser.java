@@ -1,9 +1,13 @@
 package com.elproyectegrande.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,15 +19,27 @@ public class ApplicationUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
     private Integer userId;
+
+    @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String username;
 
-    @Column(name = "email")
+    @Email(message = "Email must be a valid address")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
+
+    @Column(name = "reset_password_token_expires_at")
+    private Instant resetPasswordTokenExpiresAt;
+
+    @NotBlank(message = "Password is required")
     private String password;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -109,6 +125,14 @@ public class ApplicationUser implements UserDetails {
 
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public Instant getResetPasswordTokenExpiresAt() {
+        return resetPasswordTokenExpiresAt;
+    }
+
+    public void setResetPasswordTokenExpiresAt(Instant resetPasswordTokenExpiresAt) {
+        this.resetPasswordTokenExpiresAt = resetPasswordTokenExpiresAt;
     }
 
     public String getEmail() {

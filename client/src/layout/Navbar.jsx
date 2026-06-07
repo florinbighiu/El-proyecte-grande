@@ -57,7 +57,7 @@ const Navbar = () => {
           {!isAuthenticated && (
             <Link
               to="/login"
-              className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-full px-5 py-2 transition">
+              className="ml-4 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold rounded-full px-5 py-2 transition">
               Log in
             </Link>
           )}
@@ -65,10 +65,15 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           {isAuthenticated && (
-            <UserProfileButton
-              toggleDropdown={() => setDropdownOpen((o) => !o)}
-              userInfo={userInfo}
-            />
+            <div className="relative">
+              <UserProfileButton
+                toggleDropdown={() => setDropdownOpen((o) => !o)}
+                userInfo={userInfo}
+              />
+              {dropdownOpen && (
+                <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />
+              )}
+            </div>
           )}
           <button
             className="lg:hidden text-slate-600 hover:text-indigo-700 transition p-1"
@@ -80,9 +85,6 @@ const Navbar = () => {
 
       {mobileOpen && (
         <DropdownContent isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
-      )}
-      {dropdownOpen && isAuthenticated && (
-        <ProfileDropdown handleLogout={handleLogout} userInfo={userInfo} />
       )}
     </nav>
   );

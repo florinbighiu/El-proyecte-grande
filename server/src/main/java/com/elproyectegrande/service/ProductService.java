@@ -1,5 +1,6 @@
 package com.elproyectegrande.service;
 
+import com.elproyectegrande.exceptions.ProductNotFoundException;
 import com.elproyectegrande.model.*;
 import com.elproyectegrande.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -29,25 +30,26 @@ public class ProductService {
     }
 
     public Product updateProduct(Long productId, Product updatedProduct) {
-        Optional<Product> existingProductOptional = productRepository.findById(productId);
-        if (existingProductOptional.isPresent()) {
-            Product existingProduct = existingProductOptional.get();
-            existingProduct.setTitle(updatedProduct.getTitle());
-            existingProduct.setDescription(updatedProduct.getDescription());
-            existingProduct.setDiscountPercentage(updatedProduct.getDiscountPercentage());
-            existingProduct.setBrand(updatedProduct.getBrand());
-            existingProduct.setPrice(updatedProduct.getPrice());
-            existingProduct.setRating(updatedProduct.getRating());
-            existingProduct.setStock(updatedProduct.getStock());
-            existingProduct.setThumbnail(updatedProduct.getThumbnail());
-            existingProduct.setCategory(updatedProduct.getCategory());
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
 
-            return productRepository.save(existingProduct);
-        }
-        return null;
+        existingProduct.setTitle(updatedProduct.getTitle());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setDiscountPercentage(updatedProduct.getDiscountPercentage());
+        existingProduct.setBrand(updatedProduct.getBrand());
+        existingProduct.setPrice(updatedProduct.getPrice());
+        existingProduct.setRating(updatedProduct.getRating());
+        existingProduct.setStock(updatedProduct.getStock());
+        existingProduct.setThumbnail(updatedProduct.getThumbnail());
+        existingProduct.setCategory(updatedProduct.getCategory());
+
+        return productRepository.save(existingProduct);
     }
 
     public void deleteProduct(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ProductNotFoundException(productId);
+        }
         productRepository.deleteById(productId);
     }
 

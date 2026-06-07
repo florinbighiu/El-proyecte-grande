@@ -73,7 +73,7 @@ const Homepage = () => {
           Explore our wide range of products at amazing prices, delivered straight to your door.
         </p>
         <Link to="/products">
-          <button className="bg-indigo-600 text-white py-3 px-8 rounded-full hover:bg-indigo-700 font-semibold shadow-lg shadow-indigo-200 transition">
+          <button className="bg-indigo-500 text-white py-3 px-8 rounded-full hover:bg-indigo-600 font-semibold shadow-lg shadow-indigo-200 transition">
             Shop Now
           </button>
         </Link>

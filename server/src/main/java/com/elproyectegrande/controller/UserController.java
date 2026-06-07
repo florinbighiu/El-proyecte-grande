@@ -1,8 +1,8 @@
 package com.elproyectegrande.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.elproyectegrande.model.ApplicationUser;
@@ -25,7 +25,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public Optional<ApplicationUser> getUserById(@PathVariable Integer userId) {
-        return userService.getUserById(userId);
+    public ResponseEntity<ApplicationUser> getUserById(@PathVariable Integer userId) {
+        return userService.getUserById(userId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

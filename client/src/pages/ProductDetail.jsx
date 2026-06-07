@@ -64,6 +64,15 @@ const ProductDetail = () => {
 
   const isLowStock = product.stock > 0 && product.stock < LOW_STOCK_THRESHOLD;
 
+  const addToCartLabel =
+    product.stock === 0
+      ? `${product.title} is out of stock`
+      : !isAuthenticated
+      ? `Log in to add ${product.title} to your cart`
+      : addingToCart
+      ? `Adding ${product.title} to cart`
+      : `Add ${product.title} to cart`;
+
   return (
     <div className="w-full mt-10 md:p-6 flex flex-col lg:flex-row items-start gap-8">
       <div className="w-full lg:w-1/2 bg-white border border-gray-100 rounded-2xl shadow-sm flex items-center justify-center p-8 min-h-[28rem]">
@@ -109,10 +118,11 @@ const ProductDetail = () => {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0 || addingToCart}
+          aria-label={addToCartLabel}
           className={`w-full py-3 rounded-full font-bold text-white text-lg transition flex items-center justify-center gap-2 ${
             product.stock === 0
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-indigo-600 hover:bg-indigo-700"
+              : "bg-indigo-500 hover:bg-indigo-600"
           } disabled:opacity-70`}>
           {addingToCart ? (
             <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" />

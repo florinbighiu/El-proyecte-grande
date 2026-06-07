@@ -209,7 +209,7 @@ const ProductForm: FC<ProductFormProps> = ({
           <button
             type="button"
             onClick={onSaveProduct}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-full transition text-sm">
+            className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-full transition text-sm">
             {isAddOrEditProduct ? "Add Product" : "Save Changes"}
           </button>
           <button

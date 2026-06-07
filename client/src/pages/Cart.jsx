@@ -173,7 +173,7 @@ const Cart = () => {
         <p className="text-slate-400 text-sm mb-8">Add some products to get started.</p>
         <Link
           to="/products"
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full transition"
+          className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-8 py-3 rounded-full transition"
         >
           <FiShoppingBag size={16} />
           Browse Products
@@ -240,7 +240,7 @@ const Cart = () => {
 
             <button
               onClick={() => setShowCheckout(true)}
-              className="mt-5 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-full transition flex items-center justify-center gap-2 text-sm"
+              className="mt-5 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-full transition flex items-center justify-center gap-2 text-sm"
             >
               <FiShoppingCart size={15} />
               Proceed to Checkout

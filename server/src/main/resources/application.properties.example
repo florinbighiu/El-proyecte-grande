@@ -1,0 +1,60 @@
+# Copy this file to "application.properties" (same folder) and fill in your own
+# Supabase project's connection details. application.properties is gitignored so
+# your credentials never get committed.
+#
+# Alternatively, leave application.properties with placeholder fallbacks and
+# export DB_URL / DB_USERNAME / DB_PASSWORD as environment variables — both are
+# read via ${VAR:fallback} syntax, so env vars always win when present.
+
+spring.datasource.url=${DB_URL:jdbc:postgresql://<your-pooler-host>:5432/postgres?sslmode=require}
+spring.datasource.username=${DB_USERNAME:<your-db-username>}
+spring.datasource.password=${DB_PASSWORD:<your-db-password>}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.datasource.hikari.maximum-pool-size=${DB_POOL_MAX_SIZE:5}
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.connection-timeout=20000
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.max-lifetime=900000
+
+# update = preserves existing data; use create only for first-time setup
+spring.jpa.hibernate.ddl-auto=update
+
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false
+
+spring.jpa.open-in-view=false
+
+# --- Social login (OAuth2) — see docs/AUTH_SETUP.md for how to obtain these ---
+spring.security.oauth2.client.registration.google.client-id=${GOOGLE_CLIENT_ID:<your-google-client-id>}
+spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_CLIENT_SECRET:<your-google-client-secret>}
+spring.security.oauth2.client.registration.google.scope=email,profile
+
+spring.security.oauth2.client.registration.github.client-id=${GITHUB_CLIENT_ID:<your-github-client-id>}
+spring.security.oauth2.client.registration.github.client-secret=${GITHUB_CLIENT_SECRET:<your-github-client-secret>}
+spring.security.oauth2.client.registration.github.scope=read:user,user:email
+
+# Apple needs an Apple Developer Program membership and a regenerated JWT client secret — see docs/AUTH_SETUP.md
+spring.security.oauth2.client.registration.apple.client-id=${APPLE_CLIENT_ID:<your-apple-services-id>}
+spring.security.oauth2.client.registration.apple.client-secret=${APPLE_CLIENT_SECRET:<your-apple-jwt-client-secret>}
+spring.security.oauth2.client.registration.apple.client-authentication-method=client_secret_post
+spring.security.oauth2.client.registration.apple.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.apple.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
+spring.security.oauth2.client.registration.apple.scope=name,email
+spring.security.oauth2.client.provider.apple.authorization-uri=https://appleid.apple.com/auth/authorize?response_mode=form_post
+spring.security.oauth2.client.provider.apple.token-uri=https://appleid.apple.com/auth/token
+spring.security.oauth2.client.provider.apple.jwk-set-uri=https://appleid.apple.com/auth/keys
+spring.security.oauth2.client.provider.apple.user-name-attribute=sub
+
+app.oauth2.redirect-uri=${OAUTH2_REDIRECT_URI:http://localhost:5173/oauth/callback}
+
+# --- Mail (password-reset emails) ---
+spring.mail.host=${MAIL_HOST:smtp.gmail.com}
+spring.mail.port=${MAIL_PORT:587}
+spring.mail.username=${MAIL_USERNAME:<your-smtp-username>}
+spring.mail.password=${MAIL_PASSWORD:<your-smtp-app-password>}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+app.mail.from=${MAIL_FROM:<your-from-address>}
+
+app.frontend.base-url=${FRONTEND_BASE_URL:http://localhost:5173}

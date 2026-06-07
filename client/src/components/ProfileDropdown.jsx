@@ -6,7 +6,7 @@ const ProfileDropdown = ({ handleLogout, userInfo }) => {
   const initial = userInfo?.username?.[0]?.toUpperCase() ?? "U";
 
   return (
-    <div className="absolute right-4 top-14 mt-1 w-56 rounded-2xl shadow-xl bg-white border border-gray-100 z-50 overflow-hidden">
+    <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl shadow-xl bg-white border border-gray-100 z-50 overflow-hidden">
       <div className="px-4 py-3 bg-gradient-to-r from-indigo-500 to-violet-500 flex items-center gap-3">
         <div className="w-9 h-9 rounded-full bg-white/25 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
           {initial}

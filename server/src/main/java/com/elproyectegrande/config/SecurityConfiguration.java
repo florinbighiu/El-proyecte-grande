@@ -1,5 +1,8 @@
 package com.elproyectegrande.config;
 
+import com.elproyectegrande.config.oauth2.CookieOAuth2AuthorizationRequestRepository;
+import com.elproyectegrande.config.oauth2.OAuth2AuthenticationFailureHandler;
+import com.elproyectegrande.config.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.elproyectegrande.utils.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -29,14 +32,25 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     private final RSAKeyProperties keys;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
-    public SecurityConfiguration(RSAKeyProperties keys) {
+    public SecurityConfiguration(RSAKeyProperties keys,
+                                  OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler,
+                                  OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler) {
         this.keys = keys;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
     }
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    CookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+        return new CookieOAuth2AuthorizationRequestRepository();
     }
 
     @Bean
@@ -61,10 +75,18 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/cart/items/**").permitAll();
                     auth.requestMatchers("/email/send/**").permitAll();
                     auth.requestMatchers("/users/**").permitAll();
+                    auth.requestMatchers("/oauth2/**").permitAll();
+                    auth.requestMatchers("/login/oauth2/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 });
 
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(endpoint -> endpoint
+                                .authorizationRequestRepository(cookieAuthorizationRequestRepository()))
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .failureHandler(oAuth2AuthenticationFailureHandler));
         http
                 .oauth2ResourceServer(server -> server
                         .jwt(jwt -> jwt

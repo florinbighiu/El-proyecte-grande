@@ -3,12 +3,12 @@
 const StarRating = ({ product }) => {
   return (
     <div className="flex items-center">
-      <div className="flex space-x-1 items-center pt-1">
+      <div className="flex space-x-0.5 items-center">
         {[1, 2, 3, 4, 5].map((index) => (
           <svg
             key={index}
             xmlns="http://www.w3.org/2000/svg"
-            className={`text-center w-7 fill-current ${index <= product.rating ? "text-emerald-600" : "text-gray-500"
+            className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current flex-shrink-0 ${index <= product.rating ? "text-emerald-600" : "text-gray-300"
               }`}
             viewBox="0 0 24 24">
             <path
@@ -18,7 +18,7 @@ const StarRating = ({ product }) => {
           </svg>
         ))}
       </div>
-      <span className="ml-2 text-start font-display text-gray-800">{product.rating.toFixed(1)}</span>
+      <span className="ml-1.5 text-xs sm:text-sm text-slate-600 font-medium">{product.rating.toFixed(1)}</span>
     </div>
   );
 };

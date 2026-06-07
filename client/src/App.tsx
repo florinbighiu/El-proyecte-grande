@@ -14,6 +14,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PasswordReset from "./pages/PasswordReset";
+import OAuthCallback from "./pages/OAuthCallback";
 import Logout from "./pages/Logout";
 import ProductDetail from "./pages/ProductDetail";
 import UserProfile from "./pages/UserProfile";
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/reset" element={<PasswordReset />} />
+              <Route path="/oauth/callback" element={<OAuthCallback />} />
             </Routes>
           </div>
           <Toaster position="top-right" toastOptions={{ duration: 3000 }} />

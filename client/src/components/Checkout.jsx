@@ -111,7 +111,7 @@ const Checkout = ({ onClose, onSuccess, cartItems, totalCost, deliveryFee }) => 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-full transition flex items-center justify-center gap-2">
+            className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:opacity-60 text-white font-semibold py-2.5 rounded-full transition flex items-center justify-center gap-2">
             {loading ? (
               <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" />
             ) : (

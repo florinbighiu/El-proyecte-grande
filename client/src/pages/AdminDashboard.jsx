@@ -186,7 +186,7 @@ const AdminDashboard = () => {
             {tab === "products" && (
               <button
                 onClick={openAdd}
-                className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition flex-shrink-0"
+                className="flex items-center gap-1.5 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition flex-shrink-0"
               >
                 <FiPlus size={15} /> Add
               </button>

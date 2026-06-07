@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { FiPlus, FiX, FiPackage } from "react-icons/fi";
 import { useAuth } from "../contexts/AuthContext";
 import apiService from "../api/apiService";
 import ProductForm from "../components/ProductForm";
@@ -47,16 +48,16 @@ const ProductList = () => {
   );
 
   const uniqueCategories = useMemo(
-    () => Array.from(new Set(products.map((p) => p.category))),
+    () => Array.from(new Set(products.map((p) => p.category))).sort(),
     [products]
   );
+
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE));
 
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
     return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
   }, [filteredProducts, currentPage]);
-
-  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -121,78 +122,119 @@ const ProductList = () => {
     }
   };
 
-  const categoriesToShow = selectedCategory
-    ? [selectedCategory]
-    : uniqueCategories.filter((cat) => paginatedProducts.some((p) => p.category === cat));
+  const handleOpenAddForm = () => {
+    setNewProduct(EMPTY_PRODUCT);
+    setErrors({});
+    setShowForm(true);
+  };
+
+  const resultLabel = `${filteredProducts.length} ${filteredProducts.length === 1 ? "product" : "products"}`;
 
   return (
     <div className="flex flex-col w-full">
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="m-0.5 p-4 w-full rounded-xl">
-          <CategoryDropdown
-            categories={uniqueCategories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+        <div className="w-full max-w-screen-2xl mx-auto px-3 sm:px-6 lg:px-8 py-2">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800">Products</h1>
+              <p className="text-sm text-slate-400 mt-1">
+                {resultLabel}
+                {selectedCategory && <span> in <span className="font-medium text-slate-500 capitalize">{selectedCategory}</span></span>}
+                {searchQuery && <span> matching &ldquo;{searchQuery}&rdquo;</span>}
+              </p>
+            </div>
 
-          {isAdmin && (
-            <div className="flex items-center justify-between mb-4 py-2">
-              <p className="text-xs text-slate-500 font-medium">Admin mode — you can add, edit and delete products.</p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <CategoryDropdown
+                categories={uniqueCategories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+
+              {isAdmin && (
+                <button
+                  onClick={handleOpenAddForm}
+                  className="inline-flex items-center justify-center gap-1.5 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold py-2.5 px-5 rounded-full transition whitespace-nowrap">
+                  <FiPlus size={16} />
+                  Add Product
+                </button>
+              )}
+            </div>
+          </div>
+
+          {(selectedCategory || searchQuery) && (
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              {selectedCategory && (
+                <button
+                  onClick={() => setSelectedCategory("")}
+                  className="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-xs font-medium pl-3 pr-2 py-1.5 rounded-full hover:bg-indigo-100 transition capitalize"
+                >
+                  {selectedCategory}
+                  <FiX size={13} />
+                </button>
+              )}
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="inline-flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-medium pl-3 pr-2 py-1.5 rounded-full hover:bg-slate-200 transition"
+                >
+                  &ldquo;{searchQuery}&rdquo;
+                  <FiX size={13} />
+                </button>
+              )}
               <button
-                onClick={() => { setNewProduct(EMPTY_PRODUCT); setErrors({}); setShowForm(true); }}
-                className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 px-5 rounded-full transition">
-                + Add Product
+                onClick={() => { setSelectedCategory(""); setSearchQuery(""); }}
+                className="text-xs text-slate-400 hover:text-slate-600 underline-offset-2 hover:underline transition"
+              >
+                Clear all
               </button>
             </div>
           )}
 
           {filteredProducts.length === 0 ? (
-            <p className="text-center text-gray-400 mt-16 text-lg">No products found.</p>
+            <div className="flex flex-col items-center justify-center text-center py-20 px-4">
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                <FiPackage className="text-slate-400" size={26} />
+              </div>
+              <h2 className="text-lg font-semibold text-slate-700 mb-1">No products found</h2>
+              <p className="text-sm text-slate-400 max-w-sm">
+                Try adjusting your search or category filter to find what you&apos;re looking for.
+              </p>
+            </div>
           ) : (
             <>
-              {categoriesToShow.map((category) => {
-                const categoryProducts = paginatedProducts.filter((p) => p.category === category);
-                if (!categoryProducts.length) return null;
-                return (
-                  <div key={category} className="mb-16">
-                    <h2 className="m-1 my-3 px-1 text-2xl font-bold text-slate-700 capitalize">
-                      {category}
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                      {categoryProducts.map((product) => (
-                        <ProductCard
-                          key={product.id}
-                          product={product}
-                          quantity={defaultQuantity}
-                          handleAddToCart={() => handleAddToCart(product, product.id, defaultQuantity, setProducts)}
-                          handleDeleteProduct={handleDeleteProduct}
-                          handleOpenUpdateForm={handleOpenUpdateForm}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 mt-8 sm:mt-10">
+                {paginatedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    quantity={defaultQuantity}
+                    handleAddToCart={() => handleAddToCart(product, product.id, defaultQuantity, setProducts)}
+                    handleDeleteProduct={handleDeleteProduct}
+                    handleOpenUpdateForm={handleOpenUpdateForm}
+                  />
+                ))}
+              </div>
 
               {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-3 mt-8 mb-4">
+                <div className="flex justify-center items-center gap-3 mt-10 mb-4">
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="px-5 py-2 rounded-full bg-white bg-opacity-40 border border-gray-200 text-gray-700 disabled:opacity-40 hover:bg-opacity-60 transition text-sm font-medium">
+                    className="px-5 py-2 rounded-full bg-white border border-gray-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo-200 hover:text-indigo-600 transition text-sm font-medium">
                     ← Prev
                   </button>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-slate-500">
                     Page {currentPage} of {totalPages}
                   </span>
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="px-5 py-2 rounded-full bg-white bg-opacity-40 border border-gray-200 text-gray-700 disabled:opacity-40 hover:bg-opacity-60 transition text-sm font-medium">
+                    className="px-5 py-2 rounded-full bg-white border border-gray-200 text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-indigo-200 hover:text-indigo-600 transition text-sm font-medium">
                     Next →
                   </button>
                 </div>
