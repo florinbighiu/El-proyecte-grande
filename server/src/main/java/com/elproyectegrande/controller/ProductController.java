@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<Product> searchByProductName(@RequestParam String query, @RequestParam Double minPrice, @RequestParam Double maxPrice) {
-        return productService.searchProductsByName(query, minPrice, maxPrice);
-    }    
+    public List<Product> searchByProductName(@RequestParam String query) {
+        return productService.searchProductsByName(query);
+    }
 }

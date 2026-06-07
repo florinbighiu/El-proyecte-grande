@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -80,26 +79,15 @@ public class AuthenticationService {
 
 
     public LoginResponseDTO loginUser(String username, String password) {
-        
-        ApplicationUser user = userRepository.findByUsername(username);
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
 
-        if (user == null) {
-            throw new AuthenticationException("Invalid username or password");
-        }
+            ApplicationUser user = userRepository.findByUsername(username);
+            String token = tokenService.generateJwt(auth);
 
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            try {
-                Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
-                );
-    
-                String token = tokenService.generateJwt(auth);
-    
-                return new LoginResponseDTO(user, token);
-            } catch (AuthenticationException e) {
-                throw new AuthenticationException("Authentication failed");
-            }
-        } else {
+            return new LoginResponseDTO(user, token);
+        } catch (org.springframework.security.core.AuthenticationException e) {
             throw new AuthenticationException("Invalid username or password");
         }
     }

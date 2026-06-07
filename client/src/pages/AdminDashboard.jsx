@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   FiPackage, FiUsers, FiAlertTriangle, FiXCircle,
-  FiSearch, FiPlus, FiEdit2, FiTrash2, FiChevronLeft
+  FiSearch, FiPlus, FiEdit2, FiTrash2, FiChevronLeft, FiShield
 } from "react-icons/fi";
 import apiService from "../api/apiService";
 import ProductForm from "../components/ProductForm";
@@ -123,6 +123,28 @@ const AdminDashboard = () => {
       setProducts((prev) => prev.filter((p) => p.id !== id));
       toast.success("Product deleted.");
     } catch { toast.error("Failed to delete product."); }
+  };
+
+  const handleToggleRole = async (user) => {
+    const currentRole = user.authorities?.[0]?.authority ?? "USER";
+    const nextRole = currentRole === "ADMIN" ? "USER" : "ADMIN";
+    try {
+      const res = await apiService.put(`/admin/users/${user.userId}/role`, { role: nextRole });
+      setUsers((prev) => prev.map((u) => (u.userId === user.userId ? res.data : u)));
+      toast.success(`${user.username} is now ${nextRole === "ADMIN" ? "an admin" : "a regular user"}.`);
+    } catch {
+      toast.error("Failed to update user role.");
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await apiService.delete(`/admin/users/${userId}`);
+      setUsers((prev) => prev.filter((u) => u.userId !== userId));
+      toast.success("User deleted.");
+    } catch {
+      toast.error("Failed to delete user.");
+    }
   };
 
   const openEdit = (product) => {
@@ -271,12 +293,13 @@ const AdminDashboard = () => {
                   <th className="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">User</th>
                   <th className="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide hidden sm:table-cell">Email</th>
                   <th className="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Role</th>
+                  <th className="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-5 py-10 text-center text-slate-400">No users found.</td>
+                    <td colSpan={5} className="px-5 py-10 text-center text-slate-400">No users found.</td>
                   </tr>
                 ) : (
                   filteredUsers.map((u, i) => {
@@ -295,6 +318,24 @@ const AdminDashboard = () => {
                         <td className="px-5 py-3 hidden sm:table-cell text-slate-500">{u.email || "—"}</td>
                         <td className="px-5 py-3">
                           <RoleBadge role={role} />
+                        </td>
+                        <td className="px-5 py-3 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => handleToggleRole(u)}
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition"
+                              title={role === "ADMIN" ? "Demote to user" : "Promote to admin"}
+                            >
+                              <FiShield size={15} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteUser(u.userId)}
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition"
+                              title="Delete user"
+                            >
+                              <FiTrash2 size={15} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );

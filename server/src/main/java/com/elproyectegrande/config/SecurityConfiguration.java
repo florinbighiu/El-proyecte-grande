@@ -1,8 +1,5 @@
 package com.elproyectegrande.config;
 
-import com.elproyectegrande.config.oauth2.CookieOAuth2AuthorizationRequestRepository;
-import com.elproyectegrande.config.oauth2.OAuth2AuthenticationFailureHandler;
-import com.elproyectegrande.config.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.elproyectegrande.utils.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -10,6 +7,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,25 +30,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     private final RSAKeyProperties keys;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
-    public SecurityConfiguration(RSAKeyProperties keys,
-                                  OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler,
-                                  OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler) {
+    public SecurityConfiguration(RSAKeyProperties keys) {
         this.keys = keys;
-        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
-        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    CookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
-        return new CookieOAuth2AuthorizationRequestRepository();
     }
 
     @Bean
@@ -68,25 +55,21 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/home/**").permitAll();
-                    auth.requestMatchers("/products/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN");
                     auth.requestMatchers("/cart/add/**").permitAll();
                     auth.requestMatchers("/cart/remove/**").permitAll();
                     auth.requestMatchers("/cart/update/**").permitAll();
                     auth.requestMatchers("/cart/items/**").permitAll();
                     auth.requestMatchers("/email/send/**").permitAll();
-                    auth.requestMatchers("/users/**").permitAll();
-                    auth.requestMatchers("/oauth2/**").permitAll();
-                    auth.requestMatchers("/login/oauth2/**").permitAll();
+                    auth.requestMatchers("/users/all").hasRole("ADMIN");
+                    auth.requestMatchers("/users/**").authenticated();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 });
 
-        http
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(endpoint -> endpoint
-                                .authorizationRequestRepository(cookieAuthorizationRequestRepository()))
-                        .successHandler(oAuth2AuthenticationSuccessHandler)
-                        .failureHandler(oAuth2AuthenticationFailureHandler));
         http
                 .oauth2ResourceServer(server -> server
                         .jwt(jwt -> jwt
@@ -103,7 +86,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    JwtEncoder jwtEncoder() {
+    static JwtEncoder jwtEncoder(RSAKeyProperties keys) {
         JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 import ProductCard from "../components/ProductCard.jsx";
+import ProductForm from "../components/ProductForm.tsx";
 import Loading from "../layout/Loading.jsx";
 import apiService from "../api/apiService.js";
 import { useAuth } from "../contexts/AuthContext.jsx";
@@ -25,6 +26,10 @@ const Homepage = () => {
   const { userId, token } = useAuth();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [productIdToUpdate, setProductIdToUpdate] = useState(null);
+  const [editedProduct, setEditedProduct] = useState({});
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     apiService
@@ -53,6 +58,40 @@ const Homepage = () => {
       );
     } catch {
       toast.error("Could not add to cart. Please try again.");
+    }
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedProduct((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
+  };
+
+  const handleOpenUpdateForm = (productId) => {
+    const product = products.find((p) => p.id === productId);
+    setProductIdToUpdate(productId);
+    setEditedProduct({ ...product });
+    setShowUpdateForm(true);
+  };
+
+  const handleUpdateProduct = async () => {
+    try {
+      const response = await apiService.put(`/products/${productIdToUpdate}`, editedProduct);
+      setProducts((prev) => prev.map((p) => (p.id === productIdToUpdate ? response.data : p)));
+      toast.success("Product updated successfully!");
+      setShowUpdateForm(false);
+    } catch {
+      toast.error("Failed to update product.");
+    }
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await apiService.delete(`/products/${productId}`);
+      setProducts((prev) => prev.filter((p) => p.id !== productId));
+      toast.success("Product deleted.");
+    } catch {
+      toast.error("Failed to delete product.");
     }
   };
 
@@ -97,12 +136,25 @@ const Homepage = () => {
                   product={product}
                   quantity={quantity}
                   handleAddToCart={handleAddToCart}
+                  handleDeleteProduct={handleDeleteProduct}
+                  handleOpenUpdateForm={handleOpenUpdateForm}
                 />
               ))}
             </div>
           </div>
         )}
       </section>
+
+      {showUpdateForm && (
+        <ProductForm
+          {...editedProduct}
+          errors={errors}
+          isAddOrEditProduct={false}
+          handleInputChange={handleEditInputChange}
+          onSaveProduct={handleUpdateProduct}
+          onClose={() => setShowUpdateForm(false)}
+        />
+      )}
 
       <section className="my-16">
         <div className="text-center mb-10">

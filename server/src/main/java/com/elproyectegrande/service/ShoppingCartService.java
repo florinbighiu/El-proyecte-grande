@@ -1,6 +1,8 @@
 package com.elproyectegrande.service;
 
+import com.elproyectegrande.exceptions.UserNotFoundException;
 import com.elproyectegrande.model.ApplicationUser;
+import com.elproyectegrande.model.CheckoutDTO;
 import com.elproyectegrande.model.Product;
 import com.elproyectegrande.model.ShoppingCart;
 import com.elproyectegrande.repository.ProductRepository;
@@ -12,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,14 +23,18 @@ import java.util.Optional;
 @Transactional
 public class ShoppingCartService {
 
-    
+    private static final double DELIVERY_FEE = 20.0;
+
+
     private final ShoppingCartRepository shoppingCartRepository;
 
-   
+
     private final ProductRepository productRepository;
 
-    
+
     private final UserRepository userRepository;
+
+    private final EmailSenderService emailSenderService;
 
     public void addToCart(Integer userId, Long productId, Integer quantity) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
@@ -105,5 +113,32 @@ public class ShoppingCartService {
 
             shoppingCartRepository.deleteById(cartItemId);
         }
+    }
+
+    public void checkout(Integer userId, CheckoutDTO customerInfo) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(userId);
+        }
+
+        List<ShoppingCart> items = new ArrayList<>();
+        shoppingCartRepository.findByUserUserId(userId).forEach(items::add);
+
+        if (items.isEmpty()) {
+            throw new RuntimeException("Your cart is empty");
+        }
+
+        double subtotal = items.stream().mapToDouble(this::itemSubtotal).sum();
+
+        emailSenderService.sendOrderNotification(customerInfo, items, subtotal, DELIVERY_FEE);
+
+        shoppingCartRepository.deleteAll(items);
+    }
+
+    private double itemSubtotal(ShoppingCart item) {
+        Product product = item.getProduct();
+        double unitPrice = product.getDiscountPercentage() > 0
+                ? product.getPrice() - (product.getPrice() * product.getDiscountPercentage()) / 100
+                : product.getPrice();
+        return unitPrice * item.getQuantity();
     }
 }

@@ -3,6 +3,7 @@ package com.elproyectegrande.service;
 import com.elproyectegrande.exceptions.ProductNotFoundException;
 import com.elproyectegrande.model.*;
 import com.elproyectegrande.repository.ProductRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,8 +54,8 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    public List<Product> searchProductsByName(String query, Double minPrice, Double maxPrice) {
-        return productRepository.findProductByTitleIgnoreCaseAndPriceBetween(query, minPrice, maxPrice);
+    public List<Product> searchProductsByName(String query) {
+        return productRepository.findProductByTitleContainingIgnoreCase(query);
     }
 
 }

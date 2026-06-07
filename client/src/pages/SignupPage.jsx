@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import toast from "react-hot-toast";
 import apiService from "../api/apiService";
-import SocialLoginButtons from "../components/SocialLoginButtons";
 import Logo from "../assets/carton.png";
 
 const validate = (formData) => {
@@ -73,14 +72,6 @@ const SignupPage = () => {
           <img src={Logo} alt="Logo" className="w-12 h-12 mb-3" />
           <h1 className="text-xl font-semibold text-gray-900">Create your EcomX account</h1>
           <p className="text-sm text-gray-500 mt-1">Welcome! Please fill in the details to get started</p>
-        </div>
-
-        <SocialLoginButtons actionLabel="Continue" />
-
-        <div className="flex items-center gap-3 my-6">
-          <div className="flex-1 h-px bg-gray-200" />
-          <span className="text-xs uppercase tracking-wide text-gray-400">or</span>
-          <div className="flex-1 h-px bg-gray-200" />
         </div>
 
         <form onSubmit={handleRegistration} className="space-y-4">
