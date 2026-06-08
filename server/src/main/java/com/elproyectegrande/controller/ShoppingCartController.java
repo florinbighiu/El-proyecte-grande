@@ -1,15 +1,11 @@
 package com.elproyectegrande.controller;
 
-import com.elproyectegrande.model.CheckoutDTO;
 import com.elproyectegrande.model.ShoppingCart;
 import com.elproyectegrande.service.ShoppingCartService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/cart")
@@ -58,10 +54,9 @@ public class ShoppingCartController {
         }
     }
 
-    @PostMapping("/checkout/{userId}")
-    public ResponseEntity<Map<String, String>> checkout(@PathVariable Integer userId, @Valid @RequestBody CheckoutDTO checkoutInfo) {
-        shoppingCartService.checkout(userId, checkoutInfo);
-        return ResponseEntity.ok(Map.of("message", "Order placed successfully."));
+    @DeleteMapping("/clear/{userId}")
+    public void clearCart(@PathVariable Integer userId) {
+        shoppingCartService.clearCart(userId);
     }
 
 }

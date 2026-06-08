@@ -148,7 +148,14 @@ const Cart = () => {
     }
   };
 
-  const handleCheckoutSuccess = () => {
+  const handleCheckoutSuccess = async () => {
+    if (userId) {
+      try {
+        await apiService.delete(`/cart/clear/${userId}`);
+      } catch {
+        // best-effort: the order email already went through
+      }
+    }
     setCartProducts([]);
     setShowCheckout(false);
   };
