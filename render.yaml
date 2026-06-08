@@ -1,0 +1,48 @@
+# Render Blueprint — deploys the Spring Boot API (Docker) and the Vite frontend (static site).
+# Secrets are marked `sync: false`; you fill them in the Render dashboard after the first apply.
+# Field names follow Render's current Blueprint spec; if a field is rejected, set it via the
+# dashboard instead (see the manual steps in the deploy guide).
+services:
+  # --- Spring Boot API (Docker web service) ---
+  - type: web
+    name: elproyectegrande-api
+    runtime: docker
+    rootDir: server
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: frankfurt
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DB_URL
+        sync: false          # jdbc:postgresql://...supabase.com:5432/postgres?sslmode=require
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        value: onboarding@resend.dev
+      - key: MAIL_OWNER_INBOX
+        sync: false
+      - key: FRONTEND_BASE_URL
+        sync: false          # https://elproyectegrande-web.onrender.com
+
+  # --- React / Vite frontend (static site) ---
+  - type: web
+    name: elproyectegrande-web
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false          # https://elproyectegrande-api.onrender.com
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
