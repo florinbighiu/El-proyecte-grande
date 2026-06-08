@@ -44,3 +44,4 @@ server/src/main/resources/application.properties
 ### Tool files ###
 .agents/
 skills-lock.json
+.claude/scheduled_tasks.lock
