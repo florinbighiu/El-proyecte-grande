@@ -2,7 +2,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FiX, FiCheckCircle } from "react-icons/fi";
 import apiService from "../api/apiService";
-import { useAuth } from "../contexts/AuthContext";
 
 const validate = (data) => {
   const errors = {};
@@ -18,7 +17,6 @@ const validate = (data) => {
 };
 
 const Checkout = ({ onClose, onSuccess, cartItems, totalCost, deliveryFee }) => {
-  const { userId } = useAuth();
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", address: "" });
   const [errors, setErrors] = useState({});
   const [placed, setPlaced] = useState(false);
@@ -40,7 +38,17 @@ const Checkout = ({ onClose, onSuccess, cartItems, totalCost, deliveryFee }) => 
 
     setLoading(true);
     try {
-      await apiService.post(`/cart/checkout/${userId}`, formData);
+      const payload = {
+        ...formData,
+        deliveryFee,
+        items: cartItems.map((item) => ({
+          title: item.product.title,
+          quantity: item.quantity,
+          price: item.product.price,
+          discountPercentage: item.product.discountPercentage,
+        })),
+      };
+      await apiService.post("/email/order", payload);
       setPlaced(true);
       toast.success("Order placed successfully!");
       setTimeout(onSuccess, 2500);
