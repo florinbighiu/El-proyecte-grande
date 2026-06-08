@@ -32,6 +32,13 @@ spring.mail.username=${MAIL_USERNAME:<your-smtp-username>}
 spring.mail.password=${MAIL_PASSWORD:<your-smtp-app-password>}
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
-app.mail.from=${MAIL_FROM:<your-from-address>}
+
+# --- Resend (transactional email: contact form + checkout notifications) ---
+# Create a free account at https://resend.com, then Settings -> API Keys -> create one.
+app.mail.resend-api-key=${RESEND_API_KEY:<your-resend-api-key>}
+# Sender address. Use onboarding@resend.dev for testing, or an address on a domain you verified in Resend.
+app.mail.from=${MAIL_FROM:onboarding@resend.dev}
+# Inbox that receives contact-form and order-notification emails (in Resend test mode this must be your account email).
+app.mail.owner-inbox=${MAIL_OWNER_INBOX:<inbox-that-receives-notifications>}
 
 app.frontend.base-url=${FRONTEND_BASE_URL:http://localhost:5173}

@@ -3,10 +3,10 @@ package com.elproyectegrande.service;
 import com.elproyectegrande.model.CheckoutDTO;
 import com.elproyectegrande.model.Product;
 import com.elproyectegrande.model.ShoppingCart;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.resend.Resend;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -16,31 +16,40 @@ import java.util.List;
 @Service
 public class EmailSenderService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-
-    @Value("${app.mail.from}")
-    private String mailFrom;
-
     private static final DateTimeFormatter SENT_AT = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm");
 
-    public void sendContactMessage(String name, String email, String message) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(mailFrom);
-        mailMessage.setTo(mailFrom);
-        mailMessage.setReplyTo(email);
-        mailMessage.setSubject("New contact message from " + name);
-        mailMessage.setText(
-                "You have received a new message through the website contact form.\n\n"
-                        + "From:    " + name + "\n"
-                        + "Email:   " + email + "\n"
-                        + "Sent:    " + ZonedDateTime.now().format(SENT_AT) + "\n\n"
-                        + "Message:\n"
-                        + message + "\n\n"
-                        + "----------------------------------------\n"
-                        + "Reply directly to this email to respond to " + name + ".");
+    private final Resend resend;
+    private final String fromAddress;
+    private final String ownerInbox;
 
-        javaMailSender.send(mailMessage);
+    public EmailSenderService(
+            @Value("${app.mail.resend-api-key}") String resendApiKey,
+            @Value("${app.mail.from}") String fromAddress,
+            @Value("${app.mail.owner-inbox}") String ownerInbox) {
+        this.resend = new Resend(resendApiKey);
+        this.fromAddress = fromAddress;
+        this.ownerInbox = ownerInbox;
+    }
+
+    public void sendContactMessage(String name, String email, String message) {
+        String body = "You have received a new message through the website contact form.\n\n"
+                + "From:    " + name + "\n"
+                + "Email:   " + email + "\n"
+                + "Sent:    " + ZonedDateTime.now().format(SENT_AT) + "\n\n"
+                + "Message:\n"
+                + message + "\n\n"
+                + "----------------------------------------\n"
+                + "Reply directly to this email to respond to " + name + ".";
+
+        CreateEmailOptions options = CreateEmailOptions.builder()
+                .from(fromAddress)
+                .to(ownerInbox)
+                .replyTo(email)
+                .subject("New contact message from " + name)
+                .text(body)
+                .build();
+
+        dispatch(options);
     }
 
     public void sendOrderNotification(CheckoutDTO customerInfo, List<ShoppingCart> items, double subtotal, double deliveryFee) {
@@ -63,13 +72,22 @@ public class EmailSenderService {
         body.append(String.format("Delivery: $%.2f%n", deliveryFee));
         body.append(String.format("Total: $%.2f%n", subtotal + deliveryFee));
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(mailFrom);
-        mailMessage.setTo(mailFrom);
-        mailMessage.setReplyTo(customerInfo.getEmail());
-        mailMessage.setSubject(String.format("New order from %s — $%.2f", customerInfo.getName(), subtotal + deliveryFee));
-        mailMessage.setText(body.toString());
+        CreateEmailOptions options = CreateEmailOptions.builder()
+                .from(fromAddress)
+                .to(ownerInbox)
+                .replyTo(customerInfo.getEmail())
+                .subject(String.format("New order from %s — $%.2f", customerInfo.getName(), subtotal + deliveryFee))
+                .text(body.toString())
+                .build();
 
-        javaMailSender.send(mailMessage);
+        dispatch(options);
+    }
+
+    private void dispatch(CreateEmailOptions options) {
+        try {
+            resend.emails().send(options);
+        } catch (ResendException e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage(), e);
+        }
     }
 }
