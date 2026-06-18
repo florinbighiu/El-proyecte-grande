@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId);
     }
 
+    @Transactional
     public ApplicationUser updateUserRole(Integer userId, String roleName) {
         ApplicationUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -58,6 +60,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Integer userId) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(userId);
@@ -65,6 +68,7 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
+    @Transactional
     public ApplicationUser updateEmail(String username, String newEmail) {
         ApplicationUser user = userRepository.findByUsername(username);
 
@@ -79,6 +83,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public void changePassword(String username, String currentPassword, String newPassword) {
         ApplicationUser user = userRepository.findByUsername(username);
 
@@ -89,6 +94,7 @@ public class UserService implements UserDetailsService {
         updatePassword(user, newPassword);
     }
 
+    @Transactional
     public void updateResetPassword(String token, String email, Instant expiresAt) {
         ApplicationUser applicationUser = userRepository.findByEmail(email);
 
@@ -115,6 +121,7 @@ public class UserService implements UserDetailsService {
         return applicationUser;
     }
 
+    @Transactional
     public void updatePassword(ApplicationUser applicationUser, String newPassword) {
         String encodePassword = passwordEncoder.encode(newPassword);
 

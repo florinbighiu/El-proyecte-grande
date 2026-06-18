@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff, FiUser, FiMail, FiLock } from "react-icons/fi";
 import toast from "react-hot-toast";
 import apiService from "../api/apiService";
-import Logo from "../assets/carton.png";
+import AuthLayout from "../layout/AuthLayout";
 
 const validate = (formData) => {
   const errors = {};
@@ -24,6 +24,11 @@ const validate = (formData) => {
   }
   return errors;
 };
+
+const inputClass = (hasError) =>
+  `w-full pl-11 pr-3.5 py-2.5 bg-white border rounded-lg text-ink placeholder-ink-soft/50 focus:outline-none focus:ring-2 focus:ring-clay/40 focus:border-clay transition ${
+    hasError ? "border-red-400" : "border-clay-soft"
+  }`;
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -62,23 +67,20 @@ const SignupPage = () => {
     }
   };
 
-  const inputClass = (field) =>
-    `w-full px-3.5 py-2.5 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 transition ${errors[field] ? "border-red-400" : "border-gray-300"}`;
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-xl shadow-gray-200/60 w-full max-w-sm px-8 py-10">
-        <div className="flex flex-col items-center text-center mb-6">
-          <img src={Logo} alt="Logo" className="w-12 h-12 mb-3" />
-          <h1 className="text-xl font-semibold text-gray-900">Create your EcomX account</h1>
-          <p className="text-sm text-gray-500 mt-1">Welcome! Please fill in the details to get started</p>
-        </div>
-
-        <form onSubmit={handleRegistration} className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-              Username
-            </label>
+    <AuthLayout
+      subtitle="Create your account in under a minute."
+      altText="Already have an account?"
+      altLinkText="Log in"
+      altLinkTo="/login"
+    >
+      <form onSubmit={handleRegistration} className="space-y-4" noValidate>
+        <div>
+          <label htmlFor="username" className="block text-sm font-medium text-ink mb-1.5">
+            Username
+          </label>
+          <div className="relative">
+            <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-soft/60" size={16} />
             <input
               type="text"
               id="username"
@@ -87,16 +89,19 @@ const SignupPage = () => {
               onChange={handleChange}
               aria-invalid={!!errors.username}
               aria-describedby={errors.username ? "username-error" : undefined}
-              className={inputClass("username")}
+              className={inputClass(!!errors.username)}
               placeholder="Choose a username"
             />
-            {errors.username && <p id="username-error" role="alert" className="mt-1 text-xs text-red-500">{errors.username}</p>}
           </div>
+          {errors.username && <p id="username-error" role="alert" className="mt-1 text-xs text-red-500">{errors.username}</p>}
+        </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-ink mb-1.5">
+            Email
+          </label>
+          <div className="relative">
+            <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-soft/60" size={16} />
             <input
               type="email"
               id="email"
@@ -105,65 +110,63 @@ const SignupPage = () => {
               onChange={handleChange}
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "email-error" : undefined}
-              className={inputClass("email")}
+              className={inputClass(!!errors.email)}
               placeholder="your@email.com"
             />
-            {errors.email && <p id="email-error" role="alert" className="mt-1 text-xs text-red-500">{errors.email}</p>}
           </div>
+          {errors.email && <p id="email-error" role="alert" className="mt-1 text-xs text-red-500">{errors.email}</p>}
+        </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                aria-invalid={!!errors.password}
-                aria-describedby={errors.password ? "password-error" : undefined}
-                className={`${inputClass("password")} pr-11`}
-                placeholder="At least 6 characters"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600">
-                {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
-              </button>
-            </div>
-            {errors.password && <p id="password-error" role="alert" className="mt-1 text-xs text-red-500">{errors.password}</p>}
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium text-ink mb-1.5">
+            Password
+          </label>
+          <div className="relative">
+            <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-soft/60" size={16} />
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? "password-error" : "password-hint"}
+              className={`${inputClass(!!errors.password)} pr-11`}
+              placeholder="At least 6 characters"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-ink-soft hover:text-ink">
+              {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
+            </button>
           </div>
-
-          {serverError && (
-            <div role="alert" className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-2">
-              {serverError}
-            </div>
+          {errors.password ? (
+            <p id="password-error" role="alert" className="mt-1 text-xs text-red-500">{errors.password}</p>
+          ) : (
+            <p id="password-hint" className="mt-1 text-xs text-ink-soft/70">Use 6 or more characters.</p>
           )}
+        </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2">
-            {loading ? (
-              <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" />
-            ) : (
-              "Create Account"
-            )}
-          </button>
-        </form>
+        {serverError && (
+          <div role="alert" className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-2.5">
+            {serverError}
+          </div>
+        )}
 
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Already have an account?{" "}
-          <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">
-            Log in
-          </Link>
-        </p>
-      </div>
-    </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-ink hover:bg-clay disabled:opacity-60 text-cream font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 mt-1">
+          {loading ? (
+            <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-cream" />
+          ) : (
+            "Create account"
+          )}
+        </button>
+      </form>
+    </AuthLayout>
   );
 };
 

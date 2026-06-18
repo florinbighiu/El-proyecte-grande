@@ -37,9 +37,38 @@ export default {
         40: 40,
         50: 50,
       },
+      colors: {
+        cream: {
+          DEFAULT: "#f9f6f0",
+          deep: "#f1ebe0",
+        },
+        ink: {
+          DEFAULT: "#26221c",
+          soft: "#6b6358",
+        },
+        clay: {
+          DEFAULT: "#c0603a",
+          dark: "#a44f2d",
+          soft: "#efe1d6",
+        },
+      },
       fontFamily: {
         sans: ["Poppins", "ui-sans-serif", "system-ui"],
         mono: ["ui-monospace", "SFMono-Regular"],
+      },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        floaty: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+      },
+      animation: {
+        marquee: "marquee 34s linear infinite",
+        floaty: "floaty 6s ease-in-out infinite",
       },
     },
   },

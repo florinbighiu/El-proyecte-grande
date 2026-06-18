@@ -24,7 +24,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-cream text-ink">
           <Navbar />
           <div className="min-h-[80vh] px-3 flex items-start justify-center">
             <Routes>
